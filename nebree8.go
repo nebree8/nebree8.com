@@ -51,11 +51,13 @@ func (k *KeyedOrder) Put(c appengine.Context) error {
 func findOrder(c appengine.Context, encoded_key string) (*KeyedOrder, error) {
 	key, err := datastore.DecodeKey(encoded_key)
 	if err != nil {
+		c.Infof("Bad key %v", encoded_key)
 		return nil, err
 	}
 	order := &KeyedOrder{}
 	order.key = key
 	if err = datastore.Get(c, key, &order.Order); err != nil {
+		c.Infof("Failed to find key %v", encoded_key)
 		return nil, err
 	}
 	return order, nil
@@ -73,6 +75,7 @@ func mutateOrder(w http.ResponseWriter, r *http.Request, f func(*Order) error) {
 		return
 	}
 	if err := order.Put(c); err != nil {
+		c.Infof("Failed to write back to datastore key=%v", order.key.Encode())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -205,8 +208,10 @@ func archiveDrink(w http.ResponseWriter, r *http.Request) {
 }
 
 func drinkProgress(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
 	progress, err := strconv.ParseInt(r.FormValue("progress"), 10, 32)
 	if err != nil {
+		c.Infof("Bad value \"%v\" for progress: %v", r.FormValue("progress"), err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	mutateOrder(w, r, func(o *Order) error {
