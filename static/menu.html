@@ -61,7 +61,7 @@
         $scope.db = data;
       });
       $scope.drinkUrl = function(n) {
-        return n.toLowerCase().replace(/ /g, "_");
+        return n.toLowerCase().replace(/ /g, "_").replace(/&/g, 'and');
       }
       $scope.ingredientsCsv = function(drink) {
         var names = [];
@@ -148,7 +148,7 @@
         <input ng-model="query">
       </md-input-container>
       <md-list-item class="md-2-line" ng-repeat="drink in db | filter:{drink_name:query} | orderBy:'drink_name'" ng-click="selectDrink(drink)">
-          <img ng-src="images/{{drinkUrl(drink.drink_name)}}.jpg" class="md-avatar">
+          <img ng-src="thumbs/{{drinkUrl(drink.drink_name)}}.jpg" class="md-avatar">
           <div class="md-list-item-text">
             <h3>{{drink.drink_name}}</h3>
             <p>{{ingredientsCsv(drink)}}</p>
