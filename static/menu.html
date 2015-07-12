@@ -4,15 +4,15 @@
     <!-- Angular Material CSS now available via Google CDN; version 0.10 used here -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
     body {
       width: 100%;
       height: 100%;
     }
 
-    .drink-list img {
-      max-height: 1em;
-      max-width: 1em;
+    .drink-list h3 {
+      font-size: 150%;
     }
 
     .selected-drink {
@@ -59,7 +59,6 @@
 
       $http.get('/all_drinks').success(function(data) {
         $scope.db = data;
-        $scope.selectDrink(data[0]);
       });
       $scope.drinkUrl = function(n) {
         return n.toLowerCase().replace(/ /g, "_");
@@ -151,7 +150,7 @@
       <md-list-item class="md-2-line" ng-repeat="drink in db | filter:{drink_name:query} | orderBy:'drink_name'" ng-click="selectDrink(drink)">
           <img ng-src="images/{{drinkUrl(drink.drink_name)}}.jpg" class="md-avatar">
           <div class="md-list-item-text">
-            <h4>{{drink.drink_name}}</h4>
+            <h3>{{drink.drink_name}}</h3>
             <p>{{ingredientsCsv(drink)}}</p>
           </div>
         </md-list-item>
