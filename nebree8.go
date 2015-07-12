@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"appengine"
@@ -30,6 +31,7 @@ type Order struct {
 	ProgressPercent int          `json:"progress_percent"`
 	DoneTime        time.Time    `json:"done_time"`
 	Approved        bool         `json:"approved"`
+	TotalOz         float32      `json:"total_oz"`
 }
 
 type KeyedOrder struct {
@@ -59,6 +61,24 @@ func findOrder(c appengine.Context, encoded_key string) (*KeyedOrder, error) {
 	return order, nil
 }
 
+func mutateOrder(w http.ResponseWriter, r *http.Request, f func(*Order) error) {
+	c := appengine.NewContext(r)
+	order, err := findOrder(c, r.FormValue("key"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	if err := f(&order.Order); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err := order.Put(c); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(order)
+}
+
 func unpreparedDrinkQueryNewestFirst() *datastore.Query {
 	return datastore.NewQuery(orderEntityType).Filter("DoneTime =", time.Time{}).Order("OrderTime")
 }
@@ -71,7 +91,9 @@ func init() {
 	// Internal.
 	http.HandleFunc("/api/next_drink", nextDrink)
 	http.HandleFunc("/api/finished_drink", finishedDrink)
+	http.HandleFunc("/api/set_drink_progress", drinkProgress)
 	http.HandleFunc("/api/approve_drink", approveDrink)
+	http.HandleFunc("/api/archive_drink", archiveDrink)
 }
 
 func orderDrink(w http.ResponseWriter, r *http.Request) {
@@ -110,23 +132,7 @@ func orderStatus(w http.ResponseWriter, r *http.Request) {
 
 func nextDrink(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	q := unpreparedDrinkQueryNewestFirst().Filter("Approved=", true).Limit(1)
-	var orders []Order
-	if _, err := q.GetAll(c, &orders); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	if len(orders) == 0 {
-		http.Error(w, "No orders", http.StatusNotFound)
-		return
-	}
-	enc := json.NewEncoder(w)
-	enc.Encode(orders[0])
-}
-
-func drinkQueue(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	q := unpreparedDrinkQueryNewestFirst()
+	q := unpreparedDrinkQueryNewestFirst().Filter("Approved=", true).Limit(10)
 	var orders []Order
 	if _, err := q.GetAll(c, &orders); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -134,6 +140,27 @@ func drinkQueue(w http.ResponseWriter, r *http.Request) {
 	}
 	enc := json.NewEncoder(w)
 	enc.Encode(orders)
+}
+
+func drinkQueue(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	q := unpreparedDrinkQueryNewestFirst()
+	var orders []Order
+	type Item struct {
+		Order
+		Id string `json:"id"`
+	}
+	var items []Item
+	keys, err := q.GetAll(c, &orders)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	for i, o := range orders {
+		items = append(items, Item{Order: o, Id: keys[i].Encode()})
+	}
+	enc := json.NewEncoder(w)
+	enc.Encode(items)
 }
 
 func finishedDrink(w http.ResponseWriter, r *http.Request) {
@@ -161,4 +188,29 @@ func approveDrink(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func archiveDrink(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	order, err := findOrder(c, r.FormValue("key"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	order.DoneTime = time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC)
+	if err := order.Put(c); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(order)
+}
+
+func drinkProgress(w http.ResponseWriter, r *http.Request) {
+	progress, err := strconv.ParseInt(r.FormValue("progress"), 10, 32)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	mutateOrder(w, r, func(o *Order) error {
+		o.ProgressPercent = int(progress)
+		return nil
+	})
 }
