@@ -60,7 +60,7 @@
         $scope.db = data;
       });
       $scope.drinkUrl = function(n) {
-        return n.toLowerCase().replace(/ /g, "_").replace(/&/g, 'and');
+        return n.toLowerCase().replace(/[ ()]/g, "_").replace(/&/g, 'and');
       }
       $scope.ingredientsCsv = function(drink) {
         var names = [];
