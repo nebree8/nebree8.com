@@ -63,7 +63,7 @@ func findOrder(c appengine.Context, encoded_key string) (*KeyedOrder, error) {
 	return order, nil
 }
 
-func mutateOrder(w http.ResponseWriter, r *http.Request, f func(*Order) error) {
+func mutateAndReturnOrder(w http.ResponseWriter, r *http.Request, f func(*Order) error) {
 	c := appengine.NewContext(r)
 	order, err := findOrder(c, r.FormValue("key"))
 	if err != nil {
@@ -167,54 +167,35 @@ func drinkQueue(w http.ResponseWriter, r *http.Request) {
 }
 
 func finishedDrink(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	order, err := findOrder(c, r.FormValue("key"))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	order.DoneTime = time.Now()
-	if err := order.Put(c); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	mutateAndReturnOrder(w, r, func(o *Order) error {
+		o.DoneTime = time.Now()
+		return nil
+	})
 }
 
 func approveDrink(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	order, err := findOrder(c, r.FormValue("key"))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	}
-	order.Approved = true
-	if err := order.Put(c); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	mutateAndReturnOrder(w, r, func(o *Order) error {
+		o.Approved = true
+		return nil
+	})
 }
 
 func archiveDrink(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	order, err := findOrder(c, r.FormValue("key"))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	}
-	order.DoneTime = time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC)
-	if err := order.Put(c); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	json.NewEncoder(w).Encode(order)
+	mutateAndReturnOrder(w, r, func(o *Order) error {
+		o.DoneTime = time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC)
+		return nil
+	})
 }
 
 func drinkProgress(w http.ResponseWriter, r *http.Request) {
+	// Validate progress argument.
 	c := appengine.NewContext(r)
 	progress, err := strconv.ParseInt(r.FormValue("progress"), 10, 32)
 	if err != nil {
 		c.Infof("Bad value \"%v\" for progress: %v", r.FormValue("progress"), err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
-	mutateOrder(w, r, func(o *Order) error {
+	mutateAndReturnOrder(w, r, func(o *Order) error {
 		o.ProgressPercent = int(progress)
 		return nil
 	})
