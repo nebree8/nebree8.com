@@ -13,6 +13,7 @@ angular.module('nebree8.drink-list', [])
 .controller('DrinkListCtrl', ['$scope', '$http', '$mdDialog', '$location',
   function($scope, $http, $mdDialog, $location) {
     console.log("DrinkAppCtrl constructor");
+    $scope.searching = false;
     $scope.query = '';
     $scope.selected_drink = null;
     $scope.user_name = '';

@@ -7,16 +7,29 @@ body {
   font-size: 150%;
 }
 
-.selected-drink {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-}
-
 .ingredients {
   width: 100%;
   padding: .5em 1em;
+}
+#title {
+  overflow: hidden;
+  transition: width 5s;
+  -webkit-transition: width 5s, padding 5s;
+  transition: width 5s, padding 5s;
+}
+
+#title.searching {
+  width: 0;
+  padding: 0;
+}
+
+#searchBox {
+  overflow: hidden;
+  transition: width 5s;
+  -webkit-transition: width 5s, padding 5s;
+  transition: width 5s, padding 5s;
+}
+
+#searchBox.not_searching {
+  width: 0;
 }

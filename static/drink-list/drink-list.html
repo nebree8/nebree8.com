@@ -1,17 +1,27 @@
-<div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
-  <md-content class="layout-padding">
-  <md-list class="drink-list">
-  <md-input-container>
-    <label ng-hide="selected_drink">Search</label>
-    <input ng-model="query">
-  </md-input-container>
-  <md-list-item class="md-2-line" ng-repeat="drink in db | filter:{drink_name:query} | orderBy:'drink_name'" ng-click="selectDrink(drink)">
-      <img ng-src="thumbs/{{drinkUrl(drink.drink_name)}}.jpg" class="md-avatar">
-      <div class="md-list-item-text">
-        <h3>{{drink.drink_name}}</h3>
-        <p>{{ingredientsCsv(drink)}}</p>
-      </div>
-    </md-list-item>
-  </md-list>
+<div layout="column" tabIndex="-1" role="main" ng-cloak>
+  <md-toolbar md-scroll-shrink>
+    <div class="md-toolbar-tools">
+      <span ng-class="{'searching': searching}" id="title">N.E.Bree.8</span>
+      <md-input-container ng-class="{'not_searching': !searching}" id="searchBox">
+        <label>Search</label>
+        <input ng-model="query">
+      </md-input-container>
+      <span flex></span>
+      <md-button ng-click="searching = !searching">
+        <md-icon md-svg-src="icons/ic_search_white_24px.svg" ng-if="!searching">Search</md-icon>
+        <md-icon md-svg-src="icons/ic_close_white_24px.svg" ng-if="searching">Search</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content flex>
+    <md-list class="drink-list">
+      <md-list-item class="md-2-line" ng-repeat="drink in db | filter:{drink_name:query} | orderBy:'drink_name'" ng-click="selectDrink(drink)">
+        <img ng-src="thumbs/{{drinkUrl(drink.drink_name)}}.jpg" class="md-avatar">
+        <div class="md-list-item-text">
+          <h3>{{drink.drink_name}}</h3>
+          <p>{{ingredientsCsv(drink)}}</p>
+        </div>
+      </md-list-item>
+    </md-list>
   </md-content>
 </div>
