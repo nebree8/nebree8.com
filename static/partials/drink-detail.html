@@ -1,0 +1,27 @@
+<div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
+  <md-content class="layout-padding">
+      <div flex layout="column" class="selected-drink layout-padding" ng-show="selected_drink">
+        <md-toolbar layout="row" class="md-whiteframe-z1">
+          <md-button ng-click="cancelSelection()">
+            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon></md-button>
+          </md-button>
+          <h3>{{selected_drink.drink_name}}</h3>
+        </md-toolbar>
+        <table class="ingredients">
+        <tr ng-repeat="ingredient in selected_drink.ingredients">
+        <!--<div class="md-list-item-text">-->
+          <td style="white-space: nowrap">{{ingredient.name}}</td>
+          <td width="100%">
+          <md-slider flex min="0" max="10" ng-model="ingredient.parts" ng-show="ingredient.parts !== undefined"> 
+          <md-slider flex min="0" max="6" ng-model="ingredient.drops" ng-show="ingredient.drops !== undefined"> 
+          </td>
+          <!--</div>-->
+        </table>
+        <div layout="row">
+          <span flex></span>
+          <md-button ng-click="cancel()">Cancel</md-button>
+          <md-button ng-click="makeDrink($event)" class="md-primary">Create</md-button>
+        </div>
+      </div>
+  </md-content>
+</div>

@@ -1,6 +1,5 @@
 <html ng-app="nebree8App">
   <head>
-
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
     <link rel="stylesheet" href="/menu.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
@@ -8,52 +7,12 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
     <script src="/menu.js"></script>
   </head>
   <body>
-
-    
-    <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2" ng-controller="DrinkAppCtrl">
-      <md-content class="layout-padding">
-      <md-list class="drink-list">
-      <md-input-container>
-        <label ng-hide="selected_drink">Search</label>
-        <input ng-model="query">
-      </md-input-container>
-      <md-list-item class="md-2-line" ng-repeat="drink in db | filter:{drink_name:query} | orderBy:'drink_name'" ng-click="selectDrink(drink)">
-          <img ng-src="thumbs/{{drinkUrl(drink.drink_name)}}.jpg" class="md-avatar">
-          <div class="md-list-item-text">
-            <h3>{{drink.drink_name}}</h3>
-            <p>{{ingredientsCsv(drink)}}</p>
-          </div>
-        </md-list-item>
-      </md-list>
-      <div flex layout="column" class="selected-drink layout-padding" ng-show="selected_drink">
-        <md-toolbar layout="row" class="md-whiteframe-z1">
-          <md-button ng-click="cancelSelection()">
-            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon></md-button>
-          </md-button>
-          <h3>{{selected_drink.drink_name}}</h3>
-        </md-toolbar>
-        <table class="ingredients">
-        <tr ng-repeat="ingredient in selected_drink.ingredients">
-        <!--<div class="md-list-item-text">-->
-          <td style="white-space: nowrap">{{ingredient.name}}</td>
-          <td width="100%">
-          <md-slider flex min="0" max="10" ng-model="ingredient.parts" ng-show="ingredient.parts !== undefined"> 
-          <md-slider flex min="0" max="6" ng-model="ingredient.drops" ng-show="ingredient.drops !== undefined"> 
-          </td>
-          <!--</div>-->
-        </table>
-        <div layout="row">
-          <span flex></span>
-          <md-button ng-click="cancelSelection()">Cancel</md-button>
-          <md-button ng-click="makeDrink($event)" class="md-primary">Create</md-button>
-        </div>
-      </div>
-      </md-content>
-    </div>
+    <div ng-view></div>
   </body>
 </html>
