@@ -1,8 +1,8 @@
 <div layout="column" tabIndex="-1" role="main" ng-cloak>
   <md-toolbar layout="row" class="md-whiteframe-z1">
     <div class="md-toolbar-tools">
-      <md-button ng-click="cancel()">
-        <md-icon md-svg-src="icons/ic_close_white_24px.svg" aria-label="Close dialog"></md-icon>
+      <md-button ng-click="cancel()" aria-label="Close dialog">
+        <md-icon md-svg-src="icons/ic_close_white_24px.svg"></md-icon>
       </md-button>
       <span>{{selected_drink.drink_name}}</span>
       <span flex></span>
@@ -11,10 +11,16 @@
   <md-content flex>
     <table class="ingredients">
       <tr ng-repeat="ingredient in selected_drink.ingredients">
-        <td style="white-space: nowrap">{{ingredient.name}}</td>
+        <td style="white-space: nowrap" id="ingredient-{{$index}}">{{ingredient.name}}</td>
         <td width="100%">
-          <md-slider flex min="0" max="{{parts_max}}" ng-model="ingredient.parts" ng-show="ingredient.parts !== undefined"></md-slider>
-          <md-slider flex min="0" max="6" ng-model="ingredient.drops" ng-show="ingredient.drops !== undefined"></md-slider>
+          <md-slider flex min="0" max="{{parts_max}}"
+            ng-model="ingredient.parts"
+            ng-if="ingredient.parts !== undefined"
+            aria-label="{{ingredient.name}}"></md-slider>
+          <md-slider flex min="0" max="6"
+            ng-model="ingredient.drops"
+            aria-label="{{ingredient.name}}"
+            ng-if="ingredient.drops !== undefined"></md-slider>
         </td>
     </table>
     <div layout="row">

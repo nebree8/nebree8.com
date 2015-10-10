@@ -7,9 +7,13 @@
         <input ng-model="query">
       </md-input-container>
       <span flex></span>
-      <md-button ng-click="searching = !searching">
-        <md-icon md-svg-src="icons/ic_search_white_24px.svg" ng-if="!searching">Search</md-icon>
-        <md-icon md-svg-src="icons/ic_close_white_24px.svg" ng-if="searching">Search</md-icon>
+      <md-button ng-click="searching = true" ng-if="!searching"
+          aria-label="Cancel search">
+        <md-icon md-svg-src="icons/ic_search_white_24px.svg"></md-icon>
+      </md-button>
+      <md-button ng-click="searching = false" ng-if="searching"
+          aria-label="Search">
+        <md-icon md-svg-src="icons/ic_close_white_24px.svg"></md-icon>
       </md-button>
     </div>
   </md-toolbar>
