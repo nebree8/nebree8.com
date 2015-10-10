@@ -24,6 +24,14 @@ angular.module('nebree8.drink-detail', [])
         if (slugifyDrink(data[i].drink_name) == drinkName) {
           originalDrink = data[i];
           $scope.selected_drink = angular.copy(originalDrink);
+          var parts_max = 4;
+          for (var j = 0; j < originalDrink.ingredients.length; j++) {
+            var parts = originalDrink.ingredients[j].parts;
+            if (parts && parts > parts_max) {
+              parts_max = parts;
+            }
+          }
+          $scope.parts_max = parts_max * 1.5;
           return;
         }
       }
