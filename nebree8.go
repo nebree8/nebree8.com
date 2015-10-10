@@ -126,7 +126,7 @@ func orderStatus(w http.ResponseWriter, r *http.Request) {
 	if !order.DoneTime.IsZero() {
 		status = "Done"
 	} else if order.ProgressPercent > 0 {
-		status = fmt.Sprintf("%v%v done", order.ProgressPercent)
+		status = fmt.Sprintf("%v%% done", order.ProgressPercent)
 	} else if !order.Approved {
 		status = "Insert coins to continue"
 	}
