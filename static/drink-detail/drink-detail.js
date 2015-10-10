@@ -12,14 +12,12 @@ angular.module('nebree8.drink-detail', [])
 
 .controller('DrinkDetailCtrl', ['$scope', '$http', '$mdDialog', '$routeParams', '$location',
   function($scope, $http, $mdDialog, $routeParams, $location) {
-    console.log("DrinkDetailCtrl", $routeParams);
     var drinkName = $routeParams.drinkName;
     var originalDrink = {};
     $scope.selected_drink = {};
     $scope.parts_max = 10;
 
     $http.get('/all_drinks', { cache: true }).success(function(data) {
-      console.log('Searching for drink', drinkName, data);
       for (var i = 0; i < data.length; i++) {
         if (slugifyDrink(data[i].drink_name) == drinkName) {
           originalDrink = data[i];
@@ -35,7 +33,7 @@ angular.module('nebree8.drink-detail', [])
           return;
         }
       }
-      console.log("Not found, redirecting");
+      console.log("Didn't find drink, redirecting", drinkName, data);
       $location.path('/drinks').replace();
     });
 
