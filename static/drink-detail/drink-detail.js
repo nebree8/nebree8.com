@@ -16,6 +16,7 @@ angular.module('nebree8.drink-detail', [])
     var drinkName = $routeParams.drinkName;
     var originalDrink = {};
     $scope.selected_drink = {};
+    $scope.parts_max = 10;
 
     $http.get('/all_drinks', { cache: true }).success(function(data) {
       console.log('Searching for drink', drinkName, data);

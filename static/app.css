@@ -1,8 +1,3 @@
-body {
-  width: 100%;
-  height: 100%;
-}
-
 .drink-list h3 {
   font-size: 150%;
 }
@@ -11,6 +6,7 @@ body {
   width: 100%;
   padding: .5em 1em;
 }
+
 #title {
   overflow: hidden;
   transition: width 5s;
