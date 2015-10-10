@@ -1,36 +1,14 @@
-function slugifyDrink(name) {
-  return name.toLowerCase().replace(/[ ()]/g, "_").replace(/&/g, 'and');
-}
-
-angular.module('nebree8.drink-list', [])
-
-.controller('DrinkListCtrl', ['$scope', '$http', '$mdDialog', '$location',
-  function($scope, $http, $mdDialog, $location) {
-    console.log("DrinkAppCtrl constructor");
-    $scope.query = '';
-    $scope.selected_drink = null;
-    $scope.user_name = '';
-
-    $http.get('/all_drinks', { cache: true }).success(function(data) {
-      $scope.db = data;
-    });
-    $scope.drinkUrl = slugifyDrink;
-    $scope.ingredientsCsv = function(drink) {
-      var names = [];
-      for (var i = 0; i < drink.ingredients.length; i++) {
-        names.push(drink.ingredients[i].name);
-      }
-      return names.join(", ");
-    }
-    $scope.selectDrink = function(drink) {
-      console.log("select", drink);
-      $scope.selected_drink = angular.copy(drink);
-      $location.path('/drinks/' + slugifyDrink(drink.drink_name));
-    }
-  }
-]);
-
 angular.module('nebree8.drink-detail', [])
+
+.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/drinks/:drinkName', {
+        templateUrl: 'drink-detail/drink-detail.html',
+        controller: 'DrinkDetailCtrl',
+      });
+  }
+])
 
 .controller('DrinkDetailCtrl', ['$scope', '$http', '$mdDialog', '$routeParams', '$location',
   function($scope, $http, $mdDialog, $routeParams, $location) {
@@ -119,25 +97,3 @@ angular.module('nebree8.drink-detail', [])
     }
   }
 ]);
-
-var nebree8App = angular.module('nebree8App', ['ngMaterial', 'ngRoute',
-  'nebree8.drink-list', 'nebree8.drink-detail'
-]);
-
-nebree8App.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-      when('/drinks', {
-        templateUrl: 'partials/drink-list.html',
-        controller: 'DrinkListCtrl',
-      }).
-      when('/drinks/:drinkName', {
-        templateUrl: 'partials/drink-detail.html',
-        controller: 'DrinkDetailCtrl',
-      }).
-      otherwise({
-        redirectTo: '/drinks'
-      });
-  }
-]);
-
