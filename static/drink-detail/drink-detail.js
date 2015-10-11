@@ -14,27 +14,37 @@ angular.module('nebree8.drink-detail', [])
   }
 ])
 
-.controller('DrinkDetailCtrl', ['$scope', '$http', '$mdDialog', '$routeParams', '$location',
+.controller('DrinkDetailCtrl', [
+  '$scope', '$http', '$mdDialog', '$routeParams', '$location',
   function($scope, $http, $mdDialog, $routeParams, $location) {
     var originalDrink = {};
     $scope.selected_drink = {};
-    $scope.parts_max = 10;
+    $scope.parts_modifier_max = 10;
+    var parts_modifier_range = .25;  // Maximum + or - %.
 
     $scope.setRecipe = function(recipe) {
-      originalDrink = recipe;
-      $scope.reset();
+      originalDrink = angular.copy(recipe);
       var parts_max = 4;
       for (var j = 0; j < originalDrink.ingredients.length; j++) {
-        var parts = originalDrink.ingredients[j].parts;
-        if (parts && parts > parts_max) {
-          parts_max = parts;
+        if (originalDrink.ingredients[j].parts) {
+          originalDrink.ingredients[j].parts_modifier =
+              $scope.parts_modifier_max / 2;
         }
       }
-      $scope.parts_max = parts_max * 1.5;
+      $scope.reset();
     }
 
     function sendOrder(user_name, order) {
       var order = angular.copy(order);
+      for (var i = 0; i < order.ingredients.length; i++) {
+        var ingredient = order.ingredients[i];
+        var mod = ingredient.parts_modifier;
+        delete ingredient.parts_modifier
+        if (mod != undefined) {
+          var coef = mod / $scope.parts_modifier_max * 2 * parts_modifier_range;
+          ingredient.parts *= 1 - parts_modifier_range + coef;
+        }
+      }
       order.user_name = user_name;
       $scope.drink_id = 'unknown';
       $http({
@@ -45,7 +55,7 @@ angular.module('nebree8.drink-detail', [])
         },
         'responseType': 'json'
       }).then(function(response) {
-        console.log("response", response)
+        console.log("response from /api/order", response)
         $scope.drink_id = response.data.id;
       })
     }
@@ -115,7 +125,6 @@ angular.module('nebree8.drink-detail', [])
     });
   }
 ])
-
 
 .controller('RandomDrinkCtrl', ['$scope', '$controller', '$mdToast',
   function($scope, $controller, $mdToast) {

@@ -18,9 +18,9 @@ const (
 )
 
 type Ingredient struct {
-	Parts int    `json:"parts,omitempty"`
-	Drops int    `json:"drops,omitempty"`
-	Name  string `json:"name"`
+	Parts float32 `json:"parts,omitempty"`
+	Drops int     `json:"drops,omitempty"`
+	Name  string  `json:"name"`
 }
 
 type Order struct {

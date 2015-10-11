@@ -21,8 +21,8 @@
       <tr ng-repeat="ingredient in selected_drink.ingredients">
         <td style="white-space: nowrap" id="ingredient-{{$index}}">{{ingredient.name}}</td>
         <td width="100%">
-          <md-slider flex min="0" max="{{parts_max}}"
-            ng-model="ingredient.parts"
+          <md-slider flex min="0" max="{{parts_modifier_max}}"
+            ng-model="ingredient.parts_modifier"
             ng-if="ingredient.parts !== undefined"
             aria-label="{{ingredient.name}}"></md-slider>
           <md-slider flex min="0" max="6"
