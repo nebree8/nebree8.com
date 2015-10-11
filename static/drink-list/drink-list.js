@@ -33,6 +33,10 @@ angular.module('nebree8.drink-list', [])
       $scope.selected_drink = angular.copy(drink);
       $location.path('/drinks/' + slugifyDrink(drink.drink_name));
     }
+
+    $scope.toggleSearch = function(state) {
+      $scope.searching = state;
+    }
   }
 ]);
 
