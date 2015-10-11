@@ -9,7 +9,14 @@
     </div>
   </md-toolbar>
   <md-content>
-    <table class="ingredients">
+    <div layout="row" layout-padding style="padding: 24px"
+        ng-if="selected_drink.ingredients.length == 1">
+    <p>
+      Just {{selected_drink.total_oz}}oz of
+      {{selected_drink.ingredients[0].name}}.
+    </p>
+    </div>
+    <table class="ingredients" ng-if="selected_drink.ingredients.length > 1">
       <tr ng-repeat="ingredient in selected_drink.ingredients">
         <td style="white-space: nowrap" id="ingredient-{{$index}}">{{ingredient.name}}</td>
         <td width="100%">
