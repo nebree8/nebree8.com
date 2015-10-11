@@ -1,25 +1,33 @@
 <div layout="column" tabIndex="-1" role="main" ng-cloak>
   <md-toolbar md-scroll-shrink>
-    <div class="md-toolbar-tools">
-      <span ng-class="{'searching': searching}" id="title">N.E.Bree.8</span>
-      <md-input-container ng-class="{'not_searching': !searching}" id="searchBox">
+    <div class="md-toolbar-tools" ng-hide="searching">
+      <span>N.E.Bree.8</span>
+      <span flex></span>
+      <md-button aria-label="Search" class="md-icon-button"
+          ng-click="openSearch()">
+        <md-icon md-svg-src="icons/ic_search_white_24px.svg"></md-icon>
+      </md-button>
+    </div>
+    <div class="md-toolbar-tools" ng-show="searching">
+      <md-button aria-label="Back" class="md-icon-button"
+          ng-click="closeSearch()">
+        <md-icon md-svg-src="icons/ic_arrow_back_white_24px.svg"></md-icon>
+      </md-button>
+      <md-input-container>
         <label>Search</label>
-        <input ng-model="query">
+        <input id="searchBox" ng-model="query" md-autofocus>
       </md-input-container>
       <span flex></span>
-      <md-button ng-if="searching" ng-click="toggleSearch(false)"
-          aria-label="Cancel search">
+      <md-button aria-label="Clear search" class="md-icon-button"
+          ng-click="clearSearch()">
         <md-icon md-svg-src="icons/ic_close_white_24px.svg"></md-icon>
-      </md-button>
-      <md-button ng-if="!searching" ng-click="toggleSearch(true)"
-          aria-label="Search">
-        <md-icon md-svg-src="icons/ic_search_white_24px.svg"></md-icon>
       </md-button>
     </div>
   </md-toolbar>
   <md-content>
     <md-list class="drink-list">
-      <md-list-item class="md-2-line" ng-click="randomDrink()">
+      <md-list-item class="md-2-line" ng-click="randomDrink()"
+          ng-hide="searching">
         <img ng-src="thumbs/random_sour.jpg" class="md-avatar">
         <div class="md-list-item-text">
           <h3>Random Drink</h3>
@@ -28,7 +36,7 @@
       </md-list-item>
       <md-list-item class="md-2-line" ng-click="selectDrink(drink)"
         ng-repeat="drink in db | filter:{$:query} | orderBy:'drink_name'">
-        <img ng-src="thumbs/{{drinkUrl(drink.drink_name)}}.jpg" class="md-avatar">
+        <img ng-src="thumbs/{{slugify(drink.drink_name)}}.jpg" class="md-avatar">
         <div class="md-list-item-text">
           <h3>{{drink.drink_name}}</h3>
           <p>{{ingredientsCsv(drink)}}</p>

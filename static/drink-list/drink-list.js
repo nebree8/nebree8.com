@@ -12,13 +12,12 @@ angular.module('nebree8.drink-list', [])
 
 .controller('DrinkListCtrl', ['$scope', '$http', '$mdDialog', '$location',
   function($scope, $http, $mdDialog, $location) {
-    $scope.searching = false;
-    $scope.query = '';
-
     $http.get('/all_drinks', { cache: true }).success(function(data) {
       $scope.db = data;
     });
-    $scope.drinkUrl = slugifyDrink;
+
+    $scope.slugify = slugifyDrink;
+
     $scope.ingredientsCsv = function(drink) {
       var names = [];
       for (var i = 0; i < drink.ingredients.length; i++) {
@@ -30,13 +29,22 @@ angular.module('nebree8.drink-list', [])
       $location.path('/drinks/' + slugifyDrink(drink.drink_name));
     }
 
-    $scope.toggleSearch = function(state) {
-      $scope.searching = state;
+    $scope.openSearch = function() {
+      $scope.searching = true;
     }
+
+    $scope.closeSearch = function() {
+      $scope.searching = false;
+      $scope.clearSearch();
+    }
+
+    $scope.clearSearch = function() { $scope.query = '' }
 
     $scope.randomDrink = function(drink) {
       $location.path('/drinks/random');
     }
+
+    $scope.closeSearch();
   }
 ]);
 

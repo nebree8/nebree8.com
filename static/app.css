@@ -7,25 +7,7 @@
   padding: .5em 1em;
 }
 
-#title {
-  overflow: hidden;
-  transition: width 5s;
-  -webkit-transition: width 5s, padding 5s;
-  transition: width 5s, padding 5s;
-}
-
-#title.searching {
-  width: 0;
-  padding: 0;
-}
-
 #searchBox {
-  overflow: hidden;
-  transition: width 5s;
-  -webkit-transition: width 5s, padding 5s;
-  transition: width 5s, padding 5s;
-}
-
-#searchBox.not_searching {
-  width: 0;
+  color: white;
+  border-color: white;
 }

@@ -1,7 +1,8 @@
 <div layout="column" tabIndex="-1" role="main" ng-cloak>
   <md-toolbar layout="row" class="md-whiteframe-z1">
     <div class="md-toolbar-tools">
-      <md-button ng-click="cancel()" aria-label="Close dialog">
+      <md-button aria-label="Close dialog" class="md-icon-button"
+           ng-click="cancel()">
         <md-icon md-svg-src="icons/ic_close_white_24px.svg"></md-icon>
       </md-button>
       <span>{{selected_drink.drink_name}}</span>
