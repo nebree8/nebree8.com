@@ -34,6 +34,7 @@
           <p>Let N.E.Bree.8 design you a drink!</p>
         </div>
       </md-list-item>
+      <md-divider ng-hide="state.searching"></md-divider>
       <md-list-item class="md-2-line" ng-click="selectDrink(drink)"
         ng-repeat="drink in db | filter:{$:state.query} | orderBy:'drink_name'">
         <img ng-src="thumbs/{{slugify(drink.drink_name)}}.jpg" class="md-avatar">
@@ -42,6 +43,7 @@
           <p>{{ingredientsCsv(drink)}}</p>
         </div>
       </md-list-item>
+      <md-list-item></md-list-item>
     </md-list>
   </md-content>
 </div>
