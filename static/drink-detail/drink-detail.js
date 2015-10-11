@@ -96,8 +96,9 @@ angular.module('nebree8.drink-detail', [])
   }
 ])
 
-.controller('NamedDrinkCtrl', ['$scope', '$http', '$controller', '$routeParams',
-  function($scope, $http, $controller, $routeParams) {
+.controller('NamedDrinkCtrl', [
+  '$scope', '$http', '$controller', '$routeParams', '$location',
+  function($scope, $http, $controller, $routeParams, $location) {
     $controller('DrinkDetailCtrl', {$scope: $scope});
 
     // Look up the drink by name.
@@ -106,6 +107,7 @@ angular.module('nebree8.drink-detail', [])
       for (var i = 0; i < data.length; i++) {
         if (slugifyDrink(data[i].drink_name) == drinkName) {
           $scope.setRecipe(data[i]);
+          return;
         }
       }
       console.log("Didn't find drink, redirecting", drinkName, data);
