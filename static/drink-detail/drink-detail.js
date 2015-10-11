@@ -39,43 +39,43 @@ angular.module('nebree8.drink-detail', [])
 
     $scope.makeDrink = function(event) {
       var EnterNameController = ['$scope', '$mdDialog', function($scope,
-        $mdDialog, user_name) {
-        $scope.user_name = user_name;
-        $scope.$broadcast('dialogOpened');
+        $mdDialog) {
         $scope.closeDialog = function() {
-          $mdDialog.hide($scope.user_name);
+          console.log("closeDialog called", $scope.user_name);
+          $mdDialog.hide();
         };
-        $scope.cancel = function() {
-          $mdDialog.hide(null);
+        $scope.cancelDialog = function() {
+          $mdDialog.cancel();
         }
       }];
       $mdDialog.show({
           controller: EnterNameController,
           targetEvent: event,
-          locals: {
-            user_name: $scope.user_name
-          },
+          scope: $scope,
+          preserveScope: true,
           templateUrl: 'drink-detail/enter-name-dialog.html',
+          clickOutsideToClose: true,
         })
         .then(function(answer) {
-          console.log("answer", answer);
-          if (answer) {
-            $scope.user_name = $scope.selected_drink.user_name = answer;
-            $scope.drink_id = 'unknown';
-            $http({
-              'method': 'POST',
-              'url': '/api/order',
-              'params': {
-                'recipe': $scope.selected_drink
-              },
-              'responseType': 'json'
-            }).then(function(response) {
-              console.log("response", response)
-              $scope.drink_id = response.data.id;
-            })
-            console.log("Making drink ", $scope.selected_drink);
-            $scope.cancel();
+          if (!answer) {
+            console.log("got falsy answer", answer);
+            return;
           }
+          $scope.selected_drink.user_name = $scope.user_name;
+          $scope.drink_id = 'unknown';
+          $http({
+            'method': 'POST',
+            'url': '/api/order',
+            'params': {
+              'recipe': $scope.selected_drink
+            },
+            'responseType': 'json'
+          }).then(function(response) {
+            console.log("response", response)
+            $scope.drink_id = response.data.id;
+          })
+          console.log("Making drink ", $scope.selected_drink);
+          $scope.cancel();
         }, function() {
           console.log("dialog cancelled");
         });
