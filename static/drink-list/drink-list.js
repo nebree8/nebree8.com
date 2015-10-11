@@ -14,8 +14,6 @@ angular.module('nebree8.drink-list', [])
   function($scope, $http, $mdDialog, $location) {
     $scope.searching = false;
     $scope.query = '';
-    $scope.selected_drink = null;
-    $scope.user_name = '';
 
     $http.get('/all_drinks', { cache: true }).success(function(data) {
       $scope.db = data;
@@ -29,8 +27,6 @@ angular.module('nebree8.drink-list', [])
       return names.join(", ");
     }
     $scope.selectDrink = function(drink) {
-      console.log("select", drink);
-      $scope.selected_drink = angular.copy(drink);
       $location.path('/drinks/' + slugifyDrink(drink.drink_name));
     }
 
