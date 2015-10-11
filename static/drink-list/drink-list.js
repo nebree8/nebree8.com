@@ -18,8 +18,10 @@ angular.module('nebree8.drink-list', [])
 }])
 
 .controller('DrinkListCtrl', [
-  '$scope', '$http', '$mdDialog', '$location', 'DrinkListStateService',
-  function($scope, $http, $mdDialog, $location, DrinkListStateService) {
+  '$scope', '$http', '$mdDialog', '$location', '$timeout', '$window',
+  'DrinkListStateService',
+  function($scope, $http, $mdDialog, $location, $timeout, $window,
+           DrinkListStateService) {
     $scope.state = DrinkListStateService;
 
     $http.get('/all_drinks', { cache: true }).success(function(data) {
@@ -41,7 +43,7 @@ angular.module('nebree8.drink-list', [])
 
     $scope.openSearch = function() {
       $scope.state.searching = true;
-      window.setTimeout(function() {
+      $timeout(function() {
         document.getElementById('searchBox').focus()
       });
     }
@@ -56,6 +58,19 @@ angular.module('nebree8.drink-list', [])
     $scope.randomDrink = function(drink) {
       $location.path('/drinks/random');
     }
+
+    $scope.$on('$routeChangeStart', function() {
+      $scope.state.scrollX = $window.scrollX;
+      $scope.state.scrollY = $window.scrollY;
+    });
+
+    $scope.$on('$routeChangeSuccess', function() {
+      if ($scope.state.scrollX || $scope.state.scrollY) {
+        $timeout(function() {
+          $window.scrollTo($scope.state.scrollX, $scope.state.scrollY);
+        });
+      }
+    });
   }
 ]);
 
