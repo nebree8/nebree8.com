@@ -1,4 +1,12 @@
 [{
+  "total_oz": 5,
+  "image": "steve.jpg",
+  "drink_name": "The Steve",
+  "ingredients": [{
+    "parts": 1,
+    "name": "Scotch"
+  }]
+}, {
   "total_oz": 2.75,
   "image": "margarita.jpg",
   "drink_name": "Margarita",
