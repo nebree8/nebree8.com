@@ -35,6 +35,7 @@ angular.module('nebree8.drink-list', [])
     }
 
     $scope.randomDrink = function(drink) {
+      $location.path('/drinks/random');
     }
   }
 ]);
