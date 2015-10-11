@@ -19,7 +19,15 @@
   </md-toolbar>
   <md-content flex>
     <md-list class="drink-list">
-    <md-list-item class="md-2-line" ng-repeat="drink in db | filter:{$:query} | orderBy:'drink_name'" ng-click="selectDrink(drink)">
+      <md-list-item class="md-2-line" ng-click="randomDrink()">
+        <img ng-src="thumbs/random_sour.jpg" class="md-avatar">
+        <div class="md-list-item-text">
+          <h3>Random Drink</h3>
+          <p>Let N.E.Bree.8 design you a drink!</p>
+        </div>
+      </md-list-item>
+      <md-list-item class="md-2-line" ng-click="selectDrink(drink)"
+        ng-repeat="drink in db | filter:{$:query} | orderBy:'drink_name'">
         <img ng-src="thumbs/{{drinkUrl(drink.drink_name)}}.jpg" class="md-avatar">
         <div class="md-list-item-text">
           <h3>{{drink.drink_name}}</h3>

@@ -33,6 +33,9 @@ angular.module('nebree8.drink-list', [])
     $scope.toggleSearch = function(state) {
       $scope.searching = state;
     }
+
+    $scope.randomDrink = function(drink) {
+    }
   }
 ]);
 
