@@ -74,7 +74,7 @@ angular.module('nebree8.drink-detail', [])
               $scope.drink_id = response.data.id;
             })
             console.log("Making drink ", $scope.selected_drink);
-            $scope.selectDrink(null);
+            $scope.cancel();
           }
         }, function() {
           console.log("dialog cancelled");
