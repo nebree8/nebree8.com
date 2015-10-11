@@ -10,8 +10,18 @@ angular.module('nebree8.drink-list', [])
   }
 ])
 
-.controller('DrinkListCtrl', ['$scope', '$http', '$mdDialog', '$location',
-  function($scope, $http, $mdDialog, $location) {
+.factory('DrinkListStateService', [function() {
+  var service = {};
+  service.searching = false;
+  service.query = '';
+  return service;
+}])
+
+.controller('DrinkListCtrl', [
+  '$scope', '$http', '$mdDialog', '$location', 'DrinkListStateService',
+  function($scope, $http, $mdDialog, $location, DrinkListStateService) {
+    $scope.state = DrinkListStateService;
+
     $http.get('/all_drinks', { cache: true }).success(function(data) {
       $scope.db = data;
     });
@@ -30,24 +40,22 @@ angular.module('nebree8.drink-list', [])
     }
 
     $scope.openSearch = function() {
-      $scope.searching = true;
+      $scope.state.searching = true;
       window.setTimeout(function() {
         document.getElementById('searchBox').focus()
       });
     }
 
     $scope.closeSearch = function() {
-      $scope.searching = false;
+      $scope.state.searching = false;
       $scope.clearSearch();
     }
 
-    $scope.clearSearch = function() { $scope.query = '' }
+    $scope.clearSearch = function() { $scope.state.query = '' }
 
     $scope.randomDrink = function(drink) {
       $location.path('/drinks/random');
     }
-
-    $scope.closeSearch();
   }
 ]);
 

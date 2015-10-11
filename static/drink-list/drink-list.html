@@ -1,6 +1,6 @@
 <div layout="column" tabIndex="-1" role="main" ng-cloak>
   <md-toolbar md-scroll-shrink>
-    <div class="md-toolbar-tools" ng-hide="searching">
+    <div class="md-toolbar-tools" ng-hide="state.searching">
       <span>N.E.Bree.8</span>
       <span flex></span>
       <md-button aria-label="Search" class="md-icon-button"
@@ -8,14 +8,14 @@
         <md-icon md-svg-src="icons/ic_search_white_24px.svg"></md-icon>
       </md-button>
     </div>
-    <div class="md-toolbar-tools" ng-show="searching">
+    <div class="md-toolbar-tools" ng-show="state.searching">
       <md-button aria-label="Back" class="md-icon-button"
           ng-click="closeSearch()">
         <md-icon md-svg-src="icons/ic_arrow_back_white_24px.svg"></md-icon>
       </md-button>
       <md-input-container>
         <label>Search</label>
-        <input id="searchBox" ng-model="query" md-autofocus>
+        <input id="searchBox" ng-model="state.query" md-autofocus>
       </md-input-container>
       <span flex></span>
       <md-button aria-label="Clear search" class="md-icon-button"
@@ -27,7 +27,7 @@
   <md-content>
     <md-list class="drink-list">
       <md-list-item class="md-2-line" ng-click="randomDrink()"
-          ng-hide="searching">
+          ng-hide="state.searching">
         <img ng-src="thumbs/random_sour.jpg" class="md-avatar">
         <div class="md-list-item-text">
           <h3>Random Drink</h3>
@@ -35,7 +35,7 @@
         </div>
       </md-list-item>
       <md-list-item class="md-2-line" ng-click="selectDrink(drink)"
-        ng-repeat="drink in db | filter:{$:query} | orderBy:'drink_name'">
+        ng-repeat="drink in db | filter:{$:state.query} | orderBy:'drink_name'">
         <img ng-src="thumbs/{{slugify(drink.drink_name)}}.jpg" class="md-avatar">
         <div class="md-list-item-text">
           <h3>{{drink.drink_name}}</h3>
