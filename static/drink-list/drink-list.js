@@ -31,6 +31,9 @@ angular.module('nebree8.drink-list', [])
 
     $scope.openSearch = function() {
       $scope.searching = true;
+      window.setTimeout(function() {
+        document.getElementById('searchBox').focus()
+      });
     }
 
     $scope.closeSearch = function() {
