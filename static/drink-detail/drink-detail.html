@@ -24,6 +24,7 @@
         </td>
     </table>
     <div layout="row">
+      <md-button ng-click="reset()" ng-disabled="!modified()">Reset</md-button>
       <span flex></span>
       <md-button ng-click="cancel()">Cancel</md-button>
       <md-button ng-click="makeDrink($event)" class="md-primary">Create</md-button>

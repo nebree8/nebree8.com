@@ -21,7 +21,7 @@ angular.module('nebree8.drink-detail', [])
       for (var i = 0; i < data.length; i++) {
         if (slugifyDrink(data[i].drink_name) == drinkName) {
           originalDrink = data[i];
-          $scope.selected_drink = angular.copy(originalDrink);
+          $scope.reset();
           var parts_max = 4;
           for (var j = 0; j < originalDrink.ingredients.length; j++) {
             var parts = originalDrink.ingredients[j].parts;
@@ -101,6 +101,14 @@ angular.module('nebree8.drink-detail', [])
 
     $scope.cancel = function() {
       $location.path("/drinks");
+    }
+
+    $scope.reset = function() {
+      $scope.selected_drink = angular.copy(originalDrink);
+    }
+
+    $scope.modified = function() {
+      return !angular.equals($scope.selected_drink, originalDrink);
     }
   }
 ]);
