@@ -106,6 +106,10 @@ func orderDrink(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	if order.UserName == nil || order.UserName == "" {
+		http.Error(w, "user_name is required", http.StatusBadRequest)
+		return
+	}
 	order.OrderTime = time.Now()
 	key, err := datastore.Put(c, order.Key(c), &order)
 	if err != nil {
