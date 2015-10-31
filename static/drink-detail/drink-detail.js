@@ -93,11 +93,13 @@ angular.module('nebree8.drink-detail', [])
           sendOrder($scope.user_name, $scope.selected_drink).then(
             function(response) {
               $scope.cancel();
+              $mdToast.show($mdToast.simple().hideDelay(10000).content(
+                    $scope.selected_drink.drink_name + ' ordered'));
             },
             function(response) {
               console.log("response", response);
               $mdToast.show($mdToast.simple().
-                  content('Failed to send order!').
+                  content('Error: ' + response.data).
                   action("OK").hideDelay(10000));
             });
         }, function() {
