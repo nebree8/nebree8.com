@@ -86,6 +86,25 @@ func unpreparedDrinkQueryNewestFirst() *datastore.Query {
 	return datastore.NewQuery(orderEntityType).Filter("DoneTime =", time.Time{}).Order("OrderTime")
 }
 
+func returnItems(c appengine.Context, q *datastore.Query, w http.ResponseWriter) {
+	var orders []Order
+	type Item struct {
+		Order
+		Id string `json:"id"`
+	}
+	var items []Item
+	keys, err := q.GetAll(c, &orders)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	for i, o := range orders {
+		items = append(items, Item{Order: o, Id: keys[i].Encode()})
+	}
+	enc := json.NewEncoder(w)
+	enc.Encode(items)
+}
+
 func init() {
 	// External.
 	http.HandleFunc("/api/order", orderDrink)
@@ -140,34 +159,11 @@ func orderStatus(w http.ResponseWriter, r *http.Request) {
 func nextDrink(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	q := unpreparedDrinkQueryNewestFirst().Filter("Approved=", true).Limit(10)
-	var orders []Order
-	if _, err := q.GetAll(c, &orders); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	enc := json.NewEncoder(w)
-	enc.Encode(orders)
+	returnItems(c, q, w)
 }
 
 func drinkQueue(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	q := unpreparedDrinkQueryNewestFirst()
-	var orders []Order
-	type Item struct {
-		Order
-		Id string `json:"id"`
-	}
-	var items []Item
-	keys, err := q.GetAll(c, &orders)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	for i, o := range orders {
-		items = append(items, Item{Order: o, Id: keys[i].Encode()})
-	}
-	enc := json.NewEncoder(w)
-	enc.Encode(items)
+	returnItems(appengine.NewContext(r), unpreparedDrinkQueryNewestFirst(), w)
 }
 
 func finishedDrink(w http.ResponseWriter, r *http.Request) {
