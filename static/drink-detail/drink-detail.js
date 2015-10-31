@@ -15,8 +15,8 @@ angular.module('nebree8.drink-detail', [])
 ])
 
 .controller('DrinkDetailCtrl', [
-  '$scope', '$http', '$mdDialog', '$routeParams', '$location',
-  function($scope, $http, $mdDialog, $routeParams, $location) {
+  '$scope', '$http', '$mdDialog', '$mdToast', '$routeParams', '$location',
+  function($scope, $http, $mdDialog, $mdToast, $routeParams, $location) {
     var originalDrink = {};
     $scope.selected_drink = {};
     $scope.parts_modifier_max = 10;
@@ -46,47 +46,60 @@ angular.module('nebree8.drink-detail', [])
         }
       }
       order.user_name = user_name;
+      console.log("Order", order);
       $scope.drink_id = 'unknown';
-      $http({
+      return $http({
         'method': 'POST',
         'url': '/api/order',
         'params': {
-          'recipe': $scope.selected_drink
+          'recipe': order,
         },
         'responseType': 'json'
       }).then(function(response) {
         console.log("response from /api/order", response)
         $scope.drink_id = response.data.id;
+        return response;
       })
     }
 
     $scope.confirmRecipe = function(event) {
-      var EnterNameController = ['$scope', '$mdDialog', function($scope,
-        $mdDialog) {
-        $scope.closeDialog = function() {
-          console.log("closeDialog called", $scope.user_name);
-          $mdDialog.hide();
-        };
-        $scope.cancelDialog = function() {
+      var EnterNameController = ['$mdDialog', function($mdDialog, userName) {
+        this.userName = userName;
+        this.closeDialog = function() {
+          console.log("closeDialog called", this.userName, this.nameForm);
+          if (this.nameForm.$valid) {
+            $mdDialog.hide(this.userName);
+          }
+        }
+        this.cancelDialog = function() {
           $mdDialog.cancel();
         }
       }];
       $mdDialog.show({
           controller: EnterNameController,
           targetEvent: event,
-          scope: $scope,
           preserveScope: true,
           templateUrl: 'drink-detail/enter-name-dialog.html',
           clickOutsideToClose: true,
+          controllerAs: 'ctrl',
+          locals: {'userName': this.user_name},
         })
         .then(function(answer) {
           if (!answer) {
             console.log("got falsy answer", answer);
             return;
           }
-          sendOrder($scope.user_name, $scope.selected_drink);
-          console.log("Making drink ", $scope.selected_drink);
-          $scope.cancel();
+          $scope.user_name = answer;
+          sendOrder($scope.user_name, $scope.selected_drink).then(
+            function(response) {
+              $scope.cancel();
+            },
+            function(response) {
+              console.log("response", response);
+              $mdToast.show($mdToast.simple().
+                  content('Failed to send order!').
+                  action("OK").hideDelay(10000));
+            });
         }, function() {
           console.log("dialog cancelled");
         });

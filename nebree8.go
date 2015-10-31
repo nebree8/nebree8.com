@@ -106,8 +106,8 @@ func orderDrink(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	if order.UserName == nil || order.UserName == "" {
-		http.Error(w, "user_name is required", http.StatusBadRequest)
+	if order.UserName == "" {
+		http.Error(w, fmt.Sprintf("user_name is required: %v", r.FormValue("recipe")), http.StatusBadRequest)
 		return
 	}
 	order.OrderTime = time.Now()

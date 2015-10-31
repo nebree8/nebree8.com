@@ -1,11 +1,10 @@
 <md-dialog aria-label="Enter your name">
-  <form name="nameForm" novalidate
-      ng-submit="nameForm.$valid && closeDialog()">
+  <form name="ctrl.nameForm" novalidate ng-submit="ctrl.closeDialog()">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>What should we call you?</h2>
         <span flex></span>
-        <md-button type="button" class="md-icon-button" ng-click="cancelDialog()">
+        <md-button type="button" class="md-icon-button" ng-click="ctrl.cancelDialog()">
           <md-icon md-svg-src="icons/ic_close_white_24px.svg"
               aria-label="Close dialog"></md-icon>
         </md-button>
@@ -15,14 +14,17 @@
       <div class="md-dialog-content">
         <md-input-container>
           <label>Your Name</label>
-          <input type="text" ng-model="user_name" md-autofocus required>
+          <input type="text" name="userName" ng-model="ctrl.userName" md-autofocus required>
+          <!--<div ng-messages="ctrl.nameForm.userName.$error">
+            <div ng-message="required">Enter your name.</div>
+          </div>-->
         </md-input-container>
       </div>
     </md-dialog-content>
     <div class="md-actions">
-      <md-button type="button" ng-click="cancelDialog()">Cancel</md-button>
+      <md-button type="button" ng-click="ctrl.cancelDialog()">Cancel</md-button>
       <md-button type="submit" class="md-primary"
-          ng-disabled="!nameForm.$valid">
+          ng-disabled="!ctrl.nameForm.$valid">
         Make Drink
       </md-button>
     </div>
