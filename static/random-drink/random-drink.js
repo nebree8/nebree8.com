@@ -97,7 +97,6 @@ function CreateRandomRecipe(weights) {
     } else {
       ingredient.parts = amount;
     }
-    console.log("Found ", ingredient, remaining_ingredients, " for ", weights);
     return [ingredient].concat(remaining_ingredients);
   }
   return undefined;  /* We failed to find ingredients to satisfy weights */
