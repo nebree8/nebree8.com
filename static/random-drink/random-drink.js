@@ -2,6 +2,10 @@
 angular.module('nebree8.random-drink', [])
 
 .service('RandomDrink', function () {
+  var ALCOHOL = 0;
+  var SWEET = 1;
+  var SOUR = 2;
+  var BITTER = 3;
   var INGREDIENTS = [
     ["agave", [0, 1, 0, 0, 0]],
     ["angostura bitters", [0, 0, 0, 1, 0]],
@@ -125,9 +129,9 @@ angular.module('nebree8.random-drink', [])
   this.createDrink = function (name, weights) {
     var ingredients = CreateIngredients(weights);
     var total_oz = 5;
-    if (weights[0]) {
-      // If non-virgin, aim for 2oz of alcohol (weights[0]).
-      var total_oz = 2 * sum(weights) / weights[0];
+    if (weights[ALCOHOL]) {
+      // If non-virgin, aim for 2oz of alcohol.
+      var total_oz = 2 * (sum(weights) - weights[BITTER]) / weights[ALCOHOL];
     }
     if (ingredients === undefined) {
       return undefined;
