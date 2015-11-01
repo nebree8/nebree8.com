@@ -9,9 +9,9 @@
       <span flex></span>
     </div>
   </md-toolbar>
-  <md-content>
-    <div layout="row" layout-padding style="padding: 24px"
-        ng-if="selected_drink.ingredients.length == 1">
+  <md-content layout-padding>
+    <div layout="row" style="padding: 24px"
+         ng-if="selected_drink.ingredients.length == 1">
     <p>
       Just {{selected_drink.total_oz}}oz of
       {{selected_drink.ingredients[0].name}}.
@@ -19,7 +19,9 @@
     </div>
     <table class="ingredients" ng-if="selected_drink.ingredients.length > 1">
       <tr ng-repeat="ingredient in selected_drink.ingredients">
-        <td style="white-space: nowrap" id="ingredient-{{$index}}">{{ingredient.name}}</td>
+        <td style="white-space: nowrap" id="ingredient-{{$index}}">
+          {{ingredient.name}}
+        </td>
         <td width="100%">
           <md-slider flex min="0" max="{{parts_modifier_max}}"
             ng-model="ingredient.parts_modifier"
