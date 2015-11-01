@@ -116,6 +116,8 @@ func init() {
 	http.HandleFunc("/api/set_drink_progress", drinkProgress)
 	http.HandleFunc("/api/approve_drink", approveDrink)
 	http.HandleFunc("/api/archive_drink", archiveDrink)
+	http.HandleFunc("/api/set_config", setConfig)
+	http.HandleFunc("/api/get_config", getConfig)
 }
 
 func orderDrink(w http.ResponseWriter, r *http.Request) {
@@ -199,4 +201,28 @@ func drinkProgress(w http.ResponseWriter, r *http.Request) {
 		o.ProgressPercent = int(progress)
 		return nil
 	})
+}
+
+func setConfig(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	cfg := Config{}
+	if err := json.Unmarshal([]byte(r.FormValue("config")), &cfg); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	if err := cfg.Put(c); err != nil {
+		http.Error(w, fmt.Sprintf("Error: %v, cfg=%v", err.Error(), cfg), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(cfg)
+}
+
+func getConfig(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	cfg := Config{}
+	if err := cfg.Get(c); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(cfg)
 }
