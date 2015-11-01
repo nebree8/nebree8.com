@@ -1,4 +1,5 @@
-angular.module('nebree8.drink-list', [])
+/*global angular */
+angular.module('nebree8.drink-list', ['nebree8.drinks'])
 
 .config(['$routeProvider',
   function($routeProvider) {
@@ -19,35 +20,12 @@ angular.module('nebree8.drink-list', [])
 
 .controller('DrinkListCtrl', [
   '$scope', '$http', '$mdDialog', '$location', '$timeout', '$window',
-  'DrinkListStateService',
+  'DrinkListStateService', 'DrinksService',
   function($scope, $http, $mdDialog, $location, $timeout, $window,
-           DrinkListStateService) {
+           DrinkListStateService, DrinksService) {
     $scope.state = DrinkListStateService;
-
-    $http.get('/all_drinks', { cache: false }).success(function(drinks) {
-      $scope.db = [];
-
-      $http.get('/ingredients', { cache: false }).success(function(ingredients) {
-        for (var i = 0; i < drinks.length; i++) {
-          var drink = drinks[i];
-          var all_available = true;
-          for (var j = 0; j < drink.ingredients.length; j++) {
-            if (ingredients.indexOf(drink.ingredients[j].name.toLowerCase()) === -1) {
-              console.log("Missing: " + drink.ingredients[j].name);
-              all_available = false;
-              break;
-            }
-          }
-          if (all_available || drink.drink_name.indexOf("Random") > -1) {
-            $scope.db.push(drink);
-          } else {
-            console.log("Skipping drink: " + drink.drink_name);
-          }
-        }
-      });
-    });
-
-    $scope.slugify = slugifyDrink;
+    $scope.db = DrinksService.db;
+    $scope.slugify = DrinksService.slugifyDrinkName;
 
     $scope.ingredientsCsv = function(drink) {
       var names = [];
@@ -57,7 +35,7 @@ angular.module('nebree8.drink-list', [])
       return names.join(", ");
     }
     $scope.selectDrink = function(drink) {
-      $location.path('/drinks/' + slugifyDrink(drink.drink_name));
+      $location.path('/drinks/' + DrinksService.slugifyDrinkName(drink.drink_name));
     }
 
     $scope.openSearch = function() {

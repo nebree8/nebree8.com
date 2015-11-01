@@ -1,5 +1,5 @@
 /*global angular */
-angular.module('nebree8.drink-detail', ['nebree8.random-drink'])
+angular.module('nebree8.drink-detail', ['nebree8.random-drink', 'nebree8.drinks'])
 
 .config(['$routeProvider',
   function($routeProvider) {
@@ -123,57 +123,59 @@ angular.module('nebree8.drink-detail', ['nebree8.random-drink'])
 ])
 
 .controller('NamedDrinkCtrl', [
-  '$scope', '$http', '$controller', '$routeParams', '$location',
-  function($scope, $http, $controller, $routeParams, $location) {
+  '$scope', '$controller', '$routeParams', '$location', 'DrinksService',
+  function($scope, $controller, $routeParams, $location, DrinksService) {
     $controller('DrinkDetailCtrl', {$scope: $scope});
 
     // Look up the drink by name.
-    var drinkName = $routeParams.drinkName;
-    $http.get('/all_drinks', { cache: true }).success(function(data) {
-      for (var i = 0; i < data.length; i++) {
-        if (slugifyDrink(data[i].drink_name) == drinkName) {
-          $scope.setRecipe(data[i]);
-          return;
-        }
-      }
-      console.log("Didn't find drink, redirecting", drinkName, data);
+    var recipe = DrinksService.getDrink($routeParams.drinkName);
+    if (recipe) {
+      $scope.setRecipe(recipe);
+    } else {
+      console.log("Didn't find drink, redirecting", $routeParams.drinkName,
+                  DrinksService.db);
       $location.path('/drinks').replace();
-    });
+    };
   }
 ])
 
 .controller('RandomDrinkCtrl', [
-    '$scope', '$controller', 'RandomDrink',
-  function($scope, $controller, RandomDrink) {
+    '$scope', '$controller', '$location', '$mdToast', 'RandomDrink', 'DrinksService',
+  function($scope, $controller, $location, $mdToast, RandomDrink, DrinksService) {
     $controller('DrinkDetailCtrl', {$scope: $scope});
-    var name, weights;
-    switch (Math.floor(Math.random() * 4)) {
-      case 0:
-        name = 'Random Sour';
-        weights = [2, 1, 1, 0, 0];
-        break;
-      case 1:
-        name = 'Random Spirituous';
-        weights = [4, 1, 0, 1, 0];
-        break;
-      case 2:
-        name = 'Random Bubbly Spirituous';
-        weights = [4, 1, 0, 1, 1];
-        break;
-      case 3:
-        name = 'Random Bubbly Sour';
-        weights = [2, 1, 1, 0, 1];
-        break;
-    }
-    var recipe;
-    for (var i = 0; recipe == undefined && i < 5; i++) {
-      recipe = RandomDrink.createDrink(name, weights);
-    }
-    if (!recipe) {
-      $mdToast.simple().hideDelay(5000).
-        content("Oops, that didn't work. Try again");
-      $location.path('/drinks');
-    }
-    $scope.setRecipe(recipe);
+
+    $scope.$watch(DrinksService.ready, function(ready) {
+      if (!ready) return;
+      var name, weights;
+      switch (Math.floor(Math.random() * 4)) {
+        case 0:
+          name = 'Random Sour';
+          weights = [2, 1, 1, 0, 0];
+          break;
+        case 1:
+          name = 'Random Spirituous';
+          weights = [4, 1, 0, 1, 0];
+          break;
+        case 2:
+          name = 'Random Bubbly Spirituous';
+          weights = [4, 1, 0, 1, 1];
+          break;
+        case 3:
+          name = 'Random Bubbly Sour';
+          weights = [2, 1, 1, 0, 1];
+          break;
+      }
+      var recipe;
+      for (var i = 0; recipe == undefined && i < 5; i++) {
+        recipe = RandomDrink.createDrink(name, weights);
+      }
+      if (!recipe) {
+        $mdToast.simple().hideDelay(5000).
+          content("Oops, that didn't work. Try again");
+        $location.path('/drinks');
+        return;
+      }
+      $scope.setRecipe(recipe);
+    });
   }
 ]);

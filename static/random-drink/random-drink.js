@@ -1,13 +1,13 @@
 /*global angular */
-angular.module('nebree8.random-drink', [])
+angular.module('nebree8.random-drink', ['nebree8.drinks'])
 
-.service('RandomDrink', function () {
+.service('RandomDrink', function ($rootScope, DrinksService) {
   var ALCOHOL = 0;
   var SWEET = 1;
   var SOUR = 2;
   var BITTER = 3;
-  var INGREDIENTS = [
-    ["agave", [0, 1, 0, 0, 0]],
+  var ALL_INGREDIENTS = [
+    ["agave syrup", [0, 1, 0, 0, 0]],
     ["angostura bitters", [0, 0, 0, 1, 0]],
     ["peychauds bitters", [0, 0, 0, 1, 0]],
     ["chocolate bitters", [0, 0, 0, 1, 0]],
@@ -24,13 +24,13 @@ angular.module('nebree8.random-drink', [])
     ["maple", [0, 1, 0, 0, 0]],
     ["kahlua", [0.5, 0.5, 0, 0, 0]],
     ["orange", [0, 0.8, 0.25, 0, 0]],
-    ["lime", [0, 0, 1, 0, 0]],
-    ["lemon", [0, 0, 1, 0, 0]],
+    ["lime juice", [0, 0, 1, 0, 0]],
+    ["lemon juice", [0, 0, 1, 0, 0]],
     ["scotch", [1, 0, 0, 0, 0]],
     ["pimms", [0.5, 0.5, 0, 0, 0]],
     ["rum", [1, 0, 0, 0, 0]],
     ["rye", [1, 0, 0, 0, 0]],
-    ["simple", [0, 1, 0, 0, 0]],
+    ["simple syrup", [0, 1, 0, 0, 0]],
   /*  ["stoli", [1, 0, 0, 0, 0]],  Why have stoli? We have vodka! */
     ["tequila", [1, 0, 0, 0, 0]],
     ["triple sec", [0.5, 0.5, 0, 0, 0]],
@@ -41,6 +41,7 @@ angular.module('nebree8.random-drink', [])
     ["tonic", [0, 0.2, 0, 0.3, 1]],
     ["cola", [0, 0.5, 0.3, 0, 1]],
   ];
+  var INGREDIENTS = [];
 
   /*
    * Shuffles the array.
@@ -142,4 +143,17 @@ angular.module('nebree8.random-drink', [])
       'total_oz': total_oz
     }
   }
+
+  $rootScope.$watch(DrinksService.ready, function(ready) {
+    if (!ready) return;
+    var i, ingredient;
+    for (i = 0; i < ALL_INGREDIENTS.length; i++) {
+      ingredient = ALL_INGREDIENTS[i];
+      if (DrinksService.haveIngredient(ingredient[0])) {
+        INGREDIENTS.push(ingredient);
+      } else {
+        console.log('Dropping ingredient ' + ingredient[0]);
+      }
+    }
+  });
 });
