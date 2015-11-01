@@ -21,7 +21,7 @@ angular.module('nebree8.random-drink', ['nebree8.drinks'])
     ["gin", [1, 0, 0, 0, 0]],
     ["grenadine", [0, 1, 0, 0, 0]],
     ["honey", [0, 1, 0, 0, 0]],
-    ["maple", [0, 1, 0, 0, 0]],
+    ["maple syrup", [0, 1, 0, 0, 0]],
     ["kahlua", [0.5, 0.5, 0, 0, 0]],
     ["orange", [0, 0.8, 0.25, 0, 0]],
     ["lime juice", [0, 0, 1, 0, 0]],

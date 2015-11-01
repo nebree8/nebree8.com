@@ -52,7 +52,7 @@ var defaultConfig = Config{
 		{Name: "cola", Available: true},
 		{Name: "water", Available: true},
 		{Name: "soda", Available: true},
-		{Name: "peach snapps", Available: false},
+		{Name: "peach schnapps", Available: false},
 		{Name: "honey", Available: false},
 		{Name: "maple syrup", Available: false},
 	},
