@@ -1,4 +1,5 @@
-angular.module('nebree8.drink-detail', [])
+/*global angular */
+angular.module('nebree8.drink-detail', ['nebree8.random-drink'])
 
 .config(['$routeProvider',
   function($routeProvider) {
@@ -141,8 +142,9 @@ angular.module('nebree8.drink-detail', [])
   }
 ])
 
-.controller('RandomDrinkCtrl', ['$scope', '$controller', '$mdToast',
-  function($scope, $controller, $mdToast) {
+.controller('RandomDrinkCtrl', [
+    '$scope', '$controller', 'RandomDrink',
+  function($scope, $controller, RandomDrink) {
     $controller('DrinkDetailCtrl', {$scope: $scope});
     var name, weights;
     switch (Math.floor(Math.random() * 4)) {
@@ -163,15 +165,15 @@ angular.module('nebree8.drink-detail', [])
         weights = [2, 1, 1, 0, 1];
         break;
     }
-    var ingredients;
-    for (var i = 0; ingredients == undefined && i < 5; i++) {
-      ingredients = CreateRandomRecipe(weights);
+    var recipe;
+    for (var i = 0; recipe == undefined && i < 5; i++) {
+      recipe = RandomDrink.createDrink(name, weights);
     }
-    if (!ingredients) {
+    if (!recipe) {
       $mdToast.simple().hideDelay(5000).
         content("Oops, that didn't work. Try again");
       $location.path('/drinks');
     }
-    $scope.setRecipe({'drink_name': name, 'ingredients': ingredients});
+    $scope.setRecipe(recipe);
   }
 ]);
