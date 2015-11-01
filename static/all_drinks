@@ -147,11 +147,11 @@
     "name": "Angostura Bitters"
   }]
 }, {
-  "total_oz": 5.0,
+  "total_oz": 4.0,
   "image": "gin_and_tonic.jpg",
   "drink_name": "Gin and Tonic",
   "ingredients": [{
-    "parts": 3,
+    "parts": 1,
     "name": "Gin"
   }, {
     "parts": 1,
@@ -166,7 +166,7 @@
     "name": "Scotch"
   }]
 }, {
-  "total_oz": 3.0,
+  "total_oz": 2.5,
   "image": "scotch_and_water.jpg",
   "drink_name": "Scotch and Water",
   "ingredients": [{
