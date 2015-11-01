@@ -24,8 +24,27 @@ angular.module('nebree8.drink-list', [])
            DrinkListStateService) {
     $scope.state = DrinkListStateService;
 
-    $http.get('/all_drinks', { cache: true }).success(function(data) {
-      $scope.db = data;
+    $http.get('/all_drinks', { cache: false }).success(function(drinks) {
+      $scope.db = [];
+
+      $http.get('/ingredients', { cache: false }).success(function(ingredients) {
+        for (var i = 0; i < drinks.length; i++) {
+          var drink = drinks[i];
+          var all_available = true;
+          for (var j = 0; j < drink.ingredients.length; j++) {
+            if (ingredients.indexOf(drink.ingredients[j].name.toLowerCase()) === -1) {
+              console.log("Missing: " + drink.ingredients[j].name);
+              all_available = false;
+              break;
+            }
+          }
+          if (all_available || drink.drink_name.indexOf("Random") > -1) {
+            $scope.db.push(drink);
+          } else {
+            console.log("Skipping drink: " + drink.drink_name);
+          }
+        }
+      });
     });
 
     $scope.slugify = slugifyDrink;
@@ -73,5 +92,3 @@ angular.module('nebree8.drink-list', [])
     });
   }
 ]);
-
-
