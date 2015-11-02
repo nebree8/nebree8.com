@@ -2,10 +2,13 @@
   font-size: 150%;
 }
 
-.ingredients {
-  width: 100%;
-  padding: .5em 1em;
+.page-detail .ingredients {
   text-transform: capitalize;
+  margin-bottom: 24px;
+}
+
+.page-detail md-content {
+  padding: 24px;
 }
 
 #searchBox {
