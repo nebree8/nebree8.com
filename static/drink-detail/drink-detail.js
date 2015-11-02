@@ -22,7 +22,7 @@ angular.module('nebree8.drink-detail', ['nebree8.random-drink', 'nebree8.drinks'
     $scope.pageClass = 'page-detail';
     $scope.selected_drink = {};
     $scope.parts_modifier_max = 10;
-    var parts_modifier_range = .25;  // Maximum + or - %.
+    var parts_modifier_range = 0.25;  // Maximum + or - %.
 
     $scope.setRecipe = function(recipe) {
       originalDrink = angular.copy(recipe);
