@@ -1,0 +1,43 @@
+<html ng-app="n8Admin">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.17/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.17/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.17/angular-aria.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <script>
+    var n8Admin = angular.module("n8Admin", []);
+    n8Admin.controller('n8AdminCtrl', ['$scope', '$http', function($scope, $http) {
+      $scope.config = {};
+      $scope.save = function(order) {
+        $http({
+          'method': 'POST',
+          'url': '/api/set_config',
+          'params': {'config': $scope.config}
+        }).success(function(data) {
+          $scope.refresh();
+        });
+      };
+      $scope.refresh = function () {
+        $http.get('/api/get_config').success(function(data) {
+          console.log("refresh", data);
+          $scope.config = data;
+        });
+      }
+
+      $scope.refresh();
+    }]);
+  </script>
+<body ng-controller="n8AdminCtrl">
+  <button ng-click="refresh()">Refresh</button>
+  <h2>Config</h2>
+  <ul>
+    <li ng-repeat="ingredient in config.Ingredients">
+      <label>
+        <input type="checkbox" ng-model="ingredient.Available">
+        {{ingredient.Name}}
+      </label>
+  </ul>
+  <button ng-click="save()">Save</button>
+</body>
+</html>
