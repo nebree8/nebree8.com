@@ -128,14 +128,18 @@ angular.module('nebree8.drink-detail', ['nebree8.random-drink', 'nebree8.drinks'
     $controller('DrinkDetailCtrl', {$scope: $scope});
 
     // Look up the drink by name.
-    var recipe = DrinksService.getDrink($routeParams.drinkName);
-    if (recipe) {
-      $scope.setRecipe(recipe);
-    } else {
-      console.log("Didn't find drink, redirecting", $routeParams.drinkName,
-                  DrinksService.db);
-      $location.path('/drinks').replace();
-    };
+    $scope.$watch(DrinksService.ready, function(value) {
+      if (!value) return;
+
+      var recipe = DrinksService.getDrink($routeParams.drinkName);
+      if (recipe) {
+        $scope.setRecipe(recipe);
+      } else {
+        console.log("Didn't find drink, redirecting", $routeParams.drinkName,
+                    DrinksService.db);
+        $location.path('/drinks').replace();
+      };
+    });
   }
 ])
 
