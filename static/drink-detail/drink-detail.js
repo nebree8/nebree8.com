@@ -19,6 +19,7 @@ angular.module('nebree8.drink-detail', ['nebree8.random-drink', 'nebree8.drinks'
   '$scope', '$http', '$mdDialog', '$mdToast', '$routeParams', '$location',
   function($scope, $http, $mdDialog, $mdToast, $routeParams, $location) {
     var originalDrink = {};
+    $scope.pageClass = 'page-detail';
     $scope.selected_drink = {};
     $scope.parts_modifier_max = 10;
     var parts_modifier_range = .25;  // Maximum + or - %.

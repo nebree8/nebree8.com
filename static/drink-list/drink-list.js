@@ -23,6 +23,7 @@ angular.module('nebree8.drink-list', ['nebree8.drinks'])
   'DrinkListStateService', 'DrinksService',
   function($scope, $http, $mdDialog, $location, $timeout, $window,
            DrinkListStateService, DrinksService) {
+    $scope.pageClass = 'page-list';
     $scope.state = DrinkListStateService;
     $scope.db = DrinksService.db;
     $scope.slugify = DrinksService.slugifyDrinkName;
