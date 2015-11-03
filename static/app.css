@@ -16,6 +16,10 @@
   border-color: white;
 }
 
+.view-animate {
+  width: 100%;
+}
+
 .view-animate.ng-enter, .view-animate.ng-leave {
   transition: left cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
   position: absolute;
