@@ -40,7 +40,6 @@ var DrinkDetailCtrl = function($http, $location, $mdDialog, $mdToast) {
    * @const
    */
   this.partsModifierRange = 0.25;  // Maximum + or - %.
-  console.log("DrinkDetailCtrl", this);
 };
 
 /**
@@ -124,7 +123,6 @@ DrinkDetailCtrl.prototype.confirmRecipe = function(event) {
   })
   .then(function(userName) {
     if (!userName) {
-      console.log("got falsy answer", userName);
       return;
     }
     this.sendOrder(userName).then(
@@ -134,13 +132,12 @@ DrinkDetailCtrl.prototype.confirmRecipe = function(event) {
                 this.selectedDrink.drink_name + ' ordered'));
         }.bind(this),
         function(response) {
-          console.log("response", response);
           this.$mdToast.show(this.$mdToast.simple().
               content('Error: ' + response.data).
               action("OK").hideDelay(10000));
         }.bind(this));
   }.bind(this), function() {
-    console.log("dialog cancelled");
+    console.log("Dialog cancelled");
   }.bind(this));
 };
 
@@ -184,7 +181,6 @@ DrinkDetailCtrl.prototype.is_modified = function() {
  */
 var NamedDrinkCtrl = function($scope, $injector, $routeParams, $location, DrinksService) {
   $injector.invoke(DrinkDetailCtrl, this);
-  console.log("NamedDrinkCtrl", this);
 
   /** @type {string} */
   var drinkName = $routeParams['drinkName'];
