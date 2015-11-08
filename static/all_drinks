@@ -1,6 +1,5 @@
 [{
   "total_oz": 5,
-  "image": "steve.jpg",
   "drink_name": "The Steve",
   "ingredients": [{
     "parts": 1,
@@ -8,7 +7,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "margarita.jpg",
   "drink_name": "Margarita",
   "ingredients": [{
     "parts": 2,
@@ -22,7 +20,6 @@
   }]
 }, {
   "total_oz": 2.5,
-  "image": "old_fashioned.jpg",
   "drink_name": "Old Fashioned",
   "ingredients": [{
     "parts": 4,
@@ -36,7 +33,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "daquiri.jpg",
   "drink_name": "Daquiri",
   "ingredients": [{
     "parts": 2,
@@ -50,7 +46,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "gin_gimlet.jpg",
   "drink_name": "Gin Gimlet",
   "ingredients": [{
     "parts": 6,
@@ -61,7 +56,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "whiskey_sour.jpg",
   "drink_name": "Whiskey Sour",
   "ingredients": [{
     "parts": 2,
@@ -75,7 +69,6 @@
   }]
 }, {
   "total_oz": 4.0,
-  "image": "pimms_cup.jpg",
   "drink_name": "Pimms Cup",
   "ingredients": [{
     "parts": 6,
@@ -92,7 +85,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "negroni.jpg",
   "drink_name": "Negroni",
   "ingredients": [{
     "parts": 1,
@@ -106,7 +98,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "boulevardier.jpg",
   "drink_name": "Boulevardier",
   "ingredients": [{
     "parts": 1.5,
@@ -120,7 +111,6 @@
   }]
 }, {
   "total_oz": 5.0,
-  "image": "americano.jpg",
   "drink_name": "Americano",
   "ingredients": [{
     "parts": 1,
@@ -134,7 +124,6 @@
   }]
 }, {
   "total_oz": 4.0,
-  "image": "manhattan.jpg",
   "drink_name": "Manhattan",
   "ingredients": [{
     "parts": 5,
@@ -148,7 +137,6 @@
   }]
 }, {
   "total_oz": 4.0,
-  "image": "gin_and_tonic.jpg",
   "drink_name": "Gin and Tonic",
   "ingredients": [{
     "parts": 1,
@@ -159,7 +147,6 @@
   }]
 }, {
   "total_oz": 2.0,
-  "image": "scotch_(neat).jpg",
   "drink_name": "Scotch (neat)",
   "ingredients": [{
     "parts": 1,
@@ -167,7 +154,6 @@
   }]
 }, {
   "total_oz": 2.5,
-  "image": "scotch_and_water.jpg",
   "drink_name": "Scotch and Water",
   "ingredients": [{
     "parts": 3,
@@ -178,7 +164,6 @@
   }]
 }, {
   "total_oz": 4.0,
-  "image": "cuba_libre.jpg",
   "drink_name": "Cuba Libre",
   "ingredients": [{
     "parts": 5,
@@ -192,7 +177,6 @@
   }]
 }, {
   "total_oz": 5.0,
-  "image": "rum_and_coke.jpg",
   "drink_name": "Rum and Coke",
   "ingredients": [{
     "parts": 2,
@@ -203,7 +187,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "godfather.jpg",
   "drink_name": "Godfather",
   "ingredients": [{
     "parts": 1,
@@ -214,7 +197,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "dry_martini.jpg",
   "drink_name": "Dry Martini",
   "ingredients": [{
     "parts": 6,
@@ -225,7 +207,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "original_martini.jpg",
   "drink_name": "Original Martini",
   "ingredients": [{
     "parts": 2,
@@ -236,7 +217,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "perfect_martini.jpg",
   "drink_name": "Perfect Martini",
   "ingredients": [{
     "parts": 1,
@@ -247,7 +227,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "vodka_martini.jpg",
   "drink_name": "Vodka Martini",
   "ingredients": [{
     "parts": 6,
@@ -258,7 +237,6 @@
   }]
 }, {
   "total_oz": 5.0,
-  "image": "gin_fizz.jpg",
   "drink_name": "Gin Fizz",
   "ingredients": [{
     "parts": 4.5,
@@ -275,7 +253,6 @@
   }]
 }, {
   "total_oz": 5.0,
-  "image": "yellow_bird.jpg",
   "drink_name": "Yellow Bird",
   "ingredients": [{
     "parts": 2,
@@ -292,7 +269,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "kamikaze.jpg",
   "drink_name": "Kamikaze",
   "ingredients": [{
     "parts": 1,
@@ -306,7 +282,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "lemon_drop.jpg",
   "drink_name": "Lemon Drop",
   "ingredients": [{
     "parts": 2,
@@ -320,7 +295,6 @@
   }]
 }, {
   "total_oz": 5.0,
-  "image": "long_island_ice_tea.jpg",
   "drink_name": "Long Island Ice Tea",
   "ingredients": [{
     "parts": 1,
@@ -352,7 +326,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "tom_collins.jpg",
   "drink_name": "Tom Collins",
   "ingredients": [{
     "parts": 2,
@@ -366,7 +339,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "virgin_lemonade.jpg",
   "drink_name": "Virgin Lemonade",
   "ingredients": [{
     "parts": 1,
@@ -377,7 +349,6 @@
   }]
 }, {
   "total_oz": 2.75,
-  "image": "grenadine_punch.jpg",
   "drink_name": "Grenadine Punch",
   "ingredients": [{
     "parts": 2,

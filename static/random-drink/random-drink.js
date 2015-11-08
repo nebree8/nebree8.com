@@ -1,7 +1,9 @@
-/*global angular */
-angular.module('nebree8.random-drink', ['nebree8.drinks'])
-
-.service('RandomDrink', function ($rootScope, DrinksService) {
+/**
+ * @constructor
+ * @ngInject
+ * @struct
+ */
+var RandomDrink = function ($rootScope, DrinksService) {
   var ALCOHOL = 0;
   var SWEET = 1;
   var SOUR = 2;
@@ -14,7 +16,7 @@ angular.module('nebree8.random-drink', ['nebree8.drinks'])
     ["orange bitters", [0, 0, 0, 1, 0]],
     ["bourbon", [1, 0, 0, 0, 0]],
     ["peach schnapps", [0.5, 0.5, 0, 0, 0]],
-  /* ["galliano", [0.5, 0.5, 0, 0, 0]], RAN OUT */
+    ["galliano", [0.5, 0.5, 0, 0, 0]],
     ["campari", [0.5, 0.5, 0, 1, 0]],
     ["triple sec", [0.5, 0.5, 0, 0, 0]],
     ["frangelico", [0.5, 0.5, 0, 0, 0]],
@@ -31,7 +33,7 @@ angular.module('nebree8.random-drink', ['nebree8.drinks'])
     ["rum", [1, 0, 0, 0, 0]],
     ["rye", [1, 0, 0, 0, 0]],
     ["simple syrup", [0, 1, 0, 0, 0]],
-  /*  ["stoli", [1, 0, 0, 0, 0]],  Why have stoli? We have vodka! */
+    ["stoli", [1, 0, 0, 0, 0]],
     ["tequila", [1, 0, 0, 0, 0]],
     ["triple sec", [0.5, 0.5, 0, 0, 0]],
     ["vodka", [1, 0, 0, 0, 0]],
@@ -40,7 +42,7 @@ angular.module('nebree8.random-drink', ['nebree8.drinks'])
     ["soda", [0, 0, 0, 0, 1]],
     ["tonic", [0, 0.2, 0, 0.3, 1]],
     ["cola", [0, 0.5, 0.3, 0, 1]],
-  ];
+    ];
   var INGREDIENTS = [];
 
   /*
@@ -84,10 +86,10 @@ angular.module('nebree8.random-drink', ['nebree8.drinks'])
     }
     if (is_all_zeros(weights)) { return []; } /* Finished */
     var candidates = INGREDIENTS.filter(function(ingredient) {
-        for (var j = 0; j < weights.length; j++) {
-          if (weights[j] == 0 && ingredient[1][j] > 0) return false;
-        }
-        return true;
+      for (var j = 0; j < weights.length; j++) {
+        if (weights[j] == 0 && ingredient[1][j] > 0) return false;
+      }
+      return true;
     })
     if (candidates.length == 0) return undefined;  /* Won't work */
     shuffle(candidates);
@@ -132,7 +134,7 @@ angular.module('nebree8.random-drink', ['nebree8.drinks'])
     var total_oz = 5;
     if (weights[ALCOHOL]) {
       // If non-virgin, aim for 2oz of alcohol.
-      var total_oz = 2 * (sum(weights) - weights[BITTER]) / weights[ALCOHOL];
+      total_oz = 2 * (sum(weights) - weights[BITTER]) / weights[ALCOHOL];
     }
     if (ingredients === undefined) {
       return undefined;
@@ -156,4 +158,7 @@ angular.module('nebree8.random-drink', ['nebree8.drinks'])
       }
     }
   });
-});
+};
+
+angular.module('nebree8.random-drink', ['nebree8.drinks'])
+    .service('RandomDrink', RandomDrink);

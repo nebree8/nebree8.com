@@ -2,28 +2,28 @@
   <md-toolbar layout="row" class="md-whiteframe-z1">
     <div class="md-toolbar-tools">
       <md-button aria-label="Close dialog" class="md-icon-button"
-           ng-click="cancel()">
+           ng-click="ctrl.cancel()">
         <md-icon md-svg-src="icons/ic_close_white_24px.svg"></md-icon>
       </md-button>
-      <span>{{selected_drink.drink_name}}</span>
+      <span>{{ctrl.selectedDrink.drink_name}}</span>
       <span flex></span>
     </div>
   </md-toolbar>
   <md-content layout="column">
-    <div layout="row" ng-if="selected_drink.ingredients.length == 1">
+    <div layout="row" ng-if="ctrl.selectedDrink.ingredients.length == 1">
       <p>
-        Just {{selected_drink.total_oz}}oz of
-        {{selected_drink.ingredients[0].name}}.
+        Just {{ctrl.selectedDrink.total_oz}}oz of
+        {{ctrl.selectedDrink.ingredients[0].name}}.
       </p>
     </div>
-    <table class="ingredients" ng-if="selected_drink.ingredients.length > 1">
-      <tr ng-repeat="ingredient in selected_drink.ingredients">
+    <table class="ingredients" ng-if="ctrl.selectedDrink.ingredients.length > 1">
+      <tr ng-repeat="ingredient in ctrl.selectedDrink.ingredients">
         <td style="white-space: nowrap" id="ingredient-{{$index}}">
           {{ingredient.name}}
         </td>
         <td width="100%">
-          <md-slider flex min="0" max="{{parts_modifier_max}}"
-            ng-model="ingredient.parts_modifier"
+          <md-slider flex min="0" max="{{ctrl.partsModifierMax}}"
+            ng-model="ctrl.partsModifiers[$index]"
             ng-if="ingredient.parts !== undefined"
             aria-label="{{ingredient.name}}"></md-slider>
           <md-slider flex min="0" max="6"
@@ -33,10 +33,10 @@
         </td>
     </table>
     <div layout="row">
-      <md-button ng-click="reset()" ng-disabled="!is_modified()">Reset</md-button>
+      <md-button ng-click="ctrl.reset()" ng-disabled="!is_modified()">Reset</md-button>
       <span flex></span>
-      <md-button ng-click="cancel()">Cancel</md-button>
-      <md-button ng-click="confirmRecipe($event)" class="md-primary">Create</md-button>
+      <md-button ng-click="ctrl.cancel()">Cancel</md-button>
+      <md-button ng-click="ctrl.confirmRecipe($event)" class="md-primary">Create</md-button>
     </div>
   </md-content>
 </div>

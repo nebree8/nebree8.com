@@ -3,6 +3,7 @@ package nebree8
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -123,12 +124,15 @@ func init() {
 func orderDrink(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	var order Order
-	if err := json.Unmarshal([]byte(r.FormValue("recipe")), &order); err != nil {
+	if body, err := ioutil.ReadAll(r.Body); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	} else if err := json.Unmarshal(body, &order); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	if order.UserName == "" {
-		http.Error(w, fmt.Sprintf("user_name is required: %v", r.FormValue("recipe")), http.StatusBadRequest)
+		http.Error(w, "user_name is required", http.StatusBadRequest)
 		return
 	}
 	order.OrderTime = time.Now()

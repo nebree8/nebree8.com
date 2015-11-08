@@ -1,73 +1,103 @@
-/*global angular */
-angular.module('nebree8.drink-list', ['nebree8.drinks'])
+/**
+ * @constructor
+ * @ngInject
+ * @struct
+ *
+ * @param {angular.Scope} $scope
+ * @param {angular.$location} $location
+ * @param {angular.$timeout} $timeout
+ * @param {Window} $window
+ * @param {DrinkListStateService} DrinkListStateService
+ * @param {DrinksService} DrinksService
+ */
+var DrinkListCtrl = function($scope, $location, $timeout, $window,
+    DrinkListStateService, DrinksService) {
+  this.$scope = $scope;
+  this.$location = $location;
+  this.$timeout = $timeout;
+  this.$window = $window;
 
-.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
+  /** @export {DrinkListStateService} */
+  this.state = DrinkListStateService;
+  /** @export {Array<nebree8.Recipe>} */
+  this.db = DrinksService.db;
+  /** @export {function(string)} */
+  this.slugify = DrinksService.slugifyDrinkName;
+
+  $scope.$on('$routeChangeStart', function() {
+    this.state.scrollX = $window.scrollX;
+    this.state.scrollY = $window.scrollY;
+  }.bind(this));
+
+  $scope.$on('$routeChangeSuccess', function() {
+    if (this.state.scrollX || this.state.scrollY) {
+      $timeout(function() {
+        $window.scrollTo(this.state.scrollX, this.state.scrollY);
+      }.bind(this));
+    }
+  }.bind(this));
+};
+
+/**
+ * Class to apply to the ng-view element.
+ * @export {string}
+ */
+DrinkListCtrl.prototype.pageClass = 'page-list';
+
+/**
+ * @param {nebree8.Recipe} drink
+ * @export
+ */
+DrinkListCtrl.prototype.ingredientsCsv = function(drink) {
+  var names = [];
+  for (var i = 0; i < drink.ingredients.length; i++) {
+    names.push(drink.ingredients[i].name);
+  }
+  return names.join(", ");
+};
+
+/**
+ * @param {nebree8.Recipe} drink
+ * @export
+ */
+DrinkListCtrl.prototype.selectDrink = function(drink) {
+  this.$location.path('/drinks/' + this.slugify(drink.drink_name));
+};
+
+/** @export */
+DrinkListCtrl.prototype.openSearch = function() {
+  this.state.searching = true;
+  this.$timeout(function() {
+    this.$window.document.getElementById('searchBox').focus();
+  }.bind(this));
+};
+
+/** @export */
+DrinkListCtrl.prototype.closeSearch = function() {
+  this.state.searching = false;
+  this.clearSearch();
+};
+
+/** @export */
+DrinkListCtrl.prototype.clearSearch = function() {
+  this.state.query = '';
+};
+
+/** @export */
+DrinkListCtrl.prototype.randomDrink = function() {
+  this.$location.path('/drinks/random');
+};
+
+angular.module('nebree8.drink-list',
+               ['nebree8.drinks', 'nebree8.drink-list.state'])
+  .config(['$routeProvider',
+    function($routeProvider) {
+      $routeProvider.
       when('/drinks', {
         templateUrl: 'drink-list/drink-list.html',
         controller: 'DrinkListCtrl',
-      });
-  }
-])
-
-.factory('DrinkListStateService', [function() {
-  var service = {};
-  service.searching = false;
-  service.query = '';
-  return service;
-}])
-
-.controller('DrinkListCtrl', [
-  '$scope', '$http', '$mdDialog', '$location', '$timeout', '$window',
-  'DrinkListStateService', 'DrinksService',
-  function($scope, $http, $mdDialog, $location, $timeout, $window,
-           DrinkListStateService, DrinksService) {
-    $scope.pageClass = 'page-list';
-    $scope.state = DrinkListStateService;
-    $scope.db = DrinksService.db;
-    $scope.slugify = DrinksService.slugifyDrinkName;
-
-    $scope.ingredientsCsv = function(drink) {
-      var names = [];
-      for (var i = 0; i < drink.ingredients.length; i++) {
-        names.push(drink.ingredients[i].name);
-      }
-      return names.join(", ");
-    }
-    $scope.selectDrink = function(drink) {
-      $location.path('/drinks/' + DrinksService.slugifyDrinkName(drink.drink_name));
-    }
-
-    $scope.openSearch = function() {
-      $scope.state.searching = true;
-      $timeout(function() {
-        document.getElementById('searchBox').focus()
+        controllerAs: 'ctrl',
       });
     }
-
-    $scope.closeSearch = function() {
-      $scope.state.searching = false;
-      $scope.clearSearch();
-    }
-
-    $scope.clearSearch = function() { $scope.state.query = '' }
-
-    $scope.randomDrink = function(drink) {
-      $location.path('/drinks/random');
-    }
-
-    $scope.$on('$routeChangeStart', function() {
-      $scope.state.scrollX = $window.scrollX;
-      $scope.state.scrollY = $window.scrollY;
-    });
-
-    $scope.$on('$routeChangeSuccess', function() {
-      if ($scope.state.scrollX || $scope.state.scrollY) {
-        $timeout(function() {
-          $window.scrollTo($scope.state.scrollX, $scope.state.scrollY);
-        });
-      }
-    });
-  }
-]);
+  ])
+  .controller('DrinkListCtrl', DrinkListCtrl);
