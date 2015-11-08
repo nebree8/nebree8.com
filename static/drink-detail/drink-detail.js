@@ -212,19 +212,22 @@ NamedDrinkCtrl.prototype = DrinkDetailCtrl.prototype;
  * @param {angular.$injector} $injector
  * @param {angular.$location} $location
  * @param {md.$toast} $mdToast
- * @param {RandomDrink} RandomDrink
+ * @param {RandomDrinkService} RandomDrinkService
  * @param {DrinksService} DrinksService
  * @constructor
  * @ngInject
  * @struct
  * @extends {DrinkDetailCtrl}
  */
-var RandomDrinkCtrl = function($scope, $injector, $location, $mdToast, RandomDrink, DrinksService) {
+var RandomDrinkCtrl = function($scope, $injector, $location, $mdToast, RandomDrinkService, DrinksService) {
   $injector.invoke(DrinkDetailCtrl, this);
 
   $scope.$watch(DrinksService.ready, function(ready) {
     if (!ready) { return; }
-    var name, weights;
+    /** @type {string} */
+    var name;
+    /** @type {Array<number>} */
+    var weights;
     switch (Math.floor(Math.random() * 4)) {
       case 0:
         name = 'Random Sour';
@@ -245,7 +248,7 @@ var RandomDrinkCtrl = function($scope, $injector, $location, $mdToast, RandomDri
     }
     var i, recipe;
     for (i = 0; recipe === undefined && i < 5; i++) {
-      recipe = RandomDrink.createDrink(name, weights);
+      recipe = RandomDrinkService.createDrink(name, weights);
     }
     if (!recipe) {
       $mdToast.simple().hideDelay(5000).

@@ -3,6 +3,7 @@ var nebree8 = {};
 
 /**
  * @constructor
+ * @struct
  */
 nebree8.Config = function() {
   /**
@@ -13,6 +14,7 @@ nebree8.Config = function() {
 
 /**
  * @constructor
+ * @struct
  */
 nebree8.Recipe = function() {
   /** @type{string} */
@@ -27,6 +29,7 @@ nebree8.Recipe = function() {
 
 /**
  * @constructor
+ * @struct
  */
 nebree8.Ingredient = function() {
   /** @type{string} */
