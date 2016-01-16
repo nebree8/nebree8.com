@@ -1,59 +1,69 @@
+interface IngredientInfo {
+  name: string;
+  weights: number[];
+}
+
 class RandomDrinkService {
-  private ALL_INGREDIENTS: any[] = [
-    ["agave syrup", [0, 1, 0, 0, 0]],
-    ["angostura bitters", [0, 0, 0, 1, 0]],
-    ["peychauds bitters", [0, 0, 0, 1, 0]],
-    ["chocolate bitters", [0, 0, 0, 1, 0]],
-    ["orange bitters", [0, 0, 0, 1, 0]],
-    ["bourbon", [1, 0, 0, 0, 0]],
-    ["peach schnapps", [0.5, 0.5, 0, 0, 0]],
-    ["galliano", [0.5, 0.5, 0, 0, 0]],
-    ["campari", [0.5, 0.5, 0, 1, 0]],
-    ["triple sec", [0.5, 0.5, 0, 0, 0]],
-    ["frangelico", [0.5, 0.5, 0, 0, 0]],
-    ["gin", [1, 0, 0, 0, 0]],
-    ["grenadine", [0, 1, 0, 0, 0]],
-    ["honey syrup", [0, 1, 0, 0, 0]],
-    ["maple syrup", [0, 1, 0, 0, 0]],
-    ["kahlua", [0.5, 0.5, 0, 0, 0]],
-    ["orange juice", [0, 0.8, 0.25, 0, 0]],
-    ["lime juice", [0, 0, 1, 0, 0]],
-    ["lemon juice", [0, 0, 1, 0, 0]],
-    ["scotch", [1, 0, 0, 0, 0]],
-    ["pimms", [0.5, 0.5, 0, 0, 0]],
-    ["rum", [1, 0, 0, 0, 0]],
-    ["rye", [1, 0, 0, 0, 0]],
-    ["simple syrup", [0, 1, 0, 0, 0]],
-    ["stoli", [1, 0, 0, 0, 0]],
-    ["tequila", [1, 0, 0, 0, 0]],
-    ["triple sec", [0.5, 0.5, 0, 0, 0]],
-    ["vodka", [1, 0, 0, 0, 0]],
-    ["dry vermouth", [0.5, 0.5, 0, 0.5, 0]],
-    ["sweet vermouth", [0.5, 0.5, 0, 0.5, 0]],
-    ["soda", [0, 0, 0, 0, 1]],
-    ["tonic", [0, 0.2, 0, 0.3, 1]],
-    ["cola", [0, 0.5, 0.3, 0, 1]],
-  ];
-  private INGREDIENTS: ng.IPromise<any[]>;
   private ALCOHOL = 0;
   private SWEET = 1;
   private SOUR = 2;
   private BITTER = 3;
   private FIZZY = 4;
+  private ALL_INGREDIENTS: {[name: string]: number[]} = {
+    "agave syrup": [0, 1, 0, 0, 0],
+    "angostura bitters": [0, 0, 0, 1, 0],
+    "peychauds bitters": [0, 0, 0, 1, 0],
+    "chocolate bitters": [0, 0, 0, 1, 0],
+    "orange bitters": [0, 0, 0, 1, 0],
+    "bourbon": [1, 0, 0, 0, 0],
+    "peach schnapps": [0.5, 0.5, 0, 0, 0],
+    "galliano": [0.5, 0.5, 0, 0, 0],
+    "campari": [0.5, 0.5, 0, 1, 0],
+    "frangelico": [0.5, 0.5, 0, 0, 0],
+    "gin": [1, 0, 0, 0, 0],
+    "grenadine": [0, 1, 0, 0, 0],
+    "honey syrup": [0, 1, 0, 0, 0],
+    "maple syrup": [0, 1, 0, 0, 0],
+    "kahlua": [0.5, 0.5, 0, 0, 0],
+    "orange juice": [0, 0.8, 0.25, 0, 0],
+    "lime juice": [0, 0, 1, 0, 0],
+    "lemon juice": [0, 0, 1, 0, 0],
+    "scotch": [1, 0, 0, 0, 0],
+    "pimms": [0.5, 0.5, 0, 0, 0],
+    "rum": [1, 0, 0, 0, 0],
+    "rye": [1, 0, 0, 0, 0],
+    "simple syrup": [0, 1, 0, 0, 0],
+    "stoli": [1, 0, 0, 0, 0],
+    "tequila": [1, 0, 0, 0, 0],
+    "triple sec": [0.5, 0.5, 0, 0, 0],
+    "vodka": [1, 0, 0, 0, 0],
+    "dry vermouth": [0.5, 0.5, 0, 0.5, 0],
+    "sweet vermouth": [0.5, 0.5, 0, 0.5, 0],
+    "soda": [0, 0, 0, 0, 1],
+    "tonic": [0, 0.2, 0, 0.3, 1],
+    "cola": [0, 0.5, 0.3, 0, 1],
+  };
+  private INGREDIENTS: ng.IPromise<IngredientInfo[]>;
 
   constructor(private $q: angular.IQService,
               $rootScope: angular.IRootScopeService,
               DrinksService: DrinksService) {
     this.INGREDIENTS = DrinksService.pantry.then((pantry) => {
-      return this.ALL_INGREDIENTS.filter((ingredient) => {
-        var b = pantry.hasIngredient(ingredient[0]);
-        if (!b) console.log('Dropping ingredient ' + ingredient[0]);
-        return b;
-      });
+      var result: IngredientInfo[] = [];
+      for (var name in this.ALL_INGREDIENTS) {
+        if (Object.prototype.hasOwnProperty.call(this.ALL_INGREDIENTS, name)) {
+          if (pantry.hasIngredient(name)) {
+            result.push({'name': name, 'weights': this.ALL_INGREDIENTS[name]});
+          } else {
+            console.log('Dropping ingredient ' + name)
+          }
+        }
+      }
+      return result;
     });
   }
 
-  private shuffle(arr: Array<number>) {
+  private shuffle<T>(arr: T[]) {
     for (var i = 0; i < arr.length - 1; i++) {
       var r = Math.floor(Math.random() * (arr.length - i));
       var t = arr[i];
@@ -62,7 +72,7 @@ class RandomDrinkService {
     }
   }
 
-  private is_all_zeros(vec: Array<number>): boolean {
+  private is_all_zeros(vec: number[]): boolean {
     var i;
     for (i = 0; i < vec.length; i++) {
       if (vec[i] !== 0) {
@@ -72,7 +82,7 @@ class RandomDrinkService {
     return true;
   }
 
-  private sum(vec: Array<number>): number {
+  private sum(vec: number[]): number {
     var i = 0;
     var s = 0;
     for (i = 0; i < vec.length; i++) {
@@ -81,22 +91,23 @@ class RandomDrinkService {
     return s;
   }
 
-  private chooseRandomIngredients(ingredients: any[], weights: Array<number>): Array<Ingredient> {
+  private chooseRandomIngredients(ingredients: IngredientInfo[],
+                                  weights: number[]): Ingredient[] {
     if (weights.length !== 5) {
       console.log("Bad weights provided: ", weights);
     }
     if (this.is_all_zeros(weights)) { return []; } /* Finished */
     var candidates = ingredients.filter(function(ingredient) {
       for (var j = 0; j < weights.length; j++) {
-        if (weights[j] == 0 && ingredient[1][j] > 0) return false;
+        if (weights[j] == 0 && ingredient.weights[j] > 0) return false;
       }
       return true;
     })
     if (candidates.length == 0) return null;  /* Won't work */
     this.shuffle(candidates);
     for (var i = 0; i < candidates.length; i++) {
-      var name = candidates[i][0];
-      var ingredient_weights = candidates[i][1];
+      var name = candidates[i].name;
+      var ingredient_weights = candidates[i].weights;
       /* Figure out the maximum amount we can add without going over any weight */
       var amount = 1000;
       for (var j = 0; j < weights.length; j++) {
