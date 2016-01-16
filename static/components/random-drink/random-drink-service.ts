@@ -73,8 +73,7 @@ class RandomDrinkService {
   }
 
   private is_all_zeros(vec: number[]): boolean {
-    var i;
-    for (i = 0; i < vec.length; i++) {
+    for (var i = 0; i < vec.length; i++) {
       if (vec[i] !== 0) {
         return false;
       }

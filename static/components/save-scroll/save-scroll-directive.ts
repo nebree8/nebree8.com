@@ -6,9 +6,10 @@ var SaveScrollDirective = function($window: ng.IWindowService) {
   return {
     'restrict': 'A',
     'controller': ['SaveScrollState', ScrollStateCtrl],
-    'link': function (scope: ng.IScope, elts, attrs, ctrl: ScrollStateCtrl) {
+    'link': function (scope: ng.IScope, elts: ng.IAugmentedJQuery,
+                      attrs: ng.IAttributes, ctrl: ScrollStateCtrl) {
       var elt = elts[0];
-      var key = null;
+      var key: string = null;
       var state = ctrl.state;
 
       function save() {
@@ -24,7 +25,7 @@ var SaveScrollDirective = function($window: ng.IWindowService) {
         }
       }
 
-      attrs.$observe('saveScroll', function (newkey) {
+      attrs.$observe('saveScroll', function (newkey: string) {
         save();
         key = newkey;
         $window.setTimeout(restore, 0);

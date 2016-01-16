@@ -2,7 +2,7 @@ class DrinkListCtrl {
   pageClass = 'page-list';  // Class to apply to ng-view element.
   state: DrinkListStateService;
   db: Recipe[] = [];
-  slugify: (string)=>string;
+  slugify: (name: string)=>string;
 
   constructor(private $scope: angular.IScope,
               private $location: angular.ILocationService,
@@ -16,7 +16,7 @@ class DrinkListCtrl {
   };
 
   ingredientsCsv(drink: Recipe): string {
-    var names = [];
+    var names: string[] = [];
     for (var i = 0; i < drink.ingredients.length; i++) {
       names.push(drink.ingredients[i].name);
     }

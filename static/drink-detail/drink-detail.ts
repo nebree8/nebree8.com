@@ -22,12 +22,11 @@ class DrinkDetailCtrl {
 
   private sendOrder(userName: string): angular.IHttpPromise<OrderDrinkResponse> {
     var order: Order = angular.copy(this.selectedDrink);
-    var i, ingredient, mod, coef;
-    for (i = 0; i < order.ingredients.length; i++) {
-      ingredient = order.ingredients[i];
-      mod = this.partsModifiers[i];
+    for (var i = 0; i < order.ingredients.length; i++) {
+      var ingredient = order.ingredients[i];
+      var mod = this.partsModifiers[i];
       if (mod !== undefined) {
-        coef = mod / this.partsModifierMax * 2 * this.partsModifierRange;
+        var coef = mod / this.partsModifierMax * 2 * this.partsModifierRange;
         ingredient.parts *= 1 - this.partsModifierRange + coef;
       }
     }
@@ -89,18 +88,19 @@ class DrinkDetailCtrl {
 var NamedDrinkCtrl = function($scope: ng.IScope,
                               $injector: ng.auto.IInjectorService,
                               $routeParams: ng.route.IRouteParamsService,
-                              $location: ng.ILocationService, DrinksService) {
+                              $location: ng.ILocationService,
+                              DrinksService: DrinksService) {
   $injector.invoke(DrinkDetailCtrl, this);
 
   /** @type {string} */
   var drinkName = $routeParams['drinkName'];
 
   // Look up the drink by name.
-  DrinksService.getDrink(drinkName).then((recipe)=>{
+  DrinksService.getDrink(drinkName).then((recipe: Recipe)=>{
     this.setRecipe(recipe);
   }).catch((reason) => {
     console.log("Didn't find drink, redirecting", drinkName);
-    DrinksService.db.then((db)=>{console.log("db", db);});
+    DrinksService.db.then((db: Recipe[])=>{console.log("db", db);});
     $location.path('/drinks').replace();
   });
 };
