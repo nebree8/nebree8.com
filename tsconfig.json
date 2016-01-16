@@ -4,7 +4,6 @@
         "target": "es3",
         "noImplicitAny": false,
         "removeComments": true,
-        "outDir": "deploy",
         "out": "static/compiled.js",
         "sourceMap": true
     },
