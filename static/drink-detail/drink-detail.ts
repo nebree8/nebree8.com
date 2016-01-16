@@ -11,7 +11,8 @@ class DrinkDetailCtrl {
   constructor(private $http: angular.IHttpService,
               private $location: angular.ILocationService,
               private $mdDialog: angular.material.IDialogService,
-              private $mdToast: angular.material.IToastService) {
+              private $mdToast: angular.material.IToastService,
+              private EnterNameDialogService: EnterNameDialogService) {
   };
 
   setRecipe(recipe: Recipe) {
@@ -41,44 +42,25 @@ class DrinkDetailCtrl {
    * @param {Event} event
    */
   confirmRecipe(event: MouseEvent) {
-    class EnterNameController {
-      nameForm: ng.IFormController;
-      userName: string;
-
-      constructor(private $mdDialog: ng.material.IDialogService) {}
-
-      closeDialog() {
-        if (this.nameForm.$valid) this.$mdDialog.hide(this.userName);
-      }
-
-      cancelDialog() { this.$mdDialog.cancel(); }
-    }
-    this.$mdDialog.show({
-      clickOutsideToClose: true,
-      controller: EnterNameController,
-      controllerAs: 'ctrl',
-      escapeToClose: true,
-      hasBackdrop: true,
-      targetEvent: event,
-      templateUrl: 'drink-detail/enter-name-dialog.html',
-    })
-    .then(this.confirmName)
-    .catch(() => { console.log("Dialog cancelled"); });
+    this.EnterNameDialogService.getUserName(event)
+        .then(this.confirmName.bind(this))
+        .catch(() => { console.log("Dialog cancelled"); });
   };
 
   private confirmName(userName: string) {
     if (!userName) return;
+    console.log("confirmName this", this);
     this.sendOrder(userName)
-    .then(() => {
-      this.cancel();
-      this.$mdToast.show(this.$mdToast.simple().hideDelay(10000).textContent(
-        this.selectedDrink.drink_name + ' ordered'));
-    })
-    .catch((response: ng.IHttpPromiseCallbackArg<string>) => {
-      this.$mdToast.show(this.$mdToast.simple().
-                         textContent('Error: ' + response.data).
-                         action("OK").hideDelay(10000));
-    });
+        .then(() => {
+          this.cancel();
+          this.$mdToast.show(this.$mdToast.simple().hideDelay(10000).content(
+            this.selectedDrink.drink_name + ' ordered'));
+        })
+        .catch((response: ng.IHttpPromiseCallbackArg<string>) => {
+          this.$mdToast.show(this.$mdToast.simple().
+                             content('Error: ' + response.data).
+                             action("OK").hideDelay(10000));
+        });
   }
 
   cancel() {
@@ -161,14 +143,16 @@ var RandomDrinkCtrl = function($scope: ng.IScope,
     this.setRecipe(recipe);
   }).catch((error) => {
     $mdToast.simple().hideDelay(5000).
-      textContent("Oops, that didn't work. Try again");
+      content("Oops, that didn't work. Try again");
     $location.path('/drinks');
   })
 };
 RandomDrinkCtrl.prototype = DrinkDetailCtrl.prototype;
 
 
-angular.module('nebree8.drink-detail', ['nebree8.random-drink', 'nebree8.drinks'])
+angular.module('nebree8.drink-detail',
+               ['nebree8.random-drink', 'nebree8.drinks',
+                 'nebree8.enter-name-dialog'])
     .config(['$routeProvider',
       function($routeProvider: ng.route.IRouteProvider) {
         $routeProvider.
