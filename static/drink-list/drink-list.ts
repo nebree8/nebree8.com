@@ -13,19 +13,6 @@ class DrinkListCtrl {
     this.state = DrinkListStateService;
     DrinksService.db.then((db) => {this.db = db;});
     this.slugify = DrinksService.slugifyDrinkName;
-
-    $scope.$on('$routeChangeStart', function() {
-      this.state.scrollX = $window.scrollX;
-      this.state.scrollY = $window.scrollY;
-    }.bind(this));
-
-    $scope.$on('$routeChangeSuccess', function() {
-      if (this.state.scrollX || this.state.scrollY) {
-        $timeout(function() {
-          $window.scrollTo(this.state.scrollX, this.state.scrollY);
-        }.bind(this));
-      }
-    }.bind(this));
   };
 
   ingredientsCsv(drink: Recipe): string {

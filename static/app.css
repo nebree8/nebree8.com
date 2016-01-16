@@ -16,34 +16,51 @@
   border-color: white;
 }
 
-.view-animate {
-  width: 100%;
-}
-
-.view-animate.ng-enter, .view-animate.ng-leave {
-  transition: left cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+.ng-view {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  bottom: 0;
+  right: 0;
+  overflow: scroll;
 }
 
-.view-animate.ng-enter {
-  left: 100%;
+.page-detail.ng-enter {
+  animation: from-right 0.5s forwards;
+  -webkit-animation: from-right 0.5s forwards;
 }
 
-.view-animate.ng-enter.ng-enter-active {
-  left: 0;
-}
-
-.view-animate.ng-leave.ng-leave-active {
-  left: -100%;
+.page-detail.ng-leave {
+  animation: from-right 0.5s reverse forwards;
+  -webkit-animation: from-right 0.5s reverse forwards;
 }
 
 .page-list.ng-enter {
-  left: -100%;
+  animation: from-left 0.5s forwards;
+  -webkit-animation: from-left 0.5s forwards;
 }
 
-.page-list.ng-leave-active {
-  left: 100%;
+.page-list.ng-leave {
+  animation: from-left 0.5s reverse backwards;
+  -webkit-animation: from-left 0.5s reverse backwards;
+}
+
+@keyframes from-left {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes from-left {
+    0% { -webkit-transform: translateX(-100%); }
+    100% { -webkit-transform: translateX(0%); }
+}
+    
+@keyframes from-right {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes from-right {
+    0% { -webkit-transform: translateX(100%); }
+    100% { -webkit-transform: translateX(0%); }
 }
