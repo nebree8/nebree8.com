@@ -118,7 +118,7 @@ declare module angular.material {
     }
 
     interface IToastPreset<T> {
-        textContent(content: string): T;
+        content(content: string): T;
         action(action: string): T;
         highlightAction(highlightAction: boolean): T;
         capsule(capsule: boolean): T;
