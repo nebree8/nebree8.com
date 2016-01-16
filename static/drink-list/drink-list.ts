@@ -1,97 +1,70 @@
-/**
- * @constructor
- * @ngInject
- * @struct
- *
- * @param {angular.Scope} $scope
- * @param {angular.$location} $location
- * @param {angular.$timeout} $timeout
- * @param {Window} $window
- * @param {DrinkListStateService} DrinkListStateService
- * @param {DrinksService} DrinksService
- */
-var DrinkListCtrl = function($scope, $location, $timeout, $window,
-    DrinkListStateService, DrinksService) {
-  this.$scope = $scope;
-  this.$location = $location;
-  this.$timeout = $timeout;
-  this.$window = $window;
+class DrinkListCtrl {
+  pageClass = 'page-list';  // Class to apply to ng-view element.
+  state: DrinkListStateService;
+  db: Recipe[] = [];
+  slugify: (string)=>string;
 
-  /** @export {DrinkListStateService} */
-  this.state = DrinkListStateService;
-  /** @export {Array<nebree8.Recipe>} */
-  this.db = DrinksService.db;
-  /** @export {function(string)} */
-  this.slugify = DrinksService.slugifyDrinkName;
+  constructor(private $scope: angular.IScope,
+              private $location: angular.ILocationService,
+              private $timeout: angular.ITimeoutService,
+              private $window: angular.IWindowService,
+              DrinkListStateService: DrinkListStateService,
+              DrinksService: DrinksService) {
+    this.state = DrinkListStateService;
+    DrinksService.db.then((db) => {this.db = db;});
+    this.slugify = DrinksService.slugifyDrinkName;
 
-  $scope.$on('$routeChangeStart', function() {
-    this.state.scrollX = $window.scrollX;
-    this.state.scrollY = $window.scrollY;
-  }.bind(this));
+    $scope.$on('$routeChangeStart', function() {
+      this.state.scrollX = $window.scrollX;
+      this.state.scrollY = $window.scrollY;
+    }.bind(this));
 
-  $scope.$on('$routeChangeSuccess', function() {
-    if (this.state.scrollX || this.state.scrollY) {
-      $timeout(function() {
-        $window.scrollTo(this.state.scrollX, this.state.scrollY);
-      }.bind(this));
+    $scope.$on('$routeChangeSuccess', function() {
+      if (this.state.scrollX || this.state.scrollY) {
+        $timeout(function() {
+          $window.scrollTo(this.state.scrollX, this.state.scrollY);
+        }.bind(this));
+      }
+    }.bind(this));
+  };
+
+  ingredientsCsv(drink: Recipe): string {
+    var names = [];
+    for (var i = 0; i < drink.ingredients.length; i++) {
+      names.push(drink.ingredients[i].name);
     }
-  }.bind(this));
-};
+    return names.join(", ");
+  };
 
-/**
- * Class to apply to the ng-view element.
- * @export {string}
- */
-DrinkListCtrl.prototype.pageClass = 'page-list';
+  selectDrink(drink: Recipe) {
+    this.$location.path('/drinks/' + this.slugify(drink.drink_name));
+  };
 
-/**
- * @param {nebree8.Recipe} drink
- * @export
- */
-DrinkListCtrl.prototype.ingredientsCsv = function(drink) {
-  var names = [];
-  for (var i = 0; i < drink.ingredients.length; i++) {
-    names.push(drink.ingredients[i].name);
-  }
-  return names.join(", ");
-};
+  openSearch() {
+    this.state.searching = true;
+    this.$timeout(function() {
+      this.$window.document.getElementById('searchBox').focus();
+    }.bind(this));
+  };
 
-/**
- * @param {nebree8.Recipe} drink
- * @export
- */
-DrinkListCtrl.prototype.selectDrink = function(drink) {
-  this.$location.path('/drinks/' + this.slugify(drink.drink_name));
-};
+  closeSearch() {
+    this.state.searching = false;
+    this.clearSearch();
+  };
 
-/** @export */
-DrinkListCtrl.prototype.openSearch = function() {
-  this.state.searching = true;
-  this.$timeout(function() {
-    this.$window.document.getElementById('searchBox').focus();
-  }.bind(this));
-};
+  clearSearch() {
+    this.state.query = '';
+  };
 
-/** @export */
-DrinkListCtrl.prototype.closeSearch = function() {
-  this.state.searching = false;
-  this.clearSearch();
-};
-
-/** @export */
-DrinkListCtrl.prototype.clearSearch = function() {
-  this.state.query = '';
-};
-
-/** @export */
-DrinkListCtrl.prototype.randomDrink = function() {
-  this.$location.path('/drinks/random');
-};
+  randomDrink() {
+    this.$location.path('/drinks/random');
+  };
+}
 
 angular.module('nebree8.drink-list',
                ['nebree8.drinks', 'nebree8.drink-list.state'])
   .config(['$routeProvider',
-    function($routeProvider) {
+    function($routeProvider: angular.route.IRouteProvider) {
       $routeProvider.
       when('/drinks', {
         templateUrl: 'drink-list/drink-list.html',

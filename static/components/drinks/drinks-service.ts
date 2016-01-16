@@ -1,112 +1,70 @@
-/*global angular */
+class Pantry {
+  ingredients: {[name: string]: boolean} = {};
 
-/**
- * @param {angular.$http} $http
- * @param {angular.$q} $q
- * @constructor
- * @ngInject
- * @struct
- */
-var DrinksService = function ($http, $q) {
-  /** @type {boolean} */
-  var ready = false;
-
-  /** @type {Array<nebree8.Recipe>} */
-  this.db = [];
-  /** @type {Object.<string, boolean>} */
-  this.ingredients = {};
-  this.ready = function() { return ready; };
-
-  var drinksPromise = $http.get('/all_drinks', { cache: true });
-  var configPromise = $http.get('/api/get_config', { cache: false });
-
-
-  $q.all([drinksPromise, configPromise]).then(function(data) {
-    this.setIngredients(data[1].data);
-    this.setRecipes(data[0].data);
-    ready = true;
-  }.bind(this));
-}
-
-/**
- * @param {nebree8.Recipe} drink
- * @return {boolean}
- * @private
- */
-DrinksService.prototype.haveAllIngredients = function(drink) {
-  var j;
-  for (j = 0; j < drink.ingredients.length; j++) {
-    if (!this.ingredients[this.normalizeIngredient(drink.ingredients[j].name)])
-      return false;
+  constructor(ingredients: IngredientAvailability[]) {
+    ingredients.forEach((i) => {
+      this.ingredients[Pantry.normalizeIngredient(i.Name)] = i.Available;
+    })
   }
-  return true;
-}
 
-/**
- * @param {nebree8.Config} config
- * @private
- */
-DrinksService.prototype.setIngredients = function(config) {
-  for (var i = 0; i < config.Ingredients.length; i++) {
-    var ingredient = config.Ingredients[i];
-    this.ingredients[this.normalizeIngredient(ingredient.Name)] =
-        ingredient.Available;
-  }
-}
-
-/**
- * @param {Array<nebree8.Recipe>} recipes
- * @private
- */
-DrinksService.prototype.setRecipes = function(recipes) {
-  for (var i = 0; i < recipes.length; i++) {
-    var recipe = recipes[i];
-    if (this.haveAllIngredients(recipe)) {
-      this.db.push(recipe);
-    } else {
-      console.log("Skipping recipe: " + recipe.drink_name, recipe);
+  hasAllIngredients(drink: Recipe): boolean {
+    for (var j = 0; j < drink.ingredients.length; j++) {
+      if (!this.hasIngredient(drink.ingredients[j].name))
+        return false;
     }
+    return true;
+  }
+
+  hasIngredient(ingredientName: string): boolean {
+    return this.ingredients[Pantry.normalizeIngredient(ingredientName)];
+  };
+
+  private static normalizeIngredient(ingredientName: string): string {
+    return ingredientName.toLowerCase();
   }
 }
 
-/**
- * @param {string} ingredientName
- * @return {string}
- * @private
- */
-DrinksService.prototype.normalizeIngredient = function(ingredientName) {
-  return ingredientName.toLowerCase();
-}
+class DrinksService {
+  db: ng.IPromise<Recipe[]>;
+  pantry: ng.IPromise<Pantry>;
 
-/**
- * @param {string} name
- * @return {string}
- */
-DrinksService.prototype.slugifyDrinkName = function(name) {
-  return name.toLowerCase().replace(/[ ()]/g, "_").replace(/&/g, 'and');
-};
+  constructor($http: angular.IHttpService, private $q: angular.IQService) {
+    this.pantry =
+      $http.get('/api/get_config', { cache: false })
+      .then((response: ng.IHttpPromiseCallbackArg<Config>) => {
+        return new Pantry(response.data.Ingredients);
+      });
 
-/**
- * @param {string} drinkName
- * @return {nebree8.Recipe}
- */
-DrinksService.prototype.getDrink = function(drinkName) {
-  drinkName = this.slugifyDrinkName(drinkName);
-  for (var i = 0; i < this.db.length; i++) {
-    if (this.slugifyDrinkName(this.db[i].drink_name) === drinkName) {
-      return this.db[i];
-    }
+    var recipes: ng.IHttpPromise<Recipe[]> =
+      $http.get('/all_drinks', { cache: true });
+    this.db = $q<Recipe[]>((resolve, reject) => {
+      $q.all([recipes, this.pantry]).then((args: any[]) => {
+        var recipe_response: ng.IHttpPromiseCallbackArg<Recipe[]> = args[0];
+        var pantry: Pantry = args[1];
+        resolve(recipe_response.data.filter((recipe) => {
+          var b = pantry.hasAllIngredients(recipe);
+          if (!b) console.log("Skipping recipe: " + recipe.drink_name, recipe);
+          return b;
+        }));
+      }, reject);
+    });
   }
-  return null;
-};
 
-/**
- * @param {string} ingredientName
- * @return {boolean}
- */
-DrinksService.prototype.haveIngredient = function(ingredientName) {
-  return this.ingredients[this.normalizeIngredient(ingredientName)];
-};
+  slugifyDrinkName(name: string): string {
+    return name.toLowerCase().replace(/[ ()]/g, "_").replace(/&/g, 'and');
+  };
 
+  getDrink(drinkName: string): ng.IPromise<Recipe> {
+    return this.db.then((db) => {
+      drinkName = this.slugifyDrinkName(drinkName);
+      for (var i = 0; i < db.length; i++) {
+        if (this.slugifyDrinkName(db[i].drink_name) === drinkName) {
+          return db[i];
+        }
+      }
+      return this.$q.reject("Recipe not found");
+    });
+  };
+}
 
 angular.module('nebree8.drinks', []).service('DrinksService', DrinksService);
