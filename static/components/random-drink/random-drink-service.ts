@@ -150,7 +150,7 @@ RandomDrinkService.prototype.chooseRandomIngredients = function(weights) {
       continue;  // This ingredient won't work.
     }
     // We found a recipe!
-    var ingredient = {'name': name};
+    var ingredient : Ingredient = {'name': name};
     if (name.indexOf('itters') != -1) {
       ingredient.drops = amount;
     } else {

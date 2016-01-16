@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es3",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "outDir": "deploy",
+        "out": "static/compiled.js",
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "static/externs"
+    ]
+}
