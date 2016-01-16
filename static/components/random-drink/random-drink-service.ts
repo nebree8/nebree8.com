@@ -128,7 +128,7 @@ class RandomDrinkService {
       }
       // We found a recipe!
       var ingredient : Ingredient = {'name': name};
-      if (name.indexOf('itters') != -1) {
+      if (ingredient_weights[this.BITTER] == this.sum(ingredient_weights)) {
         ingredient.drops = amount;
       } else {
         ingredient.parts = amount;
