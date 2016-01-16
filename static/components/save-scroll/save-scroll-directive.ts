@@ -14,7 +14,6 @@ var SaveScrollDirective = function($window: ng.IWindowService) {
       function save() {
         if (key) {
           state[key] = {'top': elt.scrollTop, 'left': elt.scrollLeft};
-          console.log("save", key, state[key], elt);
         }
       }
 
@@ -22,21 +21,17 @@ var SaveScrollDirective = function($window: ng.IWindowService) {
         if (state[key]) {
           elt.scrollTop = state[key].top;
           elt.scrollLeft = state[key].left;
-          console.log("restore", key, state[key], elts.height());
         }
       }
 
       attrs.$observe('saveScroll', function (newkey) {
-        console.log("new save-scroll value", newkey);
-        if (key == newkey) return;
         save();
         key = newkey;
         $window.setTimeout(restore, 0);
       });
 
-      elts.on('scroll', function() {
-        save();
-      });
+      scope.$on('$routeChangeStart', save);
+      scope.$on('$routeChangeSuccess', restore);
     },
   };
 };
