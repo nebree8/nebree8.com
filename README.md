@@ -4,13 +4,38 @@ An app with a Go/Appengine backend and Angular Material frontend.
 
 ## Dependencies / Tools
 
+- [Go Appengine SDK](https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go)
 - typescript: npm install -g typescript
+
+For deployment only:
+
 - ng-annotate: npm install -g ng-annotate
 - uglify: npm install -g uglify
+
+## Running locally
+
+`dev_appengine.py` is part of the Go AppEngine SDK. `tsc` is the typescript compiler.
+
+```bash
+rm -rf deploy/
+dev_appengine.py .
+tsc -w  # Continuously recompile typescript files.
+# View at http://localhost:8080
+```
+
+## Deploying to AppEngine
+
+`appcfg.py` is part of the Go AppEngine SDK.
+
+```bash
+make
+appcfg.py update deploy
+```
 
 ## Backend
 
 Implemented in /nebree8.go, provides a straightforward CRUD api rooted at /api/.
+A mapping from URL to Go function is in the "init" function.
 
 ## Frontend
 
