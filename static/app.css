@@ -64,3 +64,11 @@
     0% { -webkit-transform: translateX(100%); }
     100% { -webkit-transform: translateX(0%); }
 }
+
+.enter-name-dialog .md-dialog-content {
+  padding-bottom: 0;
+}
+
+.enter-name-dialog md-dialog-actions md-button {
+  margin-right: 8px;
+}

@@ -1,4 +1,4 @@
-<md-dialog aria-label="Enter your name">
+<md-dialog aria-label="Enter your name" class="enter-name-dialog">
   <form name="ctrl.nameForm" novalidate ng-submit="ctrl.submitDialog()">
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -14,19 +14,20 @@
       <div class="md-dialog-content">
         <md-input-container>
           <label>Your Name</label>
-          <input type="text" name="userName" ng-model="ctrl.userName" md-autofocus required>
-          <!--<div ng-messages="ctrl.nameForm.userName.$error">
+          <input type="text" name="userName" ng-model="ctrl.userName" md-autofocus required flex>
+          <div ng-messages="ctrl.nameForm.userName.$error" style="height: 0; overflow: visible">
             <div ng-message="required">Enter your name.</div>
-          </div>-->
+          </div>
         </md-input-container>
       </div>
     </md-dialog-content>
-    <div class="md-actions">
+    <md-dialog-actions layout="row">
+      <span flex></span>
       <md-button type="button" ng-click="ctrl.cancelDialog()">Cancel</md-button>
       <md-button type="submit" class="md-primary"
-          ng-disabled="!ctrl.nameForm.$valid">
+                               ng-disabled="!ctrl.nameForm.$valid">
         Make Drink
       </md-button>
-    </div>
+    </md-dialog-actions>
   </form>
 </md-dialog>
