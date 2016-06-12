@@ -33,6 +33,7 @@ type Order struct {
 	DoneTime        time.Time    `json:"done_time"`
 	Approved        bool         `json:"approved"`
 	TotalOz         float32      `json:"total_oz"`
+	Rating          int          `json:"rating"`
 }
 
 type KeyedOrder struct {
@@ -110,6 +111,7 @@ func init() {
 	// External.
 	http.HandleFunc("/api/order", orderDrink)
 	http.HandleFunc("/api/order_status", orderStatus)
+	http.HandleFunc("/api/order_rate", orderRate)
 	http.HandleFunc("/api/drink_queue", drinkQueue)
 	// Internal.
 	http.HandleFunc("/api/next_drink", nextDrink)
@@ -162,6 +164,20 @@ func orderStatus(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%v", status)
 }
 
+func orderRate(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	rating, err := strconv.ParseInt(r.FormValue("rating"), 10, 32)
+	if err != nil || rating < 0 || rating > 10 {
+		c.Infof("Bad value \"%v\" for rating: %v", r.FormValue("rating"), err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	mutateAndReturnOrder(w, r, func(o *Order) error {
+		o.Rating = int(rating)
+		return nil
+	})
+}
+
 func nextDrink(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	q := unpreparedDrinkQueryNewestFirst().Filter("Approved=", true).Limit(10)
@@ -200,6 +216,7 @@ func drinkProgress(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		c.Infof("Bad value \"%v\" for progress: %v", r.FormValue("progress"), err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	mutateAndReturnOrder(w, r, func(o *Order) error {
 		o.ProgressPercent = int(progress)
