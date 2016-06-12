@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
         "target": "es3",
         "noImplicitAny": true,
         "removeComments": true,
@@ -8,7 +7,9 @@
         "sourceMap": true
     },
     "exclude": [
+        "static/bower_components",
         "node_modules",
-        "static/externs"
+        "static/externs",
+        "deploy"
     ]
 }
