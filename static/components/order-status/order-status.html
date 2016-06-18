@@ -4,16 +4,15 @@
       <div class="md-list-item-text">
         <h3 layout="row">
           <span>{{order.drink_name}} for {{order.user_name}}</span>
-          <span flex></span>
-          <span class="rating" ng-class="{'unrated': !order.rating}">
-            <button ng-repeat="i in [1, 2, 3, 4, 5]"
-                    ng-click="ctrl.rate(order, i)"
-                    ng-class="i <= (order.rating||0) ? 'filled' : 'empty'">
-              {{ i <= (order.rating || 0) ? "&#x2605;" : "&#x2606;" }}
-            </button>
-          </span>
         </h3>
-        <p>{{ctrl.ingredientsCsv(order)}}</p>
+        <p class="ingredients-list">{{ctrl.ingredientsCsv(order)}}</p>
+        <span class="md-secondary rating" ng-class="{'unrated': !order.rating}">
+          <button ng-repeat="i in [1, 2, 3, 4, 5]"
+                  ng-click="ctrl.rate(order, i)"
+                  ng-class="i <= (order.rating||0) ? 'filled' : 'empty'">
+            {{ i <= (order.rating || 0) ? "&#x2605;" : "&#x2606;" }}
+          </button>
+        </span>
       </div>
     </md-list-item>
   </md-list>

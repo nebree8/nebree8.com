@@ -72,6 +72,10 @@ order-status {
   width: 100%;
 }
 
+order-status .ingredients-list {
+  text-transform: capitalize;
+}
+
 order-status .rating button {
   font-size: 200%;
   border: none;
