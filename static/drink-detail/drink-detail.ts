@@ -21,7 +21,7 @@ class DrinkDetailCtrl {
     this.reset();
   };
 
-  private sendOrder(userName: string): angular.IHttpPromise<Order> {
+  private sendOrder(userName: string): angular.IPromise<Order> {
     var order: Order = angular.copy(this.selectedDrink);
     for (var i = 0; i < order.ingredients.length; i++) {
       var ingredient = order.ingredients[i];
@@ -35,8 +35,9 @@ class DrinkDetailCtrl {
     console.log("Order", order);
     return this.$http.post('/api/order', order, {
       'responseType': 'json'
-    }).then((r: OrderDrinkResponse) => {
-      order.id = r.id;
+    }).then((r: angular.IHttpPromiseCallbackArg<OrderDrinkResponse>) => {
+      console.log('server response', r);
+      order.id = r.data.id;
       return order;
     });
   };

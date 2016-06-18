@@ -3,7 +3,7 @@ class OrderStatusCtrl {
 
   constructor(private OrderStatusService: OrderStatusService,
               private $mdToast: ng.material.IToastService,
-              private $httpParamSerializer: ng.httpParamSerializer,
+              private $httpParamSerializer: ng.IHttpRequestTransformer,
               private $http: ng.IHttpService) {
     console.log("OrderStatusCtrl");
     this.svc = OrderStatusService;
@@ -17,7 +17,7 @@ class OrderStatusCtrl {
     return names.join(", ");
   }
 
-  rate(o: Order, i: int) {
+  rate(o: Order, i: number) {
     console.log("Rate", o, i);
     o.rating = i;
     this.$http({
@@ -37,25 +37,7 @@ class OrderStatusCtrl {
 }
 
 class OrderStatusService {
-  orders: Order[] = [
-    {
-      "id": "agtkZXZ-bmVicmVlOHISCxIFT3JkZXIYgICAgICAgAoM",
-      "drink_name": "Random Spirituous",
-      "ingredients": [{
-        "name": "peychauds bitters",
-        "drops": 1
-      }, {
-        "name": "simple syrup",
-        "parts": 1
-      }, {
-        "name": "gin",
-        "parts": 4
-      }],
-      "total_oz": 2.5,
-      "user_name": "argh",
-      "rating": 0
-    }
-  ];
+  orders: Order[] = [];
 
   constructor() {
     console.log("OrderStatusService");
