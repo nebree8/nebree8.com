@@ -13,6 +13,11 @@ class OrderStatusCtrl {
     }
     return names.join(", ");
   }
+
+  rate(order: Order, i: int) {
+    console.log("Rate", order, i);
+    order.rating = i;
+  }
 }
 
 class OrderStatusService {
@@ -30,7 +35,8 @@ class OrderStatusService {
         "parts": 4
       }],
       "total_oz": 2.5,
-      "user_name": "argh"
+      "user_name": "argh",
+      "rating": 0
     }
   ];
 

@@ -71,3 +71,20 @@ order-status {
   position: fixed;
   width: 100%;
 }
+
+order-status .rating button {
+  font-size: 200%;
+  border: none;
+}
+
+order-status .rating .filled {
+  color: #FBB608;
+}
+
+order-status .rating .empty {
+  color: #999;
+}
+
+order-status .rating.unrated .empty {
+  color: black;
+}
