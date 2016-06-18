@@ -12,7 +12,8 @@ class DrinkDetailCtrl {
               private $location: angular.ILocationService,
               private $mdDialog: angular.material.IDialogService,
               private $mdToast: angular.material.IToastService,
-              private EnterNameDialogService: EnterNameDialogService) {
+              private EnterNameDialogService: EnterNameDialogService,
+              private OrderStatusService: OrderStatusService) {
   };
 
   setRecipe(recipe: Recipe) {
@@ -20,7 +21,7 @@ class DrinkDetailCtrl {
     this.reset();
   };
 
-  private sendOrder(userName: string): angular.IHttpPromise<OrderDrinkResponse> {
+  private sendOrder(userName: string): angular.IHttpPromise<Order> {
     var order: Order = angular.copy(this.selectedDrink);
     for (var i = 0; i < order.ingredients.length; i++) {
       var ingredient = order.ingredients[i];
@@ -34,6 +35,9 @@ class DrinkDetailCtrl {
     console.log("Order", order);
     return this.$http.post('/api/order', order, {
       'responseType': 'json'
+    }).then((r: OrderDrinkResponse) => {
+      order.id = r.id;
+      return order;
     });
   };
 
@@ -50,10 +54,10 @@ class DrinkDetailCtrl {
     if (!userName) return;
     console.log("confirmName this", this);
     this.sendOrder(userName)
-        .then(() => {
+        .then((o: Order) => {
+          console.log(o)
+          this.OrderStatusService.orders.push(o);
           this.cancel();
-          this.$mdToast.show(this.$mdToast.simple().hideDelay(10000).content(
-            this.selectedDrink.drink_name + ' ordered'));
         })
         .catch((response: ng.IHttpPromiseCallbackArg<string>) => {
           this.$mdToast.show(this.$mdToast.simple().
@@ -151,7 +155,7 @@ RandomDrinkCtrl.prototype = DrinkDetailCtrl.prototype;
 
 angular.module('nebree8.drink-detail',
                ['nebree8.random-drink', 'nebree8.drinks',
-                 'nebree8.enter-name-dialog'])
+                 'nebree8.enter-name-dialog', 'nebree8.order-status'])
     .config(['$routeProvider',
       function($routeProvider: ng.route.IRouteProvider) {
         $routeProvider.
