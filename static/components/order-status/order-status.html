@@ -1,4 +1,4 @@
-<md-content flex layout-padding ng-class="{'no-orders': !ctrl.svc.orders}">
+<md-content flex layout-padding ng-class="{'no-orders': ctrl.svc.orders.length == 0}">
   <md-list>
     <md-list-item class="md-2-line" ng-repeat="order in ctrl.svc.orders">
       <div class="md-list-item-text">
