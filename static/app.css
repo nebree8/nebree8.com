@@ -72,3 +72,10 @@
 .enter-name-dialog md-dialog-actions md-button {
   margin-right: 8px;
 }
+
+order-status {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+}
