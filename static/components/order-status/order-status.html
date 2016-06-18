@@ -1,0 +1,11 @@
+<md-content flex layout-padding>
+  <md-list>
+    <md-list-item class="md-2-line" ng-repeat="order in ctrl.svc.orders">
+      <div class="md-list-item-text">
+        <h3>{{order.drink_name}} for {{order.user_name}}</h3>
+        <p>{{ctrl.ingredientsCsv(order)}}</p>
+      </div>
+    </md-list-item>
+  </md-list>
+  <p>omg order status</p>
+</md-content>
