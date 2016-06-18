@@ -22,6 +22,7 @@ interface Config {
 interface Order extends Recipe {
   user_name?: string;
   rating?: int;
+  id?: string;
 }
 
 interface OrderDrinkResponse {

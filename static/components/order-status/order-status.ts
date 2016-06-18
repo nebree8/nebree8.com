@@ -1,7 +1,10 @@
 class OrderStatusCtrl {
   svc: OrderStatusService;
 
-  constructor(private OrderStatusService: OrderStatusService) {
+  constructor(private OrderStatusService: OrderStatusService,
+              private $mdToast: ng.material.IToastService,
+              private $httpParamSerializer: ng.httpParamSerializer,
+              private $http: ng.IHttpService) {
     console.log("OrderStatusCtrl");
     this.svc = OrderStatusService;
   }
@@ -14,15 +17,29 @@ class OrderStatusCtrl {
     return names.join(", ");
   }
 
-  rate(order: Order, i: int) {
-    console.log("Rate", order, i);
-    order.rating = i;
+  rate(o: Order, i: int) {
+    console.log("Rate", o, i);
+    o.rating = i;
+    this.$http({
+      method: 'POST',
+      url: '/api/order_rate',
+      data: {'rating': o.rating, 'key': o.id},
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      transformRequest: this.$httpParamSerializer,
+    }).then(
+      () => this.$mdToast.showSimple("Rating saved!"),
+      () => {
+        this.$mdToast.showSimple(
+            "Your rating was not saved. Please try again.");
+        o.rating = 0;
+    });
   }
 }
 
 class OrderStatusService {
   orders: Order[] = [
     {
+      "id": "agtkZXZ-bmVicmVlOHISCxIFT3JkZXIYgICAgICAgAoM",
       "drink_name": "Random Spirituous",
       "ingredients": [{
         "name": "peychauds bitters",
