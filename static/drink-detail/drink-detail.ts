@@ -92,8 +92,7 @@ var NamedDrinkCtrl = function($scope: ng.IScope,
                               DrinksService: DrinksService) {
   $injector.invoke(DrinkDetailCtrl, this);
 
-  /** @type {string} */
-  var drinkName = $routeParams['drinkName'];
+  var drinkName: string = $routeParams['drinkName'];
 
   // Look up the drink by name.
   DrinksService.getDrink(drinkName).then((recipe: Recipe)=>{
