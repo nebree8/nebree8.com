@@ -54,6 +54,7 @@ var defaultConfig = Config{
 		{Name: "peach schnapps", Available: false},
 		{Name: "honey syrup", Available: false},
 		{Name: "maple syrup", Available: false},
+		{Name: "amaretto", Available: true},
 	},
 }
 
