@@ -77,10 +77,16 @@ order-status md-content {
   -webkit-box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
   -moz-box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
   box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
+
+  -webkit-transition: -webkit-transform 0.7s;
+  -moz-transition: -moz-transition 0.7s;
+  transition: transform 0.7s;
 }
 
-order-status .no-orders {
-  display: none;
+order-status md-content.no-orders {
+  -webkit-transform: translateY(200%);
+  -moz-transform: translateY(200%);
+  transform: translateY(200%);
 }
 
 order-status .ingredients-list {
