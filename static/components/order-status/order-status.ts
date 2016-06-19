@@ -37,14 +37,34 @@ class OrderStatusCtrl {
 }
 
 class OrderStatusService {
-  orders: Order[] = [];
+  private static COOKIE_NAME = 'orders';
+  orders: Order[];
 
-  constructor() {
+  constructor(private $cookies: any) {
     console.log("OrderStatusService");
+    this.load();
+  }
+
+  add(o: Order) {
+    this.orders.push(o);
+    this.save();
+  }
+
+  save() {
+    this.$cookies.put(OrderStatusService.COOKIE_NAME, this.orders);
+  }
+
+  load() {
+    this.orders = this.$cookies.get(OrderStatusService.COOKIE_NAME) || [];
+    console.log(this.orders);
+    if (!Array.isArray(this.orders)) {
+      console.log("Got junk when loading orders: ", this.orders)
+      this.orders = [];
+    }
   }
 }
 
-angular.module('nebree8.order-status', [])
+angular.module('nebree8.order-status', ['ngCookies', 'ngTouch'])
   .service('OrderStatusService', OrderStatusService)
   .component('orderStatus', {
     templateUrl: 'components/order-status/order-status.html',
