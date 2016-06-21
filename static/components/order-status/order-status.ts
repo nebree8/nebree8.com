@@ -38,9 +38,11 @@ class OrderStatusCtrl {
 
 class OrderStatusService {
   orders: Order[] = [];
+  showing: boolean;
 
   constructor() {
     console.log("OrderStatusService");
+    this.showing = true;
   }
 }
 
