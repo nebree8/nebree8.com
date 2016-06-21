@@ -70,7 +70,6 @@ order-status {
   left: 0;
   position: fixed;
   width: 100%;
-
 }
 
 order-status md-content {
@@ -93,9 +92,19 @@ order-status .ingredients-list {
   text-transform: capitalize;
 }
 
+order-status md-list-item.md-2-line .md-list-item-text h3 {
+  /* Wrap the title of the drink instead of letting it get cut off */
+  white-space: normal;
+}
+
 order-status .rating button {
-  font-size: 200%;
+  background-color: transparent;
   border: none;
+  font-size: 30px;
+  height: 45px;
+  padding: 0;
+  text-align: center;
+  width: 30px;
 }
 
 order-status .rating .filled {
