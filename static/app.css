@@ -25,12 +25,14 @@
   overflow: scroll;
 }
 
-.page-detail.ng-enter {
+.page-detail.ng-enter,
+.page-about.ng-enter {
   animation: from-right 0.5s forwards;
   -webkit-animation: from-right 0.5s forwards;
 }
 
-.page-detail.ng-leave {
+.page-detail.ng-leave,
+.page-about.ng-leave {
   animation: from-right 0.5s reverse forwards;
   -webkit-animation: from-right 0.5s reverse forwards;
 }
@@ -44,6 +46,7 @@
   animation: from-left 0.5s reverse backwards;
   -webkit-animation: from-left 0.5s reverse backwards;
 }
+
 
 @keyframes from-left {
     0% { transform: translateX(-100%); }
