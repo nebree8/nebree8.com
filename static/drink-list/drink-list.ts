@@ -3,13 +3,19 @@ class DrinkListCtrl {
   state: DrinkListStateService;
   db: Recipe[] = [];
   slugify: (name: string)=>string;
+  orderStatusService: OrderStatusService;
 
-  constructor(private $scope: angular.IScope,
+  constructor(private OrderStatusService: OrderStatusService,
+              private $scope: angular.IScope,
               private $location: angular.ILocationService,
               private $timeout: angular.ITimeoutService,
               private $window: angular.IWindowService,
               DrinkListStateService: DrinkListStateService,
               DrinksService: DrinksService) {
+    this.orderStatusService = OrderStatusService;
+    $scope.$on('$viewContentLoaded', () => {
+      this.orderStatusService.showing = true;
+    });
     this.state = DrinkListStateService;
     DrinksService.db.then((db) => {this.db = db;});
     this.slugify = DrinksService.slugifyDrinkName;
