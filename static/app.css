@@ -109,3 +109,8 @@ order-status .rating .empty {
 order-status .rating.unrated .empty {
   color: black;
 }
+
+md-card.about {
+  max-width: 400px;
+  margin: auto;
+}
