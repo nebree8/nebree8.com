@@ -37,16 +37,27 @@ class OrderStatusCtrl {
 }
 
 class OrderStatusService {
-  orders: Order[] = [];
+  private static const COOKIE_NAME = '$orders';
+  orders: Order[];
   showing: boolean;
 
-  constructor() {
+  constructor(private $cookies: angular.cookies.ICookiesService) {
     console.log("OrderStatusService");
     this.showing = true;
+    this.orders = this.$cookies.getObject(this.COOKIE_NAME) || [];
+  }
+
+  save() {
+    this.$cookies.putObject(this.COOKIE_NAME, this.orders);
+  }
+
+  add(o: Order) {
+    this.orders.push(o);
+    this.save();
   }
 }
 
-angular.module('nebree8.order-status', [])
+angular.module('nebree8.order-status', ['ngCookies'])
   .service('OrderStatusService', OrderStatusService)
   .component('orderStatus', {
     templateUrl: 'components/order-status/order-status.html',

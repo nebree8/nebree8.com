@@ -57,7 +57,7 @@ class DrinkDetailCtrl {
     this.sendOrder(userName)
         .then((o: Order) => {
           console.log(o)
-          this.OrderStatusService.orders.push(o);
+          this.OrderStatusService.add(o);
           this.cancel();
         })
         .catch((response: ng.IHttpPromiseCallbackArg<string>) => {
