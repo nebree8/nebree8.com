@@ -9,14 +9,6 @@ class OrderStatusCtrl {
     this.svc = OrderStatusService;
   }
 
-  ingredientsCsv(order: Order): string {
-    var names: string[] = [];
-    for (var i = 0; i < order.ingredients.length; i++) {
-      names.push(order.ingredients[i].name);
-    }
-    return names.join(", ");
-  }
-
   rate(o: Order, i: number) {
     console.log("Rate", o, i);
     o.rating = i;
@@ -63,4 +55,7 @@ angular.module('nebree8.order-status', ['ngCookies'])
     templateUrl: 'components/order-status/order-status.html',
     controller: OrderStatusCtrl,
     controllerAs: 'ctrl',
+    bindings: {
+      order: '<',
+    }
   })

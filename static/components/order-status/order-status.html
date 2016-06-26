@@ -1,23 +1,12 @@
-<md-content flex layout-padding ng-class="{'no-orders': ctrl.svc.orders.length == 0}">
-  <div ng-repeat="order in ctrl.svc.orders" layout="row">
-    <md-list flex="50">
-      <md-list-item class="md-2-line">
-        <div class="md-list-item-text">
-          <h3 layout="row">
-            {{order.drink_name}} for {{order.user_name}}
-          </h3>
-          <p class="ingredients-list">{{ctrl.ingredientsCsv(order)}}</p>
-        </div>
-      </md-list-item>
-    </md-list>
-    <span flex="50" layout="row" layout-align="space-between center" class="rating" ng-class="{'unrated': !order.rating}">
-      <div ng-repeat="i in [1, 2, 3, 4, 5]" flex>
-        <button
-                ng-click="ctrl.rate(order, i)"
-                ng-class="i <= (order.rating||0) ? 'filled' : 'empty'">
-          {{ i <= (order.rating || 0) ? "&#x2605;" : "&#x2606;" }}
-        </button>
-      </div>
-    </span>
-  </div>
-</md-content>
+<div>
+  <h3 layout="row">
+    <span>{{ctrl.order.drink_name}} for {{ctrl.order.user_name}}</span>
+  </h3>
+  <span class="md-secondary rating" ng-class="{'unrated': !order.rating}">
+    <button ng-repeat="i in [1, 2, 3, 4, 5]"
+            ng-click="ctrl.rate(order, i)"
+            ng-class="i <= (order.rating||0) ? 'filled' : 'empty'">
+      {{ i <= (order.rating || 0) ? "&#x2605;" : "&#x2606;" }}
+    </button>
+  </span>
+</div>

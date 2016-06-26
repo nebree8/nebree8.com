@@ -3,7 +3,6 @@ class DrinkListCtrl {
   state: DrinkListStateService;
   db: Recipe[] = [];
   slugify: (name: string)=>string;
-  orderStatusService: OrderStatusService;
 
   constructor(private OrderStatusService: OrderStatusService,
               private $scope: angular.IScope,
@@ -12,9 +11,10 @@ class DrinkListCtrl {
               private $window: angular.IWindowService,
               DrinkListStateService: DrinkListStateService,
               DrinksService: DrinksService) {
-    this.orderStatusService = OrderStatusService;
     $scope.$on('$viewContentLoaded', () => {
-      this.orderStatusService.showing = true;
+      if (this.OrderStatusService.orders.length > 0) {
+        this.showOrderStatusSheet();
+      }     
     });
     this.state = DrinkListStateService;
     DrinksService.db.then((db) => {this.db = db;});
@@ -32,6 +32,10 @@ class DrinkListCtrl {
   selectDrink(drink: Recipe) {
     this.$location.path('/drinks/' + this.slugify(drink.drink_name));
   };
+
+  showOrderStatusSheet() {
+  
+  };                   
 
   openSearch() {
     this.state.searching = true;
