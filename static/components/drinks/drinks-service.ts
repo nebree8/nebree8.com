@@ -10,11 +10,10 @@ class Pantry {
   hasAllIngredients(drink: Recipe): boolean {
     for (var j = 0; j < drink.ingredients.length; j++) {
       var has = this.hasIngredient(drink.ingredients[j].name);
-      console.log(typeof(has));
       if (!has) {
         console.log(typeof has == 'undefined'? "UNDEFINED!" : "Missing",
                     " ingredient ", drink.ingredients[j].name, " for ",
-                    drink.drink_name);
+                    drink.drink_name, drink);
         return false;
       }
     }
@@ -48,9 +47,7 @@ class DrinksService {
         var recipe_response: ng.IHttpPromiseCallbackArg<Recipe[]> = args[0];
         var pantry: Pantry = args[1];
         resolve(recipe_response.data.filter((recipe) => {
-          var b = pantry.hasAllIngredients(recipe);
-          if (!b) console.log("Skipping recipe: " + recipe.drink_name, recipe);
-          return b;
+          return pantry.hasAllIngredients(recipe);
         }));
       }, reject);
     });
