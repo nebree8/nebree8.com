@@ -9,8 +9,14 @@ class Pantry {
 
   hasAllIngredients(drink: Recipe): boolean {
     for (var j = 0; j < drink.ingredients.length; j++) {
-      if (!this.hasIngredient(drink.ingredients[j].name))
+      var has = this.hasIngredient(drink.ingredients[j].name);
+      console.log(typeof(has));
+      if (!has) {
+        console.log(typeof has == 'undefined'? "UNDEFINED!" : "Missing",
+                    " ingredient ", drink.ingredients[j].name, " for ",
+                    drink.drink_name);
         return false;
+      }
     }
     return true;
   }
