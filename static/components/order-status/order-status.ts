@@ -36,17 +36,17 @@ class OrderStatusCtrl {
 }
 
 class OrderStatusService {
-  private static const COOKIE_NAME = '$orders';
+  private static COOKIE_NAME = '$orders';
   orders: Order[];
   showing: boolean;
 
   constructor(private $cookies: angular.cookies.ICookiesService) {
     this.showing = true;
-    this.orders = this.$cookies.getObject(this.COOKIE_NAME) || [];
+    this.orders = this.$cookies.getObject(OrderStatusService.COOKIE_NAME) || [];
   }
 
   save() {
-    this.$cookies.putObject(this.COOKIE_NAME, this.orders);
+    this.$cookies.putObject(OrderStatusService.COOKIE_NAME, this.orders);
   }
 
   add(o: Order) {
