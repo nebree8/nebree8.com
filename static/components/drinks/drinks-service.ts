@@ -46,9 +46,24 @@ class DrinksService {
       $q.all([recipes, this.pantry]).then((args: any[]) => {
         var recipe_response: ng.IHttpPromiseCallbackArg<Recipe[]> = args[0];
         var pantry: Pantry = args[1];
-        resolve(recipe_response.data.filter((recipe) => {
+        var db = recipe_response.data.filter((recipe) => {
           return pantry.hasAllIngredients(recipe);
-        }));
+        });
+        var categories = {};
+        angular.forEach(db, (recipe) => {
+          angular.forEach(recipe.categories, (category) => {
+            var category_slug = this.slugifyDrinkName(category);
+            if (category_slug in categories) {
+              categories[category_slug].push(recipe);
+            } else {
+              categories[category_slug] = [recipe];
+              categories[category_slug].name = category;
+            }
+          });
+        });
+        db.categories = categories;
+
+        resolve(db);
       }, reject);
     });
   }
