@@ -5,7 +5,6 @@ class OrderStatusCtrl {
               private $mdToast: ng.material.IToastService,
               private $httpParamSerializer: ng.IHttpRequestTransformer,
               private $http: ng.IHttpService) {
-    console.log("OrderStatusCtrl");
     this.svc = OrderStatusService;
   }
 
@@ -42,7 +41,6 @@ class OrderStatusService {
   showing: boolean;
 
   constructor(private $cookies: angular.cookies.ICookiesService) {
-    console.log("OrderStatusService");
     this.showing = true;
     this.orders = this.$cookies.getObject(this.COOKIE_NAME) || [];
   }

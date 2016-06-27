@@ -227,7 +227,9 @@ func drinkProgress(w http.ResponseWriter, r *http.Request) {
 func setConfig(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	cfg := Config{}
-	if err := json.Unmarshal([]byte(r.FormValue("config")), &cfg); err != nil {
+	if (r.FormValue("reset") != "") {
+		cfg = defaultConfig
+	} else if err := json.Unmarshal([]byte(r.FormValue("config")), &cfg); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}

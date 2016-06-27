@@ -360,4 +360,215 @@
     "parts": 1,
     "name": "Lime Juice"
   }]
+}, {
+  "total_oz": 3,
+  "drink_name": "Bender Rodriguez",
+  "ingredients": [{
+    "parts": 2,
+    "name": "Mescal"
+  }, {
+    "parts": 2,
+    "name": "Tequila"
+  }, {
+    "parts": 0.5,
+    "name": "Sweet Vermouth"
+  }, {
+    "parts": 0.75,
+    "name": "Agave Syrup"
+  }, {
+    "drops": 2,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 2.5,
+  "drink_name": "Rosie the Robot",
+  "ingredients": [{
+    "parts": 2,
+    "name": "Gin"
+  }, {
+    "parts": 0.25,
+    "name": "Frangelico"
+  }, {
+    "parts": 1,
+    "name": "Grenadine"
+  }, {
+    "drops": 5,
+    "name": "Rose"
+  }]
+}, {
+  "total_oz": 5,
+  "drink_name": "Wall-E",
+  "ingredients": [{
+    "parts": 3,
+    "name": "Soda"
+  }, {
+    "parts": 1,
+    "name": "Simple Syrup"
+  }, {
+    "parts": 1,
+    "name": "Lemon Juice"
+  }, {
+    "drops": 2,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 3,
+  "drink_name": "Johnny Five",
+  "ingredients": [{
+    "parts": 2,
+    "name": "Gin"
+  }, {
+    "parts": 2,
+    "name": "Mescal"
+  }, {
+    "parts": 2,
+    "name": "Tonic"
+  }, {
+    "drops": 2,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 5,
+  "drink_name": "C-3PO",
+  "ingredients": [{
+    "parts": 2,
+    "name": "Gin"
+  }, {
+    "parts": 1,
+    "name": "Galliano"
+  }, {
+    "parts": 1,
+    "name": "Lime Juice"
+  }, {
+    "parts": 3,
+    "name": "Soda"
+  }, {
+    "parts": 0.5,
+    "name": "Simple Syrup"
+  }]
+}, {
+  "total_oz": 1.75,
+  "drink_name": "R2-D2",
+  "ingredients": [{
+    "parts": 1,
+    "name": "Tequila"
+  }, {
+    "parts": 1,
+    "name": "Frangelico"
+  }, {
+    "drops": 3,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 3.5,
+  "drink_name": "HAL 9000",
+  "ingredients": [{
+    "parts": 2,
+    "name": "Bourbon"
+  }, {
+    "parts": 1,
+    "name": "Lemon Juice"
+  }, {
+    "parts": 1,
+    "name": "Agave Syrup"
+  }, {
+    "parts": 0.5,
+    "name": "Soda"
+  }, {
+    "drops": 2,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 2.75,
+  "drink_name": "Marvin the Paranoid Android",
+  "ingredients": [{
+    "parts": 4,
+    "name": "Vodka"
+  }, {
+    "parts": 1,
+    "name": "Simple Syrup"
+  }, {
+    "parts": 1,
+    "name": "Tonic"
+  }, {
+    "drops": 4,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 4,
+  "drink_name": "Bishop",
+  "ingredients": [{
+    "parts": 2,
+    "name": "Mescal"
+  }, {
+    "parts": 1,
+    "name": "Frangelico"
+  }, {
+    "parts": 1,
+    "name": "Galliano"
+  }, {
+    "parts": 3,
+    "name": "Cola"
+  }]
+}, {
+  "total_oz": 2.75,
+  "drink_name": "Optimus Prime",
+  "ingredients": [{
+    "parts": 3,
+    "name": "Rum"
+  }, {
+    "parts": 1,
+    "name": "Campari"
+  }, {
+    "parts": 1,
+    "name": "Agave Syrup"
+  }]
+}, {
+  "total_oz": 3.5,
+  "drink_name": "Baymax",
+  "ingredients": [{
+    "parts": 3,
+    "name": "Gin"
+  }, {
+    "parts": 1,
+    "name": "Galliano"
+  }, {
+    "parts": 2,
+    "name": "Soda"
+  }, {
+    "drops": 2,
+    "name": "Rose"
+  }]
+}, {
+  "total_oz": 5,
+  "drink_name": "BB-8",
+  "ingredients": [{
+    "parts": 2,
+    "name": "Orange Juice"
+  }, {
+    "parts": 1,
+    "name": "Lime Juice"
+  }, {
+    "parts": 1,
+    "name": "Grenadine"
+  }, {
+    "parts": 3,
+    "name": "Soda"
+  }]
+}, {
+  "total_oz": 3.5,
+  "drink_name": "GlaDOS",
+  "ingredients": [{
+    "parts": 2,
+    "name": "Rye"
+  }, {
+    "parts": 1,
+    "name": "Kahlua"
+  }, {
+    "parts": 2,
+    "name": "Cola"
+  }, {
+    "drops": 3,
+    "name": "Angostura Bitters"
+  }]
 }]
