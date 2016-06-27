@@ -52,15 +52,13 @@ class RandomDrinkService {
               DrinksService: DrinksService) {
     this.INGREDIENTS = DrinksService.pantry.then((pantry) => {
       var result: IngredientInfo[] = [];
-      for (var name in this.ALL_INGREDIENTS) {
-        if (Object.prototype.hasOwnProperty.call(this.ALL_INGREDIENTS, name)) {
-          if (pantry.hasIngredient(name)) {
-            result.push({'name': name, 'weights': this.ALL_INGREDIENTS[name]});
-          } else {
-            console.log('Dropping ingredient ' + name)
-          }
+      angular.forEach(pantry.ingredients, (available, name) => {
+        if (typeof this.ALL_INGREDIENTS[name] == 'undefined') {
+          console.log("Missing random weights for ingredient", name);
+        } else if (available) {
+          result.push({'name': name, 'weights': this.ALL_INGREDIENTS[name]});
         }
-      }
+      });
       return result;
     });
   }
