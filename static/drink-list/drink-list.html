@@ -1,5 +1,5 @@
 <div layout="column" tabIndex="-1" role="main" ng-cloak>
-  <md-toolbar md-scroll-shrink>
+  <md-toolbar>
     <div class="md-toolbar-tools" ng-if="!ctrl.state.searching">
       <span>N.E.Bree.8</span>
       <span flex></span>
@@ -25,7 +25,7 @@
       </md-button>
     </div>
   </md-toolbar>
-  <md-content>
+  <md-content class="list-content">
     <md-list class="drink-list">
       <md-list-item class="md-2-line" ng-click="ctrl.randomDrink()"
           ng-hide="ctrl.state.searching">
@@ -47,4 +47,9 @@
       <md-list-item></md-list-item>
     </md-list>
   </md-content>
+  <div ng-if="ctrl.isOrdersBtnShowing()" class="orders-btn-cont">
+    <md-button class="orders-btn md-fab" ng-click="ctrl.showOrderStatusSheet()">
+      <md-icon md-svg-src="icons/ic_local_bar_white_24px.svg"></md-icon>
+    </md-button>
+  </div>
 </div>

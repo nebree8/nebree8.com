@@ -18,6 +18,7 @@ declare module angular.material {
         controllerAs?: string;
         bindToController?: boolean;
         parent?: string|Element|JQuery; // default: root node
+        clickOutsideToClose?: boolean;
         disableParentScroll?: boolean; // default: true
     }
 

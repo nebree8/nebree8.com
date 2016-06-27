@@ -75,22 +75,6 @@ order-status {
   width: 100%;
 }
 
-order-status md-content {
-  -webkit-box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
-  -moz-box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
-  box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
-
-  -webkit-transition: -webkit-transform 0.7s;
-  -moz-transition: -moz-transition 0.7s;
-  transition: transform 0.7s;
-}
-
-order-status md-content.no-orders {
-  -webkit-transform: translateY(200%);
-  -moz-transform: translateY(200%);
-  transform: translateY(200%);
-}
-
 order-status .ingredients-list {
   text-transform: capitalize;
 }
@@ -125,4 +109,39 @@ order-status .rating.unrated .empty {
 md-card.about {
   max-width: 400px;
   margin: auto;
+}
+
+.orders-btn-cont {
+  bottom: 8px;
+  position: fixed;
+  width: 100%;
+}
+
+.orders-btn {
+  display: block;
+  margin: auto;
+}
+
+.order-status-sheet {
+  padding-bottom: 20px;
+  transform: none;
+}
+
+order-status {
+  position: relative;
+}
+
+order-status h3 {
+  color: rgba(0,0,0,0.87);
+  margin: 10px 0 0;
+}
+
+.order-state {
+  color: rgba(0,0,0,0.54);
+  margin: 0;
+}
+
+.order-action {
+  color: rgba(0,0,0,0.54);
+  margin: 10px 0;
 }

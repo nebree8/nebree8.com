@@ -1,12 +1,14 @@
-<div>
-  <h3 layout="row">
-    <span>{{ctrl.order.drink_name}} for {{ctrl.order.user_name}}</span>
+<div layout="column" layout-fill>
+  <h3>
+    {{ctrl.currentOrder().drink_name}} for {{ctrl.currentOrder().user_name}}
   </h3>
-  <span class="md-secondary rating" ng-class="{'unrated': !order.rating}">
-    <button ng-repeat="i in [1, 2, 3, 4, 5]"
-            ng-click="ctrl.rate(order, i)"
-            ng-class="i <= (order.rating||0) ? 'filled' : 'empty'">
-      {{ i <= (order.rating || 0) ? "&#x2605;" : "&#x2606;" }}
-    </button>
-  </span>
+  <p class="order-state">Order awaiting approval</p>
+  <p class="order-action">Give your name to a specialist</p>
+  <div layout="row" layout-align="end center">
+    <md-button ng-if="ctrl.svc.orders.length > 1"
+               ng-click="ctrl.allDrinks()">All drinks</md-button>
+    <md-button class="md-primary" ng-click="ctrl.cancelOrder()">
+      Cancel order
+    </md-button>
+  </div>
 </div>

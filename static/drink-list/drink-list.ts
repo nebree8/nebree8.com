@@ -5,18 +5,14 @@ class DrinkListCtrl {
   slugify: (name: string)=>string;
 
   constructor(private OrderStatusService: OrderStatusService,
-              private $scope: angular.IScope,
               private $location: angular.ILocationService,
               private $timeout: angular.ITimeoutService,
               private $window: angular.IWindowService,
               DrinkListStateService: DrinkListStateService,
-              DrinksService: DrinksService) {
-    $scope.$on('$viewContentLoaded', () => {
-      if (this.OrderStatusService.orders.length > 0) {
-        this.showOrderStatusSheet();
-      }     
-    });
+              DrinksService: DrinksService,
+              private $mdBottomSheet: ng.material.IBottomSheetService) {
     this.state = DrinkListStateService;
+    this.showOrderStatusSheet();
     DrinksService.db.then((db) => {this.db = db;});
     this.slugify = DrinksService.slugifyDrinkName;
   };
@@ -33,8 +29,25 @@ class DrinkListCtrl {
     this.$location.path('/drinks/' + this.slugify(drink.drink_name));
   };
 
-  showOrderStatusSheet() {
+  isOrdersBtnShowing() {
+    return (!this.state.viewingOrders &&
+            this.OrderStatusService.orders.length > 0);
+  };
   
+  showOrderStatusSheet() {
+    if (this.OrderStatusService.orders.length <= 0) {
+      return;
+    }
+
+    var setState = () => {
+      this.state.viewingOrders = false;
+    }
+    
+    this.$mdBottomSheet.show(<angular.material.IBottomSheetOptions>{
+      controller: 'OrderStatusSheetCtrl',
+      templateUrl: 'components/order-status/order-status-sheet.html'
+    }).then(setState, setState);
+    this.state.viewingOrders = true;
   };                   
 
   openSearch() {

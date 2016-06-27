@@ -50,6 +50,11 @@ func (k *KeyedOrder) Put(c appengine.Context) error {
 	return err
 }
 
+var ArchivedByStaff time.Time = time.Date(
+	2000, time.January, 1, 0, 0, 0, 0, time.UTC);
+var CancelledByUser time.Time =  time.Date(
+	2000, time.February, 1, 0, 0, 0, 0, time.UTC);
+
 func findOrder(c appengine.Context, encoded_key string) (*KeyedOrder, error) {
 	key, err := datastore.DecodeKey(encoded_key)
 	if err != nil {
@@ -119,6 +124,7 @@ func init() {
 	http.HandleFunc("/api/set_drink_progress", drinkProgress)
 	http.HandleFunc("/api/approve_drink", approveDrink)
 	http.HandleFunc("/api/archive_drink", archiveDrink)
+	http.HandleFunc("/api/cancel_drink", cancelDrink)
 	http.HandleFunc("/api/set_config", setConfig)
 	http.HandleFunc("/api/get_config", getConfig)
 }
@@ -202,9 +208,17 @@ func approveDrink(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func cancelDrink(w http.ResponseWriter, r *http.Request) {
+	// Essentially the same as archiving, but uses a different "past" value.
+	mutateAndReturnOrder(w, r, func(o *Order) error {
+		o.DoneTime = CancelledByUser;
+		return nil
+	})  
+}
+
 func archiveDrink(w http.ResponseWriter, r *http.Request) {
 	mutateAndReturnOrder(w, r, func(o *Order) error {
-		o.DoneTime = time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC)
+		o.DoneTime = ArchivedByStaff;
 		return nil
 	})
 }
