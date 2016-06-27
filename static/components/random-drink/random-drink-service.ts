@@ -32,6 +32,7 @@ class RandomDrinkService {
     "peach schnapps": [0.5, 0.5, 0, 0, 0],
     "peychauds bitters": [0, 0, 0, 0.5, 0],
     "pimms": [0.5, 0.5, 0, 0, 0],
+    "rose": [0, 0, 0, 0.5, 0],
     "rum": [1, 0, 0, 0, 0],
     "rye": [1, 0, 0, 0, 0],
     "scotch": [1, 0, 0, 0, 0],
