@@ -27,6 +27,7 @@ class RandomDrinkService {
     "lemon juice": [0, 0, 1, 0, 0],
     "lime juice": [0, 0, 1, 0, 0],
     "maple syrup": [0, 1, 0, 0, 0],
+    "mescal": [1, 0, 0, 0, 0],
     "orange bitters": [0, 0, 0, 0.5, 0],
     "orange juice": [0, 0.8, 0.25, 0, 0],
     "peach schnapps": [0.5, 0.5, 0, 0, 0],
