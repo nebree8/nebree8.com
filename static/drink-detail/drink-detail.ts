@@ -104,7 +104,7 @@ var NamedDrinkCtrl = function($scope: ng.IScope,
     this.setRecipe(recipe);
   }).catch((reason) => {
     console.log("Didn't find drink, redirecting", drinkName);
-    DrinksService.db.then((db: Recipe[])=>{console.log("db", db);});
+    DrinksService.db.then((db: Recipe[][])=>{console.log("db", db);});
     $location.path('/drinks').replace();
   });
 };

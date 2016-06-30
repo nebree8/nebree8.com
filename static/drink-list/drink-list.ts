@@ -1,7 +1,7 @@
 class DrinkListCtrl {
   pageClass = 'page-list';  // Class to apply to ng-view element.
   state: DrinkListStateService;
-  db: Recipe[] = [];
+  db: Recipe[][] = [];
   slugify: (name: string)=>string;
   orderStatusService: OrderStatusService;
 

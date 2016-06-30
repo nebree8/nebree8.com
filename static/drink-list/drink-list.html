@@ -36,11 +36,11 @@
           <p>Let N.E.Bree.8 design you a drink!</p>
         </div>
       </md-list-item>
-      <div ng-repeat="(category, drinks) in ctrl.db.categories">
+      <div ng-repeat="category in ctrl.db">
         <md-divider ng-hide="ctrl.state.searching"></md-divider>
-        <md-subheader class="md-primary">{{drinks.name}}</md-subheader>
+        <md-subheader class="md-primary">{{category.name}}</md-subheader>
         <md-list-item class="md-2-line" ng-click="ctrl.selectDrink(drink)"
-                      ng-repeat="drink in drinks |
+                      ng-repeat="drink in category  |
                                  filter:{$:ctrl.state.query} |
                                  orderBy:'drink_name'">
           <img ng-src="thumbs/{{ctrl.slugify(drink.drink_name)}}.jpg" class="md-avatar">
@@ -50,7 +50,7 @@
           </div>
         </md-list-item>
       </div>
-        <md-list-item></md-list-item>
+      <md-list-item></md-list-item>
     </md-list>
   </md-content>
 </div>
