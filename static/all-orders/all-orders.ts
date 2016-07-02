@@ -1,5 +1,5 @@
 class AllOrdersCtrl {
-  pageClass = 'page-list';  // Class to apply to ng-view element.
+  pageClass = 'all-orders';  // Class to apply to ng-view element.
   svc: OrderStatusService;
   
   constructor(private OrderStatusService: OrderStatusService,

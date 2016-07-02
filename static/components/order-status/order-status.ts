@@ -2,15 +2,36 @@ class OrderStatusCtrl {
   svc: OrderStatusService;
   order: Order;
   showAllOrders: boolean;
+  status_interval: angular.IPromise<any>;
+  order_status: OrderStatusResponse;
 
   constructor(private OrderStatusService: OrderStatusService,
               private $location: angular.ILocationService,
+              private $interval: angular.IIntervalService,
               private $mdToast: ng.material.IToastService,
               private $mdBottomSheet: ng.material.IBottomSheetService,
               private $httpParamSerializer: ng.IHttpRequestTransformer,
               private $http: ng.IHttpService,
               private $mdDialog: ng.material.IDialogService) {
     this.svc = OrderStatusService;
+    this.updateOrderStatus();
+    this.status_interval = this.$interval(
+      angular.bind(this, this.updateOrderStatus), 4000);
+  }
+
+  updateOrderStatus() {
+    this.$http({
+      method: 'POST',
+      url: '/api/order_status',
+      data: { 'key': this.order.id },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      transformRequest: this.$httpParamSerializer,
+    }).then((response: ng.IHttpPromiseCallbackArg<OrderStatusResponse>) => {
+      this.order_status = response.data;
+      if (this.order_status.done) {
+        this.$interval.cancel(this.status_interval);
+      }
+    });
   }
 
   cancelOrder(event: MouseEvent) {
@@ -70,6 +91,32 @@ class OrderStatusCtrl {
             "Your rating was not saved. Please try again.");
         this.order.rating = 0;
     });
+  }
+
+  queuePosAsOrdinal(): any {
+    if (!this.order_status) {
+      return '';
+    }
+
+    var suffix = function(n: number) {
+      return Math.floor(n / 10) === 1
+        ? 'th'
+        : (n % 10 === 1
+           ? 'st'
+           : (n % 10 === 2
+              ? 'nd'
+              : (n % 10 === 3
+                 ? 'rd'
+                 : 'th')));
+    };
+    var q = this.order_status.queue_position;
+    return { q: q, suffix: suffix(q) };
+  }
+
+  orderCanCancel() {
+    return (this.order_status &&
+            !this.order_status.done &&
+            this.order_status.progress_percent == 0);
   }
 }
 

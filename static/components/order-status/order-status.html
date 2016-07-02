@@ -2,12 +2,27 @@
   <h3>
     {{ctrl.order.drink_name}} for {{ctrl.order.user_name}}
   </h3>
-  <p class="order-state">Order awaiting approval</p>
-  <p class="order-action">Give your name to a specialist</p>
-  <div layout="row" layout-align="end center">
-    <md-button ng-if="ctrl.showAllOrders && ctrl.svc.orders.length > 1"
+  <div ng-if="!ctrl.order_status" layout="row" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+  <div ng-if="ctrl.order_status">
+    <div ng-if="!ctrl.order_status.approved">
+      <p class="order-state">Order awaiting approval</p>
+      <p class="order-action">Give your name to a specialist</p>
+    </div>
+    <div ng-if="ctrl.order_status.approved && ctrl.order_status.progress_percent <= 0">
+      <div class="queue"><span class="queue-position">{{ctrl.queuePosAsOrdinal().q}}<sup>{{ctrl.queuePosAsOrdinal().suffix}}</sup></span> in the queue</div>
+    </div>
+    <div ng-if="ctrl.order_status.progress_percent > 0" class="order-progress">
+      <p class="order-state">Your drink is being made right now!</p>
+      <md-progress-linear md-mode="determinate" value="{{ctrl.order_status.progress_percent}}"></md-progress-linear>
+    </div>
+  </div>
+  <div layout="row" layout-align="space-around center">
+    <md-button ng-if="ctrl.order_status &&
+                      ctrl.showAllOrders && ctrl.svc.orders.length > 1"
                ng-click="ctrl.allOrders()">All orders</md-button>
-    <md-button class="md-primary" ng-click="ctrl.cancelOrder()">
+    <md-button ng-if="ctrl.orderCanCancel()" class="md-primary" ng-click="ctrl.cancelOrder()">
       Cancel order
     </md-button>
   </div>

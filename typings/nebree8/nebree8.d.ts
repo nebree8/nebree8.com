@@ -29,3 +29,10 @@ interface Order extends Recipe {
 interface OrderDrinkResponse {
   id: string;
 }
+
+interface OrderStatusResponse {
+  approved: boolean;
+  done: boolean;
+  queue_position: number;
+  progress_percent: number;
+}

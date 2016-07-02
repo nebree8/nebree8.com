@@ -26,13 +26,15 @@
 }
 
 .page-detail.ng-enter,
-.page-about.ng-enter {
+.page-about.ng-enter,
+.all-orders.ng-enter {
   animation: from-right 0.5s forwards;
   -webkit-animation: from-right 0.5s forwards;
 }
 
 .page-detail.ng-leave,
-.page-about.ng-leave {
+.page-about.ng-leave,
+.all-orders.ng-leave {
   animation: from-right 0.5s reverse forwards;
   -webkit-animation: from-right 0.5s reverse forwards;
 }
@@ -140,14 +142,39 @@ order-status h3 {
   width: 100%;
 }
 
-.order-state {
+.order-state,
+.order-action,
+.queue {
   color: rgba(0,0,0,0.54);
+}
+
+.order-state {
   margin: 0;
 }
 
 .order-action {
-  color: rgba(0,0,0,0.54);
   margin: 10px 0;
+}
+
+.queue {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.queue-position {
+  font-size: 24px;
+}
+
+.queue-position sup {
+  font-size: 18px;
+}
+
+.order-progress {
+  padding-bottom: 10px;
+}
+
+.order-progress md-progress-linear {
+  margin-top: 10px;
 }
 
 .all-orders-card {
