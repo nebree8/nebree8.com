@@ -136,6 +136,10 @@ order-status h3 {
   margin: 10px 0 0;
 }
 
+.order-status-wrapper {
+  width: 100%;
+}
+
 .order-state {
   color: rgba(0,0,0,0.54);
   margin: 0;
@@ -144,4 +148,10 @@ order-status h3 {
 .order-action {
   color: rgba(0,0,0,0.54);
   margin: 10px 0;
+}
+
+.all-orders-card {
+  margin: 10px auto;
+  padding: 6px;
+  width: 90%;
 }

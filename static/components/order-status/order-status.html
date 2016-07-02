@@ -1,12 +1,12 @@
-<div layout="column" layout-fill>
+<div class="order-status-wrapper" layout="column">
   <h3>
-    {{ctrl.currentOrder().drink_name}} for {{ctrl.currentOrder().user_name}}
+    {{ctrl.order.drink_name}} for {{ctrl.order.user_name}}
   </h3>
   <p class="order-state">Order awaiting approval</p>
   <p class="order-action">Give your name to a specialist</p>
   <div layout="row" layout-align="end center">
-    <md-button ng-if="ctrl.svc.orders.length > 1"
-               ng-click="ctrl.allDrinks()">All drinks</md-button>
+    <md-button ng-if="ctrl.showAllOrders && ctrl.svc.orders.length > 1"
+               ng-click="ctrl.allOrders()">All orders</md-button>
     <md-button class="md-primary" ng-click="ctrl.cancelOrder()">
       Cancel order
     </md-button>

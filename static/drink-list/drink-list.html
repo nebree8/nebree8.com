@@ -48,7 +48,8 @@
     </md-list>
   </md-content>
   <div ng-if="ctrl.isOrdersBtnShowing()" class="orders-btn-cont">
-    <md-button class="orders-btn md-fab" ng-click="ctrl.showOrderStatusSheet()">
+    <md-button class="orders-btn md-fab" aria-label="Show orders"
+               ng-click="ctrl.showOrderStatusSheet()">
       <md-icon md-svg-src="icons/ic_local_bar_white_24px.svg"></md-icon>
     </md-button>
   </div>

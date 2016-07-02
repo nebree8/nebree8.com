@@ -1,64 +1,66 @@
 class OrderStatusCtrl {
   svc: OrderStatusService;
   order: Order;
-  index: number;
+  showAllOrders: boolean;
 
   constructor(private OrderStatusService: OrderStatusService,
+              private $location: angular.ILocationService,
               private $mdToast: ng.material.IToastService,
               private $mdBottomSheet: ng.material.IBottomSheetService,
               private $httpParamSerializer: ng.IHttpRequestTransformer,
               private $http: ng.IHttpService,
               private $mdDialog: ng.material.IDialogService) {
     this.svc = OrderStatusService;
+    window.console.log(this.order);
   }
 
-  currentOrder(): Order {
-    return this.svc.orders[this.svc.orders.length - 1];
-  }
-  
-  cancelOrder(event) {
-    var confirm = this.$mdDialog.confirm({
-      title: 'Confirm drink cancellation',
-      content: 'Are you sure you want to cancel this drink order?',
-      ok: 'Cancel order',
-      cancel: 'Keep order',
-    })
+  cancelOrder(event: MouseEvent) {
+    var confirm = this.$mdDialog.confirm()
+      .title('Confirm drink cancellation')
+      .content('Are you sure you want to cancel this drink order?')
+      .targetEvent(event)
+      .ok('Cancel order')
+      .cancel('Keep order');
     this.$mdDialog.show(confirm).then(() => {
       this.$http({
         method: 'POST',
         url: '/api/cancel_drink',
-        data: { 'key': this.currentOrder().id },
+        data: { 'key': this.order.id },
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         transformRequest: this.$httpParamSerializer,
       }).then(
         () => {
           this.$mdDialog.hide();
-          var simple = this.$mdToast.simple({
-            content: 'Order cancelled!',
-            parent: document.querySelector('.list-content'),
-            position: 'top',
-          });
+          var simple = this.$mdToast.simple()
+            .content('Order cancelled!')
+            .parent(document.querySelector('.list-content'))
+            .position('top');
           this.$mdToast.show(simple);
-          this.svc.cancel(this.currentOrder());
+          this.svc.cancel(this.order);
           if (this.svc.orders.length <= 0) {
             this.$mdBottomSheet.hide();
           }
         },
         () => {
           this.$mdToast.showSimple(
-            "Your order could not be cancelled. Please try again.");
+            'Your order could not be cancelled. Please try again.');
         });
     });
   }
+
+  allOrders() {
+    this.$mdBottomSheet.hide();
+    this.$location.path('/all-orders');
+  }
   
   rate(i: number) {
-    this.currentOrder().rating = i;
+    this.order.rating = i;
     this.$http({
       method: 'POST',
       url: '/api/order_rate',
       data: {
-        'rating': this.currentOrder().rating,
-        'key': this.currentOrder().id
+        'rating': this.order.rating,
+        'key': this.order.id
       },
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       transformRequest: this.$httpParamSerializer,
@@ -67,7 +69,7 @@ class OrderStatusCtrl {
       () => {
         this.$mdToast.showSimple(
             "Your rating was not saved. Please try again.");
-        this.currentOrder().rating = 0;
+        this.order.rating = 0;
     });
   }
 }
@@ -112,8 +114,7 @@ angular.module('nebree8.order-status', ['ngCookies'])
     controller: OrderStatusCtrl,
     controllerAs: 'ctrl',
     bindings: {
-      orders: '<',
-      index: '<',
-      showMore: '<',
+      order: '<',
+      showAllOrders: '<',
     }
   })

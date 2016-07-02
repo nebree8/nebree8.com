@@ -45,6 +45,7 @@ class DrinkListCtrl {
     
     this.$mdBottomSheet.show(<angular.material.IBottomSheetOptions>{
       controller: 'OrderStatusSheetCtrl',
+      controllerAs: 'ctrl',
       templateUrl: 'components/order-status/order-status-sheet.html'
     }).then(setState, setState);
     this.state.viewingOrders = true;

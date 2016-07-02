@@ -1,0 +1,15 @@
+<div layout="column" tabIndex="-1" role="main" ng-cloak>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" ng-click="ctrl.back()">
+        <md-icon md-svg-src="icons/ic_arrow_back_white_24px.svg" aria-label="back"></md-icon>
+      </md-button>
+      <span>All Orders</span>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+  <md-card class="all-orders-card" ng-repeat="order in ctrl.svc.orders | orderBy:'+':true">
+    <order-status order="order" show-all-orders="false"
+                  layout="column" layout-align="start center"></order-status>
+  </md-card>
+</div>
