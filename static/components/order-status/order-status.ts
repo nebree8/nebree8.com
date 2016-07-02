@@ -11,7 +11,6 @@ class OrderStatusCtrl {
               private $http: ng.IHttpService,
               private $mdDialog: ng.material.IDialogService) {
     this.svc = OrderStatusService;
-    window.console.log(this.order);
   }
 
   cancelOrder(event: MouseEvent) {

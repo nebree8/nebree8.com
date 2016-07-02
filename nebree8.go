@@ -36,6 +36,13 @@ type Order struct {
 	Rating          int          `json:"rating"`
 }
 
+type OrderStatus struct {
+  Approved        bool         `json:"approved"`
+	Done            bool         `json:"done"`
+	QueuePosition   int          `json:"queue_position"`
+  ProgressPercent int          `json:"progress_percent"`
+}
+
 type KeyedOrder struct {
 	Order
 	key *datastore.Key
@@ -154,20 +161,30 @@ func orderDrink(w http.ResponseWriter, r *http.Request) {
 
 func orderStatus(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	order, err := findOrder(c, r.FormValue("key"))
+	encoded_key := r.FormValue("key")
+	keyed_order, err := findOrder(c, encoded_key)
+	key := keyed_order.key
+	order := keyed_order.Order
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	status := "unknown"
-	if !order.DoneTime.IsZero() {
-		status = "Done"
-	} else if order.ProgressPercent > 0 {
-		status = fmt.Sprintf("%v%% done", order.ProgressPercent)
-	} else if !order.Approved {
-		status = "Insert coins to continue"
+	var status OrderStatus
+	status.Done = !order.DoneTime.IsZero()
+	status.ProgressPercent = order.ProgressPercent
+	status.Approved = order.Approved
+
+	keys, err := unpreparedDrinkQueryNewestFirst().KeysOnly().GetAll(c, nil)
+	c.Debugf("keys is %s long", len(keys))
+	for i, k := range keys {
+		c.Debugf("The key, i: %s %s %s", k, key, i)
+		if k.Equal(key) {
+			status.QueuePosition = i + 1
+			break
+		}
 	}
-	fmt.Fprintf(w, "%v", status)
+
+	json.NewEncoder(w).Encode(status)
 }
 
 func orderRate(w http.ResponseWriter, r *http.Request) {
