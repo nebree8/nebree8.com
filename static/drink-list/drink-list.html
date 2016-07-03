@@ -36,7 +36,7 @@
         </div>
       </md-list-item>
       <md-divider ng-hide="ctrl.state.searching"></md-divider>
-      <md-list-item class="md-2-line" ng-click="ctrl.selectDrink(drink)"
+      <md-list-item class="md-2-line" ng-click="ctrl.orderDrink($event, drink)"
         ng-repeat="drink in ctrl.db | filter:{$:ctrl.state.query} | orderBy:'drink_name'">
         <img ng-src="thumbs/{{ctrl.slugify(drink.drink_name)}}.jpg" class="md-avatar">
         <div class="md-list-item-text">
@@ -49,7 +49,7 @@
   </md-content>
   <div ng-if="ctrl.isOrdersBtnShowing()" class="orders-btn-cont">
     <md-button class="orders-btn md-fab" aria-label="Show orders"
-               ng-click="ctrl.showOrderStatusSheet()">
+               ng-click="ctrl.gotoAllDrinks()">
       <md-icon md-svg-src="icons/ic_local_bar_white_24px.svg"></md-icon>
     </md-button>
   </div>

@@ -180,5 +180,10 @@ order-status h3 {
 .all-orders-card {
   margin: 10px auto;
   padding: 6px;
+  min-height: 150px;
   width: 90%;
+}
+
+md-dialog .md-dialog-content {
+  padding: 6px;
 }

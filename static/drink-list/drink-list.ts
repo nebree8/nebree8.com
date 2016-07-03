@@ -8,48 +8,24 @@ class DrinkListCtrl {
               private $location: angular.ILocationService,
               private $timeout: angular.ITimeoutService,
               private $window: angular.IWindowService,
+              private $mdBottomSheet: ng.material.IBottomSheetService,
+              private $mdDialog: ng.material.IDialogService,
+              private $mdToast: ng.material.IToastService,
               DrinkListStateService: DrinkListStateService,
-              DrinksService: DrinksService,
-              private $mdBottomSheet: ng.material.IBottomSheetService) {
+              private DrinksService: DrinksService,
+              private OrderDrinkService: OrderDrinkService) {
     this.state = DrinkListStateService;
-    this.showOrderStatusSheet();
-    DrinksService.db.then((db) => {this.db = db;});
+    this.DrinksService.db.then((db) => {this.db = db;});
     this.slugify = DrinksService.slugifyDrinkName;
   };
 
-  ingredientsCsv(drink: Recipe): string {
-    var names: string[] = [];
-    for (var i = 0; i < drink.ingredients.length; i++) {
-      names.push(drink.ingredients[i].name);
-    }
-    return names.join(", ");
-  };
-
-  selectDrink(drink: Recipe) {
-    this.$location.path('/drinks/' + this.slugify(drink.drink_name));
+  ingredientsCsv(recipe: Recipe): string {
+    return this.DrinksService.ingredientsCsv(recipe);
   };
 
   isOrdersBtnShowing() {
-    return (!this.state.viewingOrders &&
-            this.OrderStatusService.orders.length > 0);
-  };
-  
-  showOrderStatusSheet() {
-    if (this.OrderStatusService.orders.length <= 0) {
-      return;
-    }
-
-    var setState = () => {
-      this.state.viewingOrders = false;
-    }
-    
-    this.$mdBottomSheet.show(<angular.material.IBottomSheetOptions>{
-      controller: 'OrderStatusSheetCtrl',
-      controllerAs: 'ctrl',
-      templateUrl: 'components/order-status/order-status-sheet.html'
-    }).then(setState, setState);
-    this.state.viewingOrders = true;
-  };                   
+    return this.OrderStatusService.orders.length > 0;
+  };               
 
   openSearch() {
     this.state.searching = true;
@@ -70,6 +46,26 @@ class DrinkListCtrl {
   randomDrink() {
     this.$location.path('/drinks/random');
   };
+
+  gotoAllDrinks() {
+    this.$location.path('/all-orders');
+  }
+  
+  orderDrink(event: MouseEvent, recipe: Recipe) {
+    var dialogPromise = this.OrderDrinkService.showOrderDrinkDialog(
+      event, recipe);
+    dialogPromise.then((userName: string) => {
+      return this.OrderDrinkService.sendOrder(recipe, userName)
+    }).then((o: Order) => {
+      this.OrderStatusService.add(o);
+      this.$mdDialog.hide();
+      this.$location.path('/all-orders');
+    }).catch((response: ng.IHttpPromiseCallbackArg<string>) => {
+      this.$mdToast.show(this.$mdToast.simple().
+                         content('Error: ' + response.data).
+                         action("OK").hideDelay(10000));
+    });
+  }
 }
 
 angular.module('nebree8.drink-list',

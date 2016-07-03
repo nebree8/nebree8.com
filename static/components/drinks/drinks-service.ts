@@ -54,6 +54,14 @@ class DrinksService {
     return name.toLowerCase().replace(/[ ()]/g, "_").replace(/&/g, 'and');
   };
 
+  ingredientsCsv(recipe: Recipe): string {    
+    var names: string[] = [];
+    for (var i = 0; i < recipe.ingredients.length; i++) {
+      names.push(recipe.ingredients[i].name);
+    }
+    return names.join(", ");
+  }
+  
   getDrink(drinkName: string): ng.IPromise<Recipe> {
     return this.db.then((db) => {
       drinkName = this.slugifyDrinkName(drinkName);

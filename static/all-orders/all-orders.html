@@ -8,7 +8,7 @@
       <span flex></span>
     </div>
   </md-toolbar>
-  <md-card class="all-orders-card" ng-repeat="order in ctrl.svc.orders | orderBy:'+':true">
+  <md-card class="all-orders-card" ng-repeat="order in ctrl.svc.orders">
     <order-status order="order" show-all-orders="false"
                   layout="column" layout-align="start center"></order-status>
   </md-card>
