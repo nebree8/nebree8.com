@@ -25,6 +25,7 @@ interface Order extends Recipe {
   rating?: number;
   id?: string;
   status?: string;
+  done?: boolean;
 }
 
 interface OrderDrinkResponse {
