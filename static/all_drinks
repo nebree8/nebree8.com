@@ -1,6 +1,7 @@
 [{
   "total_oz": 5,
   "drink_name": "The Steve",
+  "categories": [],
   "ingredients": [{
     "parts": 1,
     "name": "Scotch"
@@ -8,6 +9,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Margarita",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 2,
     "name": "Tequila"
@@ -21,6 +23,7 @@
 }, {
   "total_oz": 2.5,
   "drink_name": "Old Fashioned",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 4,
     "name": "Bourbon"
@@ -34,6 +37,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Daquiri",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 2,
     "name": "Rum"
@@ -47,6 +51,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Gin Gimlet",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 6,
     "name": "Gin"
@@ -57,6 +62,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Whiskey Sour",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 2,
     "name": "Rye"
@@ -70,6 +76,7 @@
 }, {
   "total_oz": 4.0,
   "drink_name": "Pimms Cup",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 6,
     "name": "Gin"
@@ -86,6 +93,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Negroni",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Gin"
@@ -99,6 +107,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Boulevardier",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1.5,
     "name": "Rye"
@@ -112,6 +121,7 @@
 }, {
   "total_oz": 5.0,
   "drink_name": "Americano",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Campari"
@@ -125,6 +135,7 @@
 }, {
   "total_oz": 4.0,
   "drink_name": "Manhattan",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 5,
     "name": "Rye"
@@ -138,6 +149,7 @@
 }, {
   "total_oz": 4.0,
   "drink_name": "Gin and Tonic",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Gin"
@@ -148,6 +160,7 @@
 }, {
   "total_oz": 2.0,
   "drink_name": "Scotch (neat)",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Scotch"
@@ -155,6 +168,7 @@
 }, {
   "total_oz": 2.5,
   "drink_name": "Scotch and Water",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 3,
     "name": "Scotch"
@@ -165,6 +179,7 @@
 }, {
   "total_oz": 4.0,
   "drink_name": "Cuba Libre",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 5,
     "name": "Rum"
@@ -178,6 +193,7 @@
 }, {
   "total_oz": 5.0,
   "drink_name": "Rum and Coke",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 2,
     "name": "Rum"
@@ -188,6 +204,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Godfather",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Scotch"
@@ -198,6 +215,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Dry Martini",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 6,
     "name": "Gin"
@@ -208,6 +226,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Original Martini",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 2,
     "name": "Gin"
@@ -218,6 +237,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Perfect Martini",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Gin"
@@ -228,6 +248,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Vodka Martini",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 6,
     "name": "Vodka"
@@ -238,6 +259,7 @@
 }, {
   "total_oz": 5.0,
   "drink_name": "Gin Fizz",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 4.5,
     "name": "Gin"
@@ -254,6 +276,7 @@
 }, {
   "total_oz": 5.0,
   "drink_name": "Yellow Bird",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 2,
     "name": "Rum"
@@ -270,6 +293,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Kamikaze",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Vodka"
@@ -283,6 +307,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Lemon Drop",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 2,
     "name": "Vodka"
@@ -296,6 +321,7 @@
 }, {
   "total_oz": 5.0,
   "drink_name": "Long Island Ice Tea",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Vodka"
@@ -327,6 +353,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Tom Collins",
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 2,
     "name": "Gin"
@@ -340,6 +367,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Virgin Lemonade",
+  "categories": ["Classic Cocktails", "Non-Alcoholic"],
   "ingredients": [{
     "parts": 1,
     "name": "Lemon Juice"
@@ -350,6 +378,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Grenadine Punch",
+  "categories": ["Classic Cocktails", "Non-Alcoholic"],
   "ingredients": [{
     "parts": 2,
     "name": "Grenadine"
@@ -359,5 +388,229 @@
   }, {
     "parts": 1,
     "name": "Lime Juice"
+  }]
+}, {
+  "total_oz": 3,
+  "drink_name": "Bender Rodriguez",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Mescal"
+  }, {
+    "parts": 2,
+    "name": "Tequila"
+  }, {
+    "parts": 0.5,
+    "name": "Sweet Vermouth"
+  }, {
+    "parts": 0.75,
+    "name": "Agave Syrup"
+  }, {
+    "drops": 2,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 2.5,
+  "drink_name": "Rosie the Robot",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Gin"
+  }, {
+    "parts": 0.25,
+    "name": "Frangelico"
+  }, {
+    "parts": 1,
+    "name": "Grenadine"
+  }, {
+    "drops": 5,
+    "name": "Rose"
+  }]
+}, {
+  "total_oz": 5,
+  "drink_name": "Wall-E",
+  "categories": ["Robot Inspired", "Non-Alcoholic"],
+  "ingredients": [{
+    "parts": 3,
+    "name": "Soda"
+  }, {
+    "parts": 1,
+    "name": "Simple Syrup"
+  }, {
+    "parts": 1,
+    "name": "Lemon Juice"
+  }, {
+    "drops": 2,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 3,
+  "drink_name": "Johnny Five",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Gin"
+  }, {
+    "parts": 2,
+    "name": "Mescal"
+  }, {
+    "parts": 2,
+    "name": "Tonic"
+  }, {
+    "drops": 2,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 5,
+  "drink_name": "C-3PO",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Gin"
+  }, {
+    "parts": 1,
+    "name": "Galliano"
+  }, {
+    "parts": 1,
+    "name": "Lime Juice"
+  }, {
+    "parts": 3,
+    "name": "Soda"
+  }, {
+    "parts": 0.5,
+    "name": "Simple Syrup"
+  }]
+}, {
+  "total_oz": 1.75,
+  "drink_name": "R2-D2",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 1,
+    "name": "Tequila"
+  }, {
+    "parts": 1,
+    "name": "Frangelico"
+  }, {
+    "drops": 3,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 3.5,
+  "drink_name": "HAL 9000",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Bourbon"
+  }, {
+    "parts": 1,
+    "name": "Lemon Juice"
+  }, {
+    "parts": 1,
+    "name": "Agave Syrup"
+  }, {
+    "parts": 0.5,
+    "name": "Soda"
+  }, {
+    "drops": 2,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 2.75,
+  "drink_name": "Marvin the Paranoid Android",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 4,
+    "name": "Vodka"
+  }, {
+    "parts": 1,
+    "name": "Simple Syrup"
+  }, {
+    "parts": 1,
+    "name": "Tonic"
+  }, {
+    "drops": 4,
+    "name": "Angostura Bitters"
+  }]
+}, {
+  "total_oz": 4,
+  "drink_name": "Bishop",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Mescal"
+  }, {
+    "parts": 1,
+    "name": "Frangelico"
+  }, {
+    "parts": 1,
+    "name": "Galliano"
+  }, {
+    "parts": 3,
+    "name": "Cola"
+  }]
+}, {
+  "total_oz": 2.75,
+  "drink_name": "Optimus Prime",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 3,
+    "name": "Rum"
+  }, {
+    "parts": 1,
+    "name": "Campari"
+  }, {
+    "parts": 1,
+    "name": "Agave Syrup"
+  }]
+}, {
+  "total_oz": 3.5,
+  "drink_name": "Baymax",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 3,
+    "name": "Gin"
+  }, {
+    "parts": 1,
+    "name": "Galliano"
+  }, {
+    "parts": 2,
+    "name": "Soda"
+  }, {
+    "drops": 2,
+    "name": "Rose"
+  }]
+}, {
+  "total_oz": 5,
+  "drink_name": "BB-8",
+  "categories": ["Robot Inspired", "Non-Alcoholic"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Orange Juice"
+  }, {
+    "parts": 1,
+    "name": "Lime Juice"
+  }, {
+    "parts": 1,
+    "name": "Grenadine"
+  }, {
+    "parts": 3,
+    "name": "Soda"
+  }]
+}, {
+  "total_oz": 3.5,
+  "drink_name": "GlaDOS",
+  "categories": ["Robot Inspired"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Rye"
+  }, {
+    "parts": 1,
+    "name": "Kahlua"
+  }, {
+    "parts": 2,
+    "name": "Cola"
+  }, {
+    "drops": 3,
+    "name": "Angostura Bitters"
   }]
 }]

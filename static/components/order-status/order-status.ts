@@ -129,9 +129,8 @@ class OrderStatusService {
   orders: Order[];
   showing: boolean;
 
-  constructor(private $cookies: angular.cookies.ICookiesService,
-              private $http: ng.IHttpService,
-              private $httpParamSerializer: ng.IHttpRequestTransformer) {
+
+  constructor(private $cookies: angular.cookies.ICookiesService) {
     this.showing = true;
     this.orders = this.$cookies.getObject(OrderStatusService.COOKIE_NAME) || [];
   }

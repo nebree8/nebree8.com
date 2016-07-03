@@ -24,10 +24,22 @@
           $scope.config = data;
         });
       }
-
+      $scope.reset = function () {
+        $http({
+          'method': 'POST',
+          'url': '/api/set_config',
+          'params': {'reset': true}
+        }).success(function(data) {
+          $scope.refresh();
+        });
+      }
       $scope.refresh();
     }]);
   </script>
+
+  <style>
+  button { margin-bottom: 2em; }
+  </style>
 <body ng-controller="n8AdminCtrl">
   <button ng-click="refresh()">Refresh</button>
   <h2>Config</h2>
@@ -39,5 +51,7 @@
       </label>
   </ul>
   <button ng-click="save()">Save</button>
+  <br><br>
+  <button ng-click="reset()">Reset to default</button>
 </body>
 </html>

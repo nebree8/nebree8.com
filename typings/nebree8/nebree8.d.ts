@@ -6,6 +6,7 @@ interface Ingredient {
 
 interface Recipe {
   drink_name: string;
+  categories: Array<string>;
   ingredients: Array<Ingredient>;
   total_oz: number;
 }

@@ -12,10 +12,10 @@ class RandomDrinkService {
   private ALL_INGREDIENTS: {[name: string]: number[]} = {
     "agave syrup": [0, 1, 0, 0, 0],
     "amaretto": [0.5, 0.5, 0, 0, 0],
-    "angostura bitters": [0, 0, 0, 1, 0],
+    "angostura bitters": [0, 0, 0, 0.5, 0],
     "bourbon": [1, 0, 0, 0, 0],
     "campari": [0.5, 0.5, 0, 1, 0],
-    "chocolate bitters": [0, 0, 0, 1, 0],
+    "chocolate bitters": [0, 0, 0, 0.5, 0],
     "cola": [0, 0.5, 0.3, 0, 1],
     "dry vermouth": [0.5, 0.5, 0, 0.5, 0],
     "frangelico": [0.5, 0.5, 0, 0, 0],
@@ -27,11 +27,13 @@ class RandomDrinkService {
     "lemon juice": [0, 0, 1, 0, 0],
     "lime juice": [0, 0, 1, 0, 0],
     "maple syrup": [0, 1, 0, 0, 0],
-    "orange bitters": [0, 0, 0, 1, 0],
+    "mescal": [1, 0, 0, 0, 0],
+    "orange bitters": [0, 0, 0, 0.5, 0],
     "orange juice": [0, 0.8, 0.25, 0, 0],
     "peach schnapps": [0.5, 0.5, 0, 0, 0],
-    "peychauds bitters": [0, 0, 0, 1, 0],
+    "peychauds bitters": [0, 0, 0, 0.5, 0],
     "pimms": [0.5, 0.5, 0, 0, 0],
+    "rose": [0, 0, 0, 0.5, 0],
     "rum": [1, 0, 0, 0, 0],
     "rye": [1, 0, 0, 0, 0],
     "scotch": [1, 0, 0, 0, 0],
@@ -51,15 +53,13 @@ class RandomDrinkService {
               DrinksService: DrinksService) {
     this.INGREDIENTS = DrinksService.pantry.then((pantry) => {
       var result: IngredientInfo[] = [];
-      for (var name in this.ALL_INGREDIENTS) {
-        if (Object.prototype.hasOwnProperty.call(this.ALL_INGREDIENTS, name)) {
-          if (pantry.hasIngredient(name)) {
-            result.push({'name': name, 'weights': this.ALL_INGREDIENTS[name]});
-          } else {
-            console.log('Dropping ingredient ' + name)
-          }
+      angular.forEach(pantry.ingredients, (available, name) => {
+        if (typeof this.ALL_INGREDIENTS[name] == 'undefined') {
+          console.log("Missing random weights for ingredient", name);
+        } else if (available) {
+          result.push({'name': name, 'weights': this.ALL_INGREDIENTS[name]});
         }
-      }
+      });
       return result;
     });
   }
