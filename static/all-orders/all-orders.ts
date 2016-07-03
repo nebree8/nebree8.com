@@ -7,6 +7,15 @@ class AllOrdersCtrl {
     this.svc = OrderStatusService;
   };
 
+  dismiss(o: Order, toDirection: string) {
+    this.svc.cancel(o);
+    var card = document.querySelector('[data-order-id="' + o.id + '"]');
+    card.classList.add('exit-' + toDirection);
+    window.setTimeout(function() {
+      card.parentNode.removeChild(card)
+    }, 400);
+  }
+  
   back() {
     this.$location.path('/drinks');
   }

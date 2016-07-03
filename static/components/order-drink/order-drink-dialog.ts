@@ -3,7 +3,7 @@ class OrderDrinkDialogCtrl {
   userName: string;
   recipe: Recipe;  // Set in bindToController/locals.
   
-  constructor(private $mdDialog: ng.material.IDialogService
+  constructor(private $mdDialog: ng.material.IDialogService,
               private DrinksService: DrinksService) {}
 
   submitDialog() {

@@ -85,7 +85,10 @@ class OrderStatusCtrl {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       transformRequest: this.$httpParamSerializer,
     }).then(
-      () => this.$mdToast.showSimple("Rating saved!"),
+      () => {
+        this.$mdToast.showSimple("Rating saved! Swipe to dismiss.");
+        this.svc.save();
+      },
       () => {
         this.$mdToast.showSimple(
             "Your rating was not saved. Please try again.");
@@ -140,7 +143,7 @@ class OrderStatusService {
     this.orders.push(o);
     this.save();
   }
-
+  
   cancel(o: Order) {
     for(var i=0; i < this.orders.length; i++) {
       var order = this.orders[i];
@@ -160,7 +163,7 @@ angular.module('nebree8.order-status', ['ngCookies'])
     controller: OrderStatusCtrl,
     controllerAs: 'ctrl',
     bindings: {
-      order: '<',
+      order: '=',
       showAllOrders: '<',
     }
   })

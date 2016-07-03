@@ -13,9 +13,25 @@
     <div ng-if="ctrl.order_status.approved && ctrl.order_status.progress_percent <= 0">
       <div class="queue"><span class="queue-position">{{ctrl.queuePosAsOrdinal().q}}<sup>{{ctrl.queuePosAsOrdinal().suffix}}</sup></span> in the queue</div>
     </div>
-    <div ng-if="ctrl.order_status.progress_percent > 0" class="order-progress">
+    <div ng-if="ctrl.order_status.progress_percent > 0 &&
+                !ctrl.order_status.done" class="order-progress">
       <p class="order-state">Your drink is being made right now!</p>
-      <md-progress-linear md-mode="determinate" value="{{ctrl.order_status.progress_percent}}"></md-progress-linear>
+      <md-progress-linear ng-if="ctrl.order_status.progress_percent < 100"
+                          md-mode="determinate"
+                          value="{{ctrl.order_status.progress_percent}}">
+      </md-progress-linear>
+    </div>
+    <div ng-if="ctrl.order_status.done">
+      <p class="order-state order-done">Your drink is done! How is it?</p>
+      <span layout="row" layout-align="space-between center"
+            class="rating" ng-class="{'unrated': !ctrl.order.rating}">
+        <div class="star-cont" ng-repeat="i in [1, 2, 3, 4, 5]" flex>
+          <button ng-click="ctrl.rate(i)"
+                  ng-class="i <= (ctrl.order.rating||0) ? 'filled' : 'empty'">
+            {{ i <= (ctrl.order.rating || 0) ? "&#x2605;" : "&#x2606;" }}
+          </button>
+        </div>
+      </span>
     </div>
   </div>
   <div layout="row" layout-align="space-around center">

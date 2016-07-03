@@ -96,6 +96,10 @@ order-status .rating button {
   width: 30px;
 }
 
+.star-cont {
+  text-align: center;
+}
+
 order-status .rating .filled {
   color: #FBB608;
 }
@@ -156,6 +160,11 @@ order-status h3 {
   margin: 10px 0;
 }
 
+.order-state.order-done {
+  margin-bottom: 30px;
+}
+
+
 .queue {
   margin-bottom: 20px;
   text-align: center;
@@ -184,6 +193,22 @@ order-status h3 {
   width: 90%;
 }
 
+.all-orders-card.exit-left {
+  animation: from-right 0.5s forwards;
+  -webkit-animation: from-right 0.5s forwards;
+}
+
+.all-orders-card.exit-right {
+  animation: from-left 0.5s forwards;
+  -webkit-animation: from-left 0.5s forwards;
+}
+
+
 md-dialog .md-dialog-content {
   padding: 6px;
+}
+
+md-dialog {
+  max-height: 90%;
+  max-width: 90%;
 }
