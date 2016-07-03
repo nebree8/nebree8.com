@@ -8,6 +8,9 @@ class AllOrdersCtrl {
   };
 
   dismiss(o: Order, toDirection: string) {
+    if (!o.done) {
+      return;
+    }
     this.svc.cancel(o);
     var card = document.querySelector('[data-order-id="' + o.id + '"]');
     card.classList.add('exit-' + toDirection);

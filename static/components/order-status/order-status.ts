@@ -30,6 +30,7 @@ class OrderStatusCtrl {
       this.order_status = response.data;
       if (this.order_status.done) {
         this.$interval.cancel(this.status_interval);
+        this.order.done = true;
       }
     });
   }
