@@ -21,6 +21,7 @@ type Config struct {
 
 var defaultConfig = Config{
 	Ingredients: []IngredientAvailability{
+		{Name: "absinthe", Available: true},
 		{Name: "agave syrup", Available: true},
 		{Name: "amaretto", Available: false},
 		{Name: "angostura bitters", Available: true},
@@ -37,18 +38,18 @@ var defaultConfig = Config{
 		{Name: "kahlua", Available: true},
 		{Name: "lemon juice", Available: true},
 		{Name: "lime juice", Available: true},
-		{Name: "maple syrup", Available: false},
+		{Name: "maple syrup", Available: true},
 		{Name: "mescal", Available: true},
 		{Name: "orange bitters", Available: false},
 		{Name: "orange juice", Available: true},
-		{Name: "peach schnapps", Available: false},
+		{Name: "peach schnapps", Available: true},
 		{Name: "peppermint schnapps", Available: false},
-		{Name: "peychauds bitters", Available: false},
-		{Name: "pimms", Available: false},
+		{Name: "peychauds bitters", Available: true},
+		{Name: "pimms", Available: true},
 		{Name: "rum", Available: true},
 		{Name: "rose", Available: true},
 		{Name: "rye", Available: true},
-		{Name: "scotch", Available: false},
+		{Name: "scotch", Available: true},
 		{Name: "simple syrup", Available: true},
 		{Name: "soda", Available: true},
 		{Name: "sweet vermouth", Available: true},
@@ -56,7 +57,7 @@ var defaultConfig = Config{
 		{Name: "tonic", Available: true},
 		{Name: "triple sec", Available: true},
 		{Name: "vodka", Available: true},
-		{Name: "water", Available: true},
+		{Name: "water", Available: false},
 	},
 }
 
