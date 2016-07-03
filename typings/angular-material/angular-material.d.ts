@@ -18,6 +18,7 @@ declare module angular.material {
         controllerAs?: string;
         bindToController?: boolean;
         parent?: string|Element|JQuery; // default: root node
+        clickOutsideToClose?: boolean;
         disableParentScroll?: boolean; // default: true
     }
 
@@ -29,7 +30,7 @@ declare module angular.material {
 
     interface IPresetDialog<T> {
         title(title: string): T;
-        textContent(textContent: string): T;
+        content(textContent: string): T;
         htmlContent(htmlContent: string): T;
         ok(ok: string): T;
         theme(theme: string): T;

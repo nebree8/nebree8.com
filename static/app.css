@@ -26,13 +26,15 @@
 }
 
 .page-detail.ng-enter,
-.page-about.ng-enter {
+.page-about.ng-enter,
+.all-orders.ng-enter {
   animation: from-right 0.5s forwards;
   -webkit-animation: from-right 0.5s forwards;
 }
 
 .page-detail.ng-leave,
-.page-about.ng-leave {
+.page-about.ng-leave,
+.all-orders.ng-leave {
   animation: from-right 0.5s reverse forwards;
   -webkit-animation: from-right 0.5s reverse forwards;
 }
@@ -75,22 +77,6 @@ order-status {
   width: 100%;
 }
 
-order-status md-content {
-  -webkit-box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
-  -moz-box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
-  box-shadow: 0px -2px 5px 5px rgba(0,0,0,0.11);
-
-  -webkit-transition: -webkit-transform 0.7s;
-  -moz-transition: -moz-transition 0.7s;
-  transition: transform 0.7s;
-}
-
-order-status md-content.no-orders {
-  -webkit-transform: translateY(200%);
-  -moz-transform: translateY(200%);
-  transform: translateY(200%);
-}
-
 order-status .ingredients-list {
   text-transform: capitalize;
 }
@@ -110,6 +96,10 @@ order-status .rating button {
   width: 30px;
 }
 
+.star-cont {
+  text-align: center;
+}
+
 order-status .rating .filled {
   color: #FBB608;
 }
@@ -125,4 +115,100 @@ order-status .rating.unrated .empty {
 md-card.about {
   max-width: 400px;
   margin: auto;
+}
+
+.orders-btn-cont {
+  bottom: 8px;
+  position: fixed;
+  width: 100%;
+}
+
+.orders-btn {
+  display: block;
+  margin: auto;
+}
+
+.order-status-sheet {
+  padding-bottom: 20px;
+  transform: none;
+}
+
+order-status {
+  position: relative;
+}
+
+order-status h3 {
+  color: rgba(0,0,0,0.87);
+  margin: 10px 0 0;
+}
+
+.order-status-wrapper {
+  width: 100%;
+}
+
+.order-state,
+.order-action,
+.queue {
+  color: rgba(0,0,0,0.54);
+}
+
+.order-state {
+  margin: 0;
+}
+
+.order-action {
+  margin: 10px 0;
+}
+
+.order-state.order-done {
+  margin-bottom: 30px;
+}
+
+
+.queue {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.queue-position {
+  font-size: 24px;
+}
+
+.queue-position sup {
+  font-size: 18px;
+}
+
+.order-progress {
+  padding-bottom: 10px;
+}
+
+.order-progress md-progress-linear {
+  margin-top: 10px;
+}
+
+.all-orders-card {
+  margin: 10px auto;
+  padding: 6px;
+  min-height: 150px;
+  width: 90%;
+}
+
+.all-orders-card.exit-left {
+  animation: from-right 0.5s forwards;
+  -webkit-animation: from-right 0.5s forwards;
+}
+
+.all-orders-card.exit-right {
+  animation: from-left 0.5s forwards;
+  -webkit-animation: from-left 0.5s forwards;
+}
+
+
+md-dialog .md-dialog-content {
+  padding: 6px;
+}
+
+md-dialog {
+  max-height: 90%;
+  max-width: 90%;
 }

@@ -1,23 +1,45 @@
-<md-content flex layout-padding ng-class="{'no-orders': ctrl.svc.orders.length == 0}">
-  <div ng-repeat="order in ctrl.svc.orders" layout="row">
-    <md-list flex="50">
-      <md-list-item class="md-2-line">
-        <div class="md-list-item-text">
-          <h3 layout="row">
-            {{order.drink_name}} for {{order.user_name}}
-          </h3>
-          <p class="ingredients-list">{{ctrl.ingredientsCsv(order)}}</p>
-        </div>
-      </md-list-item>
-    </md-list>
-    <span flex="50" layout="row" layout-align="space-between center" class="rating" ng-class="{'unrated': !order.rating}">
-      <div ng-repeat="i in [1, 2, 3, 4, 5]" flex>
-        <button
-                ng-click="ctrl.rate(order, i)"
-                ng-class="i <= (order.rating||0) ? 'filled' : 'empty'">
-          {{ i <= (order.rating || 0) ? "&#x2605;" : "&#x2606;" }}
-        </button>
-      </div>
-    </span>
+<div class="order-status-wrapper" layout="column">
+  <h3>
+    {{ctrl.order.drink_name}} for {{ctrl.order.user_name}}
+  </h3>
+  <div ng-if="!ctrl.order_status" layout="row" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
   </div>
-</md-content>
+  <div ng-if="ctrl.order_status">
+    <div ng-if="!ctrl.order_status.approved">
+      <p class="order-state">Order awaiting approval</p>
+      <p class="order-action">Give your name to a specialist</p>
+    </div>
+    <div ng-if="ctrl.order_status.approved && ctrl.order_status.progress_percent <= 0">
+      <div class="queue"><span class="queue-position">{{ctrl.queuePosAsOrdinal().q}}<sup>{{ctrl.queuePosAsOrdinal().suffix}}</sup></span> in the queue</div>
+    </div>
+    <div ng-if="ctrl.order_status.progress_percent > 0 &&
+                !ctrl.order_status.done" class="order-progress">
+      <p class="order-state">Your drink is being made right now!</p>
+      <md-progress-linear ng-if="ctrl.order_status.progress_percent < 100"
+                          md-mode="determinate"
+                          value="{{ctrl.order_status.progress_percent}}">
+      </md-progress-linear>
+    </div>
+    <div ng-if="ctrl.order_status.done">
+      <p class="order-state order-done">Your drink is done! How is it?</p>
+      <span layout="row" layout-align="space-between center"
+            class="rating" ng-class="{'unrated': !ctrl.order.rating}">
+        <div class="star-cont" ng-repeat="i in [1, 2, 3, 4, 5]" flex>
+          <button ng-click="ctrl.rate(i)"
+                  ng-class="i <= (ctrl.order.rating||0) ? 'filled' : 'empty'">
+            {{ i <= (ctrl.order.rating || 0) ? "&#x2605;" : "&#x2606;" }}
+          </button>
+        </div>
+      </span>
+    </div>
+  </div>
+  <div layout="row" layout-align="space-around center">
+    <md-button ng-if="ctrl.order_status &&
+                      ctrl.showAllOrders && ctrl.svc.orders.length > 1"
+               ng-click="ctrl.allOrders()">All orders</md-button>
+    <md-button ng-if="ctrl.orderCanCancel()" class="md-primary" ng-click="ctrl.cancelOrder()">
+      Cancel order
+    </md-button>
+  </div>
+</div>

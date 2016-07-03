@@ -1,0 +1,38 @@
+<md-dialog aria-label="Enter your name">
+  <form name="ctrl.orderForm" novalidate ng-submit="ctrl.submitDialog()">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Name for order?</h2>
+        <span flex></span>
+        <md-button type="button" class="md-icon-button" ng-click="ctrl.cancelDialog()">
+          <md-icon md-svg-src="icons/ic_close_white_24px.svg"
+              aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content">
+      <md-list class="drink-list">
+        <md-list-item class="md-2-line">
+          <img ng-src="thumbs/{{ctrl.slugify()}}.jpg" class="md-avatar">
+          <div class="md-list-item-text">
+            <h3>{{ctrl.recipe.drink_name}}</h3>
+            <p>{{ctrl.ingredientsCsv(recipe)}}</p>
+          </div>
+        </md-list-item>
+      </md-list>
+
+      <md-input-container>
+        <label>Your Name</label>
+        <input type="text" name="userName" ng-model="ctrl.userName"
+               md-autofocus required>
+      </md-input-container>
+    </md-dialog-content>
+    <div class="md-actions">
+      <md-button type="button" ng-click="ctrl.cancelDialog()">Cancel</md-button>
+      <md-button type="submit" class="md-primary"
+          ng-disabled="!ctrl.orderForm.$valid">
+        Order Drink
+      </md-button>
+    </div>
+  </form>
+</md-dialog>
