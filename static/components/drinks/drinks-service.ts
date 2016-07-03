@@ -33,6 +33,7 @@ class DrinksService {
   db: ng.IPromise<Recipe[][]>;
   pantry: ng.IPromise<Pantry>;
   CATEGORY_ORDER: string[] = [
+    'Featured',
     'Robot Inspired',
     'Classic Cocktails',
     'Non-Alcoholic',

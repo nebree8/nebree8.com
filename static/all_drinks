@@ -22,6 +22,20 @@
   }]
 }, {
   "total_oz": 2.5,
+  "drink_name": "Tequila Sunrise",
+  "categories": ["Classic Cocktails"],
+  "ingredients": [{
+    "parts": 3,
+    "name": "Tequila"
+  }, {
+    "parts": 2,
+    "name": "Orange Juice"
+  }, {
+    "parts": 1,
+    "name": "Grenadine"
+  }]
+}, {
+  "total_oz": 2.5,
   "drink_name": "Old Fashioned",
   "categories": ["Classic Cocktails"],
   "ingredients": [{
@@ -121,7 +135,7 @@
 }, {
   "total_oz": 5.0,
   "drink_name": "Americano",
-  "categories": ["Classic Cocktails"],
+  "categories": ["Classic Cocktails", "Featured"],
   "ingredients": [{
     "parts": 1,
     "name": "Campari"
@@ -293,7 +307,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Kamikaze",
-  "categories": ["Classic Cocktails"],
+  "categories": ["Classic Cocktails", "Featured"],
   "ingredients": [{
     "parts": 1,
     "name": "Vodka"
@@ -463,7 +477,7 @@
 }, {
   "total_oz": 5,
   "drink_name": "C-3PO",
-  "categories": ["Robot Inspired"],
+  "categories": ["Robot Inspired", "Featured"],
   "ingredients": [{
     "parts": 2,
     "name": "Gin"
@@ -483,7 +497,7 @@
 }, {
   "total_oz": 1.75,
   "drink_name": "R2-D2",
-  "categories": ["Robot Inspired"],
+  "categories": ["Robot Inspired", "Featured"],
   "ingredients": [{
     "parts": 1,
     "name": "Tequila"
@@ -520,7 +534,7 @@
   "categories": ["Robot Inspired"],
   "ingredients": [{
     "parts": 4,
-    "name": "Vodka"
+    "name": "Absinthe"
   }, {
     "parts": 1,
     "name": "Simple Syrup"
@@ -571,7 +585,7 @@
     "name": "Gin"
   }, {
     "parts": 1,
-    "name": "Galliano"
+    "name": "Absinthe"
   }, {
     "parts": 2,
     "name": "Soda"
@@ -599,7 +613,7 @@
 }, {
   "total_oz": 3.5,
   "drink_name": "GlaDOS",
-  "categories": ["Robot Inspired"],
+  "categories": ["Robot Inspired", "Featured"],
   "ingredients": [{
     "parts": 2,
     "name": "Rye"
@@ -613,4 +627,22 @@
     "drops": 3,
     "name": "Angostura Bitters"
   }]
-}]
+},  {
+  "total_oz": 2.5,
+  "drink_name": "Sazerac",
+  "categories": ["Classic Cocktails", "Featured"],
+  "ingredients": [{
+    "parts": 5,
+    "name": "Rye"
+  }, {
+    "parts": 1,
+    "name": "Absinthe"
+  }, {
+    "parts": 1,
+    "name": "Simple Syrup"
+  }, {
+    "drops": 2,
+    "name": "Peychauds Bitters"
+  }]
+}
+]
