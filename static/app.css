@@ -212,3 +212,20 @@ md-dialog {
   max-height: 90%;
   max-width: 90%;
 }
+
+/* Styles for admin */
+.admin-queue-position {
+  border: 2px solid #000;
+  font-weight: bold;
+  line-height: 42px;
+  text-align: center;
+}
+
+.admin-order-list md-list-item {
+  margin-top: 20px;
+}
+
+.admin-order-list .md-avatar {
+  margin-right: 8px;
+  margin-left: 8px;
+}
