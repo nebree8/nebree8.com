@@ -175,9 +175,7 @@ func orderStatus(w http.ResponseWriter, r *http.Request) {
 	status.Approved = order.Approved
 
 	keys, err := unpreparedDrinkQueryNewestFirst().KeysOnly().GetAll(c, nil)
-	c.Debugf("keys is %s long", len(keys))
 	for i, k := range keys {
-		c.Debugf("The key, i: %s %s %s", k, key, i)
 		if k.Equal(key) {
 			status.QueuePosition = i + 1
 			break
@@ -219,8 +217,20 @@ func finishedDrink(w http.ResponseWriter, r *http.Request) {
 }
 
 func approveDrink(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	var is_approved bool
+	if (r.FormValue("approved") == "true") {
+		is_approved = true
+	} else if (r.FormValue("approved") == "false") {
+		is_approved = false;
+	} else {
+		c.Infof("Bad value \"%v\" for approved", r.FormValue("approved"))
+		http.Error(w, "Form value 'approved' must be one of: 'true', 'false'",
+			http.StatusBadRequest)
+		return
+	}
 	mutateAndReturnOrder(w, r, func(o *Order) error {
-		o.Approved = true
+		o.Approved = is_approved
 		return nil
 	})
 }
@@ -234,8 +244,14 @@ func cancelDrink(w http.ResponseWriter, r *http.Request) {
 }
 
 func archiveDrink(w http.ResponseWriter, r *http.Request) {
+	var archiveTime time.Time
+	if (r.FormValue("archive") == "true") {
+		archiveTime = ArchivedByStaff;
+	} else if (r.FormValue("archive") == "false") {
+		archiveTime = time.Time{}
+	}
 	mutateAndReturnOrder(w, r, func(o *Order) error {
-		o.DoneTime = ArchivedByStaff;
+		o.DoneTime = archiveTime;
 		return nil
 	})
 }
