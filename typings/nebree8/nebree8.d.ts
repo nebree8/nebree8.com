@@ -38,6 +38,7 @@ interface OrderDrinkResponse {
 interface OrderStatusResponse {
   approved: boolean;
   done: boolean;
+  archived: boolean;
   queue_position: number;
   progress_percent: number;
 }

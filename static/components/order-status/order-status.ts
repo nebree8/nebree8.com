@@ -31,6 +31,9 @@ class OrderStatusCtrl {
       if (this.order_status.done) {
         this.$interval.cancel(this.status_interval);
         this.order.done = true;
+      } else if (this.order_status.archived) {
+        this.$interval.cancel(this.status_interval);
+        this.svc.cancel(this.order);
       }
     });
   }
