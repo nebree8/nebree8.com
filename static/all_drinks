@@ -380,7 +380,7 @@
   }]
 }, {
   "total_oz": 2.75,
-  "drink_name": "Virgin Lemonade",
+  "drink_name": "Virgin Lemonade (Non-Alcoholic)",
   "categories": ["Classic Cocktails", "Non-Alcoholic"],
   "ingredients": [{
     "parts": 1,
@@ -391,7 +391,7 @@
   }]
 }, {
   "total_oz": 2.75,
-  "drink_name": "Grenadine Punch",
+  "drink_name": "Grenadine Punch (Non-Alcoholic)",
   "categories": ["Classic Cocktails", "Non-Alcoholic"],
   "ingredients": [{
     "parts": 2,
@@ -442,7 +442,7 @@
   }]
 }, {
   "total_oz": 5,
-  "drink_name": "Wall-E",
+  "drink_name": "Wall-E (Non-Alcoholic)",
   "categories": ["Robot Inspired", "Non-Alcoholic"],
   "ingredients": [{
     "parts": 3,
@@ -595,7 +595,7 @@
   }]
 }, {
   "total_oz": 5,
-  "drink_name": "BB-8",
+  "drink_name": "BB-8 (Non-Alcoholic)",
   "categories": ["Robot Inspired", "Non-Alcoholic"],
   "ingredients": [{
     "parts": 2,
