@@ -3,8 +3,16 @@ class AllOrdersCtrl {
   svc: OrderStatusService;
   
   constructor(private OrderStatusService: OrderStatusService,
-              private $location: angular.ILocationService) {
+              private $location: angular.ILocationService,
+              private $scope: angular.IScope) {
     this.svc = OrderStatusService;
+    this.$scope.$watch(() => {
+      return this.svc.orders.length;
+    }, (newOrderLength) => {
+      if (newOrderLength < 1) {
+        this.$location.path('/all-drinks');
+      }
+    });
   };
 
   dismiss(o: Order, toDirection: string) {

@@ -39,6 +39,7 @@ type Order struct {
 type OrderStatus struct {
   Approved        bool         `json:"approved"`
 	Done            bool         `json:"done"`
+	Archived        bool         `json:"archived"`
 	QueuePosition   int          `json:"queue_position"`
   ProgressPercent int          `json:"progress_percent"`
 }
@@ -170,7 +171,11 @@ func orderStatus(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var status OrderStatus
-	status.Done = !order.DoneTime.IsZero()
+	if (order.DoneTime.Equal(ArchivedByStaff)) {
+		status.Archived = true
+	} else if (!order.DoneTime.IsZero()) {
+		status.Done = true  // Technically this includes 'cancelled' as well.
+	}
 	status.ProgressPercent = order.ProgressPercent
 	status.Approved = order.Approved
 
