@@ -5,14 +5,14 @@ class OrderDrinkService {
 
   showOrderDrinkDialog(event: MouseEvent, recipe: Recipe) {
     return this.$mdDialog.show(<ng.material.IDialogOptions>{
-      clickOutsideToClose: true,
       controller: 'OrderDrinkDialogCtrl',
       controllerAs: 'ctrl',
       locals: {
         recipe: recipe
       },
       bindToController: true,
-      escapeToClose: true,
+      clickOutsideToClose: false,
+      escapeToClose: false,
       hasBackdrop: true,
       targetEvent: event,
       templateUrl: 'components/order-drink/order-drink-dialog.html',
