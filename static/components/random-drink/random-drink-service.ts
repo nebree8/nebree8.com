@@ -48,6 +48,14 @@ class RandomDrinkService {
   };
   private INGREDIENTS: ng.IPromise<IngredientInfo[]>;
 
+  // Array of divisor and probability. If we fall off the end, assume 1.0.
+  private PROPORTION_PROBABILITIES = [
+    [2, .2],
+    [3, .05],
+    [4, .05],
+  ];
+  private MIN_PROPORTION = .25;
+
   constructor(private $q: angular.IQService,
               $rootScope: angular.IRootScopeService,
               DrinksService: DrinksService) {
@@ -91,38 +99,53 @@ class RandomDrinkService {
     return s;
   }
 
+  private chooseProportion(amount: number): number {
+    if (amount < this.MIN_PROPORTION) return amount; // Never increase value.
+    var r = Math.random();
+    for (var i = 0; i < this.PROPORTION_PROBABILITIES.length; i++) {
+      var p = this.PROPORTION_PROBABILITIES[i];
+      if (r < p[1]) {
+        var reduced = amount / p[0];
+        return reduced < this.MIN_PROPORTION ? this.MIN_PROPORTION : reduced;
+      }
+      r -= p[1];
+    }
+    return amount;
+  }
+
   private chooseRandomIngredients(ingredients: IngredientInfo[],
                                   weights: number[]): Ingredient[] {
     if (weights.length !== 5) {
       console.log("Bad weights provided: ", weights);
     }
     if (this.is_all_zeros(weights)) { return []; } /* Finished */
-    var candidates = ingredients.filter(function(ingredient) {
-      for (var j = 0; j < weights.length; j++) {
-        if (weights[j] == 0 && ingredient.weights[j] > 0) return false;
-      }
-      return true;
-    })
-    if (candidates.length == 0) return null;  /* Won't work */
-    this.shuffle(candidates);
-    for (var i = 0; i < candidates.length; i++) {
-      var name = candidates[i].name;
-      var ingredient_weights = candidates[i].weights;
+    for (var i = 0; i < ingredients.length; i++) {
+      var name = ingredients[i].name;
+      var ingredient_weights = ingredients[i].weights;
       /* Figure out the maximum amount we can add without going over any weight */
       var amount = 1000;
       for (var j = 0; j < weights.length; j++) {
         if (ingredient_weights[j] == 0) continue;
         var amount_j = weights[j] / ingredient_weights[j];
-        if (amount_j < amount) amount = amount_j;
+        if (amount_j < amount) {
+          amount = amount_j;
+        }
       }
-      /* Calculate the new weights = weights - amount * ingredient_weights */
-      var new_weights = new Array(weights.length);
-      for (var j = 0; j < weights.length; j++) {
-        new_weights[j] = weights[j] - amount * ingredient_weights[j];
-      }
-      /* Recursively find ingredients to fill the remaining weights */
-      var remaining_ingredients = this.chooseRandomIngredients(ingredients,
-                                                               new_weights);
+      if (amount == 0) continue;
+      var original_amount = amount;
+      amount = this.chooseProportion(amount);
+      do {
+        /* Calculate the new weights = weights - amount * ingredient_weights */
+        var new_weights = new Array(weights.length);
+        for (var j = 0; j < weights.length; j++) {
+          new_weights[j] = weights[j] - amount * ingredient_weights[j];
+        }
+        /* Recursively find ingredients to fill the remaining weights */
+        var remaining_ingredients = this.chooseRandomIngredients(
+          ingredients.slice(i + 1), new_weights);
+        if (remaining_ingredients !== null || amount == original_amount) break;
+        amount = original_amount; // Try again with the full proportion.
+      } while (true);
       if (remaining_ingredients == null) {
         continue;  // This ingredient won't work.
       }
@@ -138,8 +161,22 @@ class RandomDrinkService {
     return null;  /* We failed to find ingredients to satisfy weights */
   }
 
-  createDrink(name: string, weights: number[]): ng.IPromise<Recipe> {
+  private format(r: Recipe): string {
+    var s = r.drink_name + "(" + r.total_oz + " oz): ";
+    for (var i = 0; i < r.ingredients.length; i++) {
+      var ingredient = r.ingredients[i];
+      s += "\n";
+      if (ingredient.drops) s += ingredient.drops + " drops ";
+      else s += ingredient.parts + " parts ";
+      s += ingredient.name;
+    }
+    return s;
+  }
+
+  private createInternal(name: string, weights: number[]): ng.IPromise<Recipe> {
     return this.INGREDIENTS.then((possible_ingredients) => {
+      possible_ingredients = possible_ingredients.slice(0);
+      this.shuffle(possible_ingredients);
       var ingredients = this.chooseRandomIngredients(possible_ingredients,
                                                      weights);
       var total_oz = 5;
@@ -151,12 +188,39 @@ class RandomDrinkService {
       if (ingredients === null) {
         return this.$q.reject("Couldn't find a recipe.");
       }
-      return {
+      var r: Recipe = {
         drink_name: name,
+        categories: [],
         ingredients: ingredients,
         total_oz: total_oz,
       };
+      console.log(this.format(r));
+      return r;
     });
+  }
+
+  createDrink(): ng.IPromise<Recipe> {
+    var name: string;
+    var weights: number[];
+    switch (Math.floor(Math.random() * 4)) {
+      case 0:
+        name = 'Random Sour';
+        weights = [2, 1, 1, 0, 0];
+        break;
+      case 1:
+        name = 'Random Spirituous';
+        weights = [4, 1, 0, 1, 0];
+        break;
+      case 2:
+        name = 'Random Bubbly Spirituous';
+        weights = [4, 1, 0, 1, 1];
+        break;
+      case 3:
+        name = 'Random Bubbly Sour';
+        weights = [2, 1, 1, 0, 1];
+        break;
+    }
+    return this.createInternal(name, weights);
   }
 }
 
