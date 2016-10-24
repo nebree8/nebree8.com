@@ -43,8 +43,21 @@ class DrinkListCtrl {
     this.state.query = '';
   };
 
-  randomDrink() {
-    this.$location.path('/drinks/random');
+  randomDrink(event: MouseEvent) {
+    var dialogPromise = this.OrderDrinkService.showOrderRandomDrinkDialog(
+      event);
+    dialogPromise.then((orderParams: any) => {
+      return this.OrderDrinkService.sendOrder(
+        orderParams.recipe, orderParams.userName);
+    }).then((o: Order) => {
+      this.OrderStatusService.add(o);
+      this.$mdDialog.hide();
+      this.$location.path('/all-orders');
+    }).catch((response: ng.IHttpPromiseCallbackArg<string>) => {
+      this.$mdToast.show(this.$mdToast.simple().
+                         content('Error: ' + response.data).
+                         action("OK").hideDelay(10000));
+    });
   };
 
   gotoAllDrinks() {
@@ -69,7 +82,8 @@ class DrinkListCtrl {
 }
 
 angular.module('nebree8.drink-list',
-               ['nebree8.drinks', 'nebree8.drink-list.state'])
+               ['nebree8.drinks', 'nebree8.drink-list.state',
+                'nebree8.order-drink'])
   .config(['$routeProvider',
     function($routeProvider: angular.route.IRouteProvider) {
       $routeProvider.

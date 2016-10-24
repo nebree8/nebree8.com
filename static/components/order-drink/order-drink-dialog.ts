@@ -25,5 +25,5 @@ class OrderDrinkDialogCtrl {
   }
 }
 
-angular.module('nebree8.order-drink', ['ngMaterial'])
+angular.module('nebree8.order-drink', ['ngMaterial', 'nebree8.random-drink'])
   .controller('OrderDrinkDialogCtrl', OrderDrinkDialogCtrl)

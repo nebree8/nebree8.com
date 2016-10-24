@@ -186,7 +186,7 @@ class RandomDrinkService {
             weights[this.ALCOHOL];
       }
       if (ingredients === null) {
-        return this.$q.reject("Couldn't find a recipe.");
+        return this.$q.reject("Couldn't find a recipe."); 
       }
       var r: Recipe = {
         drink_name: name,

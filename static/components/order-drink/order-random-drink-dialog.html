@@ -1,0 +1,52 @@
+<md-dialog aria-label="Enter your name">
+  <form name="ctrl.orderForm" novalidate ng-submit="ctrl.submitDialog()">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Leave it to Chance</h2>
+        <span flex></span>
+        <md-button type="button" class="md-icon-button" ng-click="ctrl.cancelDialog()">
+          <md-icon md-svg-src="icons/ic_close_white_24px.svg"
+              aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content">
+      <md-list class="drink-list">
+        <md-list-item class="md-2-line">
+          <img ng-src="thumbs/random_sour.jpg" class="md-avatar">
+          <div class="md-list-item-text">
+            <h3>
+              <span ng-if="!ctrl.recipe">Random Drink</span>
+              <span ng-if="ctrl.recipe">{{ctrl.recipe.drink_name}}</span>
+            </h3>
+            <p ng-if="!ctrl.recipe">
+              Preview the ingredients or leave it to chance
+            </p>
+            <p ng-if="ctrl.recipe">{{ctrl.ingredientsCsv(ctrl.recipe)}}</span>
+          </div>
+        </md-list-item>
+      </md-list>
+
+      <md-input-container>
+        <label>Your Name</label>
+        <input type="text" name="userName" ng-model="ctrl.userName"
+               md-autofocus required>
+      </md-input-container>
+    </md-dialog-content>
+    <div class="md-actions">
+      <md-button type="button" ng-click="ctrl.cancelDialog()">Cancel</md-button>
+      <md-button class="md-primary"
+                 type="button"
+                 ng-click="ctrl.preview()"
+                 ng-disabled="!ctrl.orderForm.$valid">
+        <span ng-if="!ctrl.recipe">Preview</span>
+        <span ng-if="ctrl.recipe">Try again</span>
+      </md-button>
+      <md-button class="md-primary"
+                 ng-click="ctrl.orderSurprise()"
+                 ng-disabled="!ctrl.orderForm.$valid">
+        Surprise!
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

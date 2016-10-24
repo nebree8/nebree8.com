@@ -29,6 +29,17 @@
   </md-toolbar>
   <md-content class="list-content">
     <md-list class="drink-list">
+      <div>
+        <md-divider ng-hide="ctr.state.searching"></md-divider>
+        <md-subheader class="md-primary">Random Drink</md-subheader>
+        <md-list-item class="md-2-line" ng-click="ctrl.randomDrink()">
+          <img src="thumbs/random_sour.jpg" class="md-avatar">
+          <div class="md-list-item-text">
+            <h3>Random Drink</h3>
+            <p>Let us make a drink for you using <b>science!</b></p>
+          </div>
+        </md-list-item>
+      </div>
       <div ng-repeat="category in ctrl.db">
         <md-divider ng-hide="ctrl.state.searching"></md-divider>
         <md-subheader class="md-primary">{{category.name}}</md-subheader>
