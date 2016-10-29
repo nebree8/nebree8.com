@@ -10,42 +10,37 @@ function RandomName() {
 
   var NOUNS = ["patron", "benefactor", "nemesis", "ally", "pedophilia", "trap", "cup", "warmth", "winter", "spring", "fall", "summer", "regret", "rag-doll", "punk", "goth", "visigoth", "marauder", "vision", "lobster", "sunrise", "american", "local", "horror", "husband", "wife", "sweet-wine", "cocktail", "humps", "terrorist", "anarchist", "lad", "wench", "cherry", "jezebel", "thought", "wish", "wonder", "actor", "engineer", "dope", "partner", "politician", "seductress", "demon", "incubus", "succubus", "devil", "scowl", "smile", "rebel", "king", "queen", "cephalopod", "snail", "monster", "bed", "sheets", "master", "mistress", "suitor", "odyssey", "adonis", "sculpture", "wanker", "nipples", "member", "phallus", "tits", "titties", "butt", "ass", "arse", "goblet", "tankard", "vessel", "lute", "affair", "hookup", "telephone", "taunt", "orgasm", "ejaculation", "semen", "pinstripes", "candy", "victory", "loser", "nerd", "geek", "illusion", "dork", "funk", "shaft", "shorts", "music", "battle", "plan", "foreplay", "tease", "toy", "tongue", "lips", "mouth", "accessory", "gadget", "bonus", "joystick", "job", "rod", "pumpkin", "flower", "plot", "limit", "theorem", "postulation", "posture", "position", "angle", "arrangement", "book", "location", "drunk", "rapture", "proverb", "song", "songbird", "porpoise", "raven", "sex", "appeal", "obsession", "stalker", "pork", "argument", "bumpkin", "yodel", "model", "actress", "swagger", "strut", "strategy", "arousal", "muscles", "flex", "man", "sex", "sanctum", "sanctuary", "priest", "pope", "hat", "lingerie", "codpiece", "cock", "crunch", "sample", "letter", "word", "hunk", "specimen", "abs", "noodles", "cavern", "crotch", "thighs", "chest", "business", "nap", "body", "porn", "elderly", "muck", "swashbuckler", "renegade", "rogue", "rapscallion", "wanderer", "milkshake", "nectar", "honey", "sap", "brew", "potion"];
 
-  var FORMULAE_BY_WEIGHT: {[key: string]: number;} = {
-   'thing()': 1,
-   'adjective()': 1,
-   'thing() + " and " + thing()': 3,
-   'adjective() + " and " + adjective()': 2,
-   '"the " + adjective() + " and " + thing()': 1,
-   '"the " + thing() + " and the " + thing()': 1
-  };
+  var FORMULAE_BY_WEIGHT: [number, ()=>string][] = [
+    [1, () => thing()],
+    [1, () => adjective()],
+    [3, () => thing() + ' and ' + thing()],
+    [2, () => adjective() + ' and ' + adjective()],
+    [1, () => 'the ' + adjective() + ' and ' + thing()],
+    [1, () => 'the ' + thing() + ' and the ' + thing()],
+  ];
 
-  function calc_weights(formulae: {[key: string]: number; }) {
+  function calc_weights(formulae: [number, ()=>string][]):
+      [number, ()=>string][] {
     var total_weight = 0;
-    for (var key in formulae) {
-      if (!formulae.hasOwnProperty(key)) {
-        continue;
-      }
-      total_weight += formulae[key];
+    for (var i = 0; i < formulae.length; i++) {
+      total_weight += formulae[i][0];
     }
-    var stop_points: [string, number][] = [];
+    var stop_points: [number, ()=>string][] = [];
     var cumulative_total = 0;
-    for (key in formulae) {
-      if (!formulae.hasOwnProperty(key)) {
-        continue;
-      }
-      var increment = formulae[key]/total_weight;
+    for (var i = 0; i < formulae.length; i++) {
+      var increment = formulae[i][0]/total_weight;
       cumulative_total += increment;
-      stop_points.push([key, cumulative_total]);
+      stop_points.push([cumulative_total, formulae[i][1]]);
     }
     return stop_points;
   }
 
-  function invoke(weights: [string, number][]) {
+  function invoke(weights: [number, ()=>string][]) {
     var r = Math.random();
     window.console.log(r);
     for (var i = 0; i < weights.length; i++) {
-      if (r < weights[i][1]) {
-        return eval(weights[i][0]);
+      if (r < weights[i][0]) {
+        return weights[i][1]();
       }
     }
   }
