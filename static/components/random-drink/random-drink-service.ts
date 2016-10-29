@@ -74,7 +74,8 @@ class RandomDrinkService {
   private SOUR = 2;
   private BITTER = 3;
   private FIZZY = 4;
-  private ALL_INGREDIENTS: {[name: string]: number[]} = {
+  private ALL_INGREDIENTS:
+      {[name: string]: [number, number, number, number, number]} = {
     "agave syrup": [0, 1, 0, 0, 0],
     "amaretto": [0.5, 0.5, 0, 0, 0],
     "angostura bitters": [0, 0, 0, 0.5, 0],
@@ -243,7 +244,7 @@ class RandomDrinkService {
     return s;
   }
 
-  private createInternal(template_name: string, weights: number[]): ng.IPromise<Recipe> {
+  private createInternal(name: string, weights: number[]): ng.IPromise<Recipe> {
     return this.INGREDIENTS.then((possible_ingredients) => {
       possible_ingredients = possible_ingredients.slice(0);
       this.shuffle(possible_ingredients);
@@ -263,7 +264,7 @@ class RandomDrinkService {
         categories: [],
         ingredients: ingredients,
         total_oz: total_oz,
-        template_name: template_name,
+        template_name: name,
       };
       console.log(this.format(r));
       return r;
