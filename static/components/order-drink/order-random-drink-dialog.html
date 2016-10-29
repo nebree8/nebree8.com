@@ -42,10 +42,17 @@
         <span ng-if="!ctrl.recipe">Preview</span>
         <span ng-if="ctrl.recipe">Try again</span>
       </md-button>
-      <md-button class="md-primary"
+      <md-button ng-if="!ctrl.recipe"
+                 class="md-primary"
                  ng-click="ctrl.orderSurprise()"
                  ng-disabled="!ctrl.orderForm.$valid">
         Surprise!
+      </md-button>
+      <md-button ng-if="ctrl.recipe"
+                 type="submit"
+                 class="md-primary"
+                 ng-disabled="!ctrl.orderForm.$valid">
+        Order
       </md-button>
     </div>
   </form>

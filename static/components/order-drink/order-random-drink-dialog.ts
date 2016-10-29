@@ -9,23 +9,20 @@ class OrderRandomDrinkDialogCtrl {
 
   submitDialog() {
     if (this.orderForm.$valid) {
-      this.$mdDialog.hide(this.userName);
+      this.$mdDialog.hide({recipe: this.recipe, userName: this.userName});
     }
   }
   
   orderSurprise() {
     if (this.orderForm.$valid) {
-      this.RandomDrinkService.createDrink()
-        .then((recipe: any) => {
-          this.$mdDialog.hide(<any>{recipe: recipe, userName: this.userName});
-        })
+      this.RandomDrinkService.createDrink().then((recipe: Recipe) => {
+        this.$mdDialog.hide({recipe: recipe, userName: this.userName});
+      })
     }
   }
 
   preview() {
-    window.console.log('Preview');
-    this.RandomDrinkService.createDrink().then((recipe: any) => {
-      window.console.log(recipe);
+    this.RandomDrinkService.createDrink().then((recipe: Recipe) => {
       this.recipe = recipe;
     });
   }
