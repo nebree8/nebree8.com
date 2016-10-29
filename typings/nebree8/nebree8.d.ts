@@ -9,6 +9,7 @@ interface Recipe {
   categories: Array<string>;
   ingredients: Array<Ingredient>;
   total_oz: number;
+  template_name: string;
 }
 
 interface IngredientAvailability {

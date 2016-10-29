@@ -34,6 +34,7 @@ type Order struct {
 	Approved        bool         `json:"approved"`
 	TotalOz         float32      `json:"total_oz"`
 	Rating          int          `json:"rating"`
+	TemplateName    string       `json:"template_name"`
 }
 
 type OrderStatus struct {
