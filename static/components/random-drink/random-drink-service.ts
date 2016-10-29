@@ -198,7 +198,12 @@ class RandomDrinkService {
       }
       if (amount == 0) continue;
       var original_amount = amount;
+      var is_bitter =
+          ingredient_weights[this.BITTER] == this.sum(ingredient_weights);
       amount = this.chooseProportion(amount);
+      if (is_bitter) {
+        amount = Math.ceil(amount);
+      }
       do {
         /* Calculate the new weights = weights - amount * ingredient_weights */
         var new_weights = new Array(weights.length);
@@ -216,7 +221,7 @@ class RandomDrinkService {
       }
       // We found a recipe!
       var ingredient : Ingredient = {'name': name};
-      if (ingredient_weights[this.BITTER] == this.sum(ingredient_weights)) {
+      if (is_bitter) {
         ingredient.drops = amount;
       } else {
         ingredient.parts = amount;
