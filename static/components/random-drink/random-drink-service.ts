@@ -3,6 +3,71 @@ interface IngredientInfo {
   weights: number[];
 }
 
+function RandomName() {
+  var ADJECTIVES = ["disgruntled", "athletic", "magnificent", "geriatric", "moldy", "piping", "roiling", "bulky", "moist", "attractive", "stunning", "dank", "watery", "glorious", "sunken", "perky", "sultry", "smarmy", "kitschy", "constant", "crunchy", "hot", "saucy", "rousing", "sleepy", "smoking", "offensive", "spooky", "medical", "unctuous", "healthy", "unhealthy", "alluring", "gorgeous", "cute", "petite", "crude", "rude", "appealing", "lyrical", "janky", "dysfunctional", "softcore", "traditional", "contrived", "kinky", "well", "proportioned", "native", "foreign", "grand", "sugary", "subtle", "groovy", "curved", "silly", "well", "endowed", "plain", "faulty", "fake", "linear", "boring", "callipygian", "crawling", "lying", "imperialistic", "wired", "rugged", "chunky", "ravenous", "sex-crazed", "anatomically", "correct", "smooth", "wild", "salty", "clean", "handsome", "muscly", "unsavory", "theatrical", "buxom", "pretty", "beautiful", "haunting", "memorable", "classy", "orange", "purple", "sweet", "velveteen", "blue", "vile", "green", "ornery", "mild", "rocking", "bashful", "hardcore", "necessary", "horny", "skanky", "languid", "sanguine", "lanky", "proud", "scandalous", "sour", "cranky", "soul-crushing", "rolling", "inebriating", "pandering", "raunchy", "reckless", "feckless", "enticing", "blasphemous", "jaunty", "jovial", "jocund", "arrogant", "mislabeled", "funky", "crabby", "malevolent", "fraudulent", "sexy", "ironic", "trite", "empty", "odoriferous", "snooty", "spectacular", "sportsmanlike", "fascinating", "ultimate", "penultimate", "punctual", "humble", "young", "nubile", "fresh", "ripe", "raucous", "hairy", "fuzzy", "fluffy", "fun", "funny", "dull", "small", "large", "huge", "tiny", "infinite", "nonexistent", "well", "placed", "successful", "unsuccessful", "pathetic", "unarmed", "dirty", "ever changing"];
+
+  var ADVERBS = ["functionally", "strangely", "wisely", "sagaciously", "softly", "overpoweringly", "coyly", "subtly", "stiflingly", "frantically", "thoroughly", "wishfully", "formidably", "thoughtfully", "pedantically", "momentarily", "mildly", "frustratingly", "angrily", "habitually", "seductively", "devilishly", "potentially", "platonically", "monotonously", "meanderingly", "pointedly", "decidedly", "fortunately", "disapprovingly", "shockingly", "wishfully", "wantonly", "wanly", "victoriously", "honestly", "totally", "truly", "fascinatingly", "musically", "reassuringly", "joyfully", "hopefully", "happily", "ethereally", "ephemerally", "fleetingly", "horribly", "gracefully", "clumsily"];
+
+  var NOUNS = ["patron", "benefactor", "nemesis", "ally", "pedophilia", "trap", "cup", "warmth", "winter", "spring", "fall", "summer", "regret", "rag-doll", "punk", "goth", "visigoth", "marauder", "vision", "lobster", "sunrise", "american", "local", "horror", "husband", "wife", "sweet-wine", "cocktail", "humps", "terrorist", "anarchist", "lad", "wench", "cherry", "jezebel", "thought", "wish", "wonder", "actor", "engineer", "dope", "partner", "politician", "seductress", "demon", "incubus", "succubus", "devil", "scowl", "smile", "rebel", "king", "queen", "cephalopod", "snail", "monster", "bed", "sheets", "master", "mistress", "suitor", "odyssey", "adonis", "sculpture", "wanker", "nipples", "member", "phallus", "tits", "titties", "butt", "ass", "arse", "goblet", "tankard", "vessel", "lute", "affair", "hookup", "telephone", "taunt", "orgasm", "ejaculation", "semen", "pinstripes", "candy", "victory", "loser", "nerd", "geek", "illusion", "dork", "funk", "shaft", "shorts", "music", "battle", "plan", "foreplay", "tease", "toy", "tongue", "lips", "mouth", "accessory", "gadget", "bonus", "joystick", "job", "rod", "pumpkin", "flower", "plot", "limit", "theorem", "postulation", "posture", "position", "angle", "arrangement", "book", "location", "drunk", "rapture", "proverb", "song", "songbird", "porpoise", "raven", "sex", "appeal", "obsession", "stalker", "pork", "argument", "bumpkin", "yodel", "model", "actress", "swagger", "strut", "strategy", "arousal", "muscles", "flex", "man", "sex", "sanctum", "sanctuary", "priest", "pope", "hat", "lingerie", "codpiece", "cock", "crunch", "sample", "letter", "word", "hunk", "specimen", "abs", "noodles", "cavern", "crotch", "thighs", "chest", "business", "nap", "body", "porn", "elderly", "muck", "swashbuckler", "renegade", "rogue", "rapscallion", "wanderer", "milkshake", "nectar", "honey", "sap", "brew", "potion"];
+
+  var FORMULAE_BY_WEIGHT: {[key: string]: number;} = {
+   'thing()': 1,
+   'adjective()': 1,
+   'thing() + " and " + thing()': 3,
+   'adjective() + " and " + adjective()': 2,
+   '"the " + adjective() + " and " + thing()': 1,
+   '"the " + thing() + " and the " + thing()': 1
+  };
+
+  function calc_weights(formulae: {[key: string]: number; }) {
+    var total_weight = 0;
+    for (var key in formulae) {
+      if (!formulae.hasOwnProperty(key)) {
+        continue;
+      }
+      total_weight += formulae[key];
+    }
+    var stop_points: [string, number][] = [];
+    var cumulative_total = 0;
+    for (key in formulae) {
+      if (!formulae.hasOwnProperty(key)) {
+        continue;
+      }
+      var increment = formulae[key]/total_weight;
+      cumulative_total += increment;
+      stop_points.push([key, cumulative_total]);
+    }
+    return stop_points;
+  }
+
+  function invoke(weights: [string, number][]) {
+    var r = Math.random();
+    window.console.log(r);
+    for (var i = 0; i < weights.length; i++) {
+      if (r < weights[i][1]) {
+        return eval(weights[i][0]);
+      }
+    }
+  }
+
+  function oneof<T>(l: T[]): T {
+    return l[Math.floor(Math.random() * l.length)];
+  }
+
+  function thing() {
+    if (Math.random() < .5) return oneof(NOUNS);
+    return adjective() + " " + oneof(NOUNS);
+  }
+
+  function adjective(): string {
+    if (Math.random() < .5) return oneof(ADJECTIVES);
+    return oneof(ADVERBS) + " " + adjective();
+  }
+
+  var weights = calc_weights(FORMULAE_BY_WEIGHT);
+  return invoke(weights);
+}
+
 class RandomDrinkService {
   private ALCOHOL = 0;
   private SWEET = 1;
@@ -189,7 +254,7 @@ class RandomDrinkService {
         return this.$q.reject("Couldn't find a recipe."); 
       }
       var r: Recipe = {
-        drink_name: name,
+        drink_name: RandomName(),
         categories: [],
         ingredients: ingredients,
         total_oz: total_oz,
