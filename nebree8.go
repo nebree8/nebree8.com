@@ -165,12 +165,12 @@ func orderStatus(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	encoded_key := r.FormValue("key")
 	keyed_order, err := findOrder(c, encoded_key)
-	key := keyed_order.key
-	order := keyed_order.Order
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	key := keyed_order.key
+	order := keyed_order.Order
 	var status OrderStatus
 	if (order.DoneTime.Equal(ArchivedByStaff)) {
 		status.Archived = true
