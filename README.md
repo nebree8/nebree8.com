@@ -14,23 +14,23 @@ For deployment only:
 
 ## Running locally
 
-`dev_appengine.py` is part of the Go AppEngine SDK. `tsc` is the typescript compiler.
+`goapp` is part of the Go AppEngine SDK. `tsc` is the typescript compiler.
 
 ```bash
 rm -rf deploy/
-dev_appengine.py .
+goapp serve .
 tsc -w  # Continuously recompile typescript files.
 # View at http://localhost:8080
 ```
 
 ## Deploying to AppEngine
 
-`appcfg.py` is part of the Go AppEngine SDK.
-
 ```bash
 make
-appcfg.py update deploy
+goapp deploy deploy/
 ```
+
+You can test the minified output using `goapp serve deploy/`.
 
 ## Backend
 
