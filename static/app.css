@@ -229,3 +229,13 @@ md-dialog {
   margin-right: 8px;
   margin-left: 8px;
 }
+
+/* About page */
+.about-card p {
+  line-height: 1.4;
+}
+
+.about-card li {
+  list-style: none;
+  margin-top: 12px;
+}
