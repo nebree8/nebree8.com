@@ -23,14 +23,17 @@ tsc -w  # Continuously recompile typescript files.
 # View at http://localhost:8080
 ```
 
-## Deploying to AppEngine
+## Deployment checklist
 
-```bash
-make
-goapp deploy deploy/
-```
-
-You can test the minified output using `goapp serve deploy/`.
+* Update recipes and featured list
+* Increment version in `app.yaml`
+* `make`
+* Do a quick verification of contents of deploy with `goapp serve deploy/`
+* Deploy to appengine using `goapp deploy deploy/`
+* Switch serving version at [console.cloud.google.com](https://console.cloud.google.com/appengine/versions?project=nebree8&serviceId=default)
+* Load http://nebree8.com and check list of excluded recipes in the Chrome console
+* Configure ingredients on frontend and backend
+* Run backend with `--check_ingredients` (the default) to check consistency
 
 ## Backend
 
