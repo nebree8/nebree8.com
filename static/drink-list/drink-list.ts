@@ -54,9 +54,11 @@ class DrinkListCtrl {
       this.$mdDialog.hide();
       this.$location.path('/all-orders');
     }).catch((response: ng.IHttpPromiseCallbackArg<string>) => {
-      this.$mdToast.show(this.$mdToast.simple().
-                         content('Error: ' + response.data).
-                         action("OK").hideDelay(10000));
+      if (response) {
+        this.$mdToast.show(this.$mdToast.simple().
+                           content('Error: ' + response.data).
+                           action("OK").hideDelay(10000));
+      }
     });
   };
 
