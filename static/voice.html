@@ -26,7 +26,7 @@
         lastUserName = userName
         lastDrinkName = drinkName
       }).fail(function(data) {
-        alert("Failed lookup");
+        console.log("Failed lookup");
       });
       var ms = 5000;
       window.setTimeout(PollAndMaybeSpeak, ms);
