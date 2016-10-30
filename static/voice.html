@@ -1,0 +1,42 @@
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    var lastDrinkName = "";
+    var lastUserName = "";
+    function PollAndMaybeSpeak() {
+      $.ajax({
+        dataType: "json",
+        url: "/api/drink_queue",
+        contentType: "application/json; charset=utf-8",
+      }).done(
+      function(data) {
+        var userName = data[0].user_name;
+        var drinkName = data[0].drink_name;
+        console.log("User is: " + userName);
+        if (lastDrinkName != "" && lastUserName != "") {
+          if (userName != lastUserName || drinkName != lastDrinkName) {
+            var msg = new SpeechSynthesisUtterance(
+              lastUserName + ", " + lastUserName + ", your " + lastDrinkName + " is ready. "
+              + lastUserName + ", your " + lastDrinkName + " is ready. "
+              + userName + ", your " + drinkName + " is next."
+            );
+            window.speechSynthesis.speak(msg);
+          }
+        }
+        lastUserName = userName
+        lastDrinkName = drinkName
+      }).fail(function(data) {
+        alert("Failed lookup");
+      });
+      var ms = 5000;
+      window.setTimeout(PollAndMaybeSpeak, ms);
+    }
+
+    window.onload = function start() {
+      PollAndMaybeSpeak();
+    }
+  </script>
+</head>
+<body>
+  This page scrapes the queue and speaks to people when their drink is done.
+</body>
