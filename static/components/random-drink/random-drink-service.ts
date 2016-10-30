@@ -4,19 +4,19 @@ interface IngredientInfo {
 }
 
 function RandomName() {
-  var ADJECTIVES = ["disgruntled", "athletic", "magnificent", "geriatric", "moldy", "piping", "roiling", "bulky", "moist", "attractive", "stunning", "dank", "watery", "glorious", "sunken", "perky", "sultry", "smarmy", "kitschy", "constant", "crunchy", "hot", "saucy", "rousing", "sleepy", "smoking", "offensive", "spooky", "medical", "unctuous", "healthy", "unhealthy", "alluring", "gorgeous", "cute", "petite", "crude", "rude", "appealing", "lyrical", "janky", "dysfunctional", "softcore", "traditional", "contrived", "kinky", "well", "proportioned", "native", "foreign", "grand", "sugary", "subtle", "groovy", "curved", "silly", "well", "endowed", "plain", "faulty", "fake", "linear", "boring", "callipygian", "crawling", "lying", "imperialistic", "wired", "rugged", "chunky", "ravenous", "sex-crazed", "anatomically", "correct", "smooth", "wild", "salty", "clean", "handsome", "muscly", "unsavory", "theatrical", "buxom", "pretty", "beautiful", "haunting", "memorable", "classy", "orange", "purple", "sweet", "velveteen", "blue", "vile", "green", "ornery", "mild", "rocking", "bashful", "hardcore", "necessary", "horny", "skanky", "languid", "sanguine", "lanky", "proud", "scandalous", "sour", "cranky", "soul-crushing", "rolling", "inebriating", "pandering", "raunchy", "reckless", "feckless", "enticing", "blasphemous", "jaunty", "jovial", "jocund", "arrogant", "mislabeled", "funky", "crabby", "malevolent", "fraudulent", "sexy", "ironic", "trite", "empty", "odoriferous", "snooty", "spectacular", "sportsmanlike", "fascinating", "ultimate", "penultimate", "punctual", "humble", "young", "nubile", "fresh", "ripe", "raucous", "hairy", "fuzzy", "fluffy", "fun", "funny", "dull", "small", "large", "huge", "tiny", "infinite", "nonexistent", "well", "placed", "successful", "unsuccessful", "pathetic", "unarmed", "dirty", "ever changing"];
+  var ADJECTIVES = ["disgruntled", "athletic", "magnificent", "geriatric", "moldy", "piping", "roiling", "bulky", "moist", "attractive", "stunning", "dank", "watery", "glorious", "sunken", "perky", "sultry", "smarmy", "kitschy", "constant", "crunchy", "hot", "saucy", "rousing", "sleepy", "smoking", "offensive", "spooky", "medical", "unctuous", "healthy", "unhealthy", "alluring", "gorgeous", "cute", "petite", "crude", "rude", "appealing", "lyrical", "janky", "dysfunctional", "softcore", "traditional", "contrived", "kinky", "well", "proportioned", "native", "foreign", "grand", "sugary", "subtle", "groovy", "curved", "silly", "well", "endowed", "plain", "faulty", "fake", "linear", "boring", "callipygian", "crawling", "lying", "imperialistic", "wired", "rugged", "chunky", "ravenous", "sex-crazed", "anatomically", "correct", "smooth", "wild", "salty", "clean", "handsome", "muscly", "unsavory", "theatrical", "buxom", "pretty", "beautiful", "haunting", "memorable", "classy", "orange", "purple", "sweet", "velveteen", "blue", "vile", "green", "ornery", "mild", "rocking", "bashful", "hardcore", "necessary", "horny", "skanky", "languid", "sanguine", "lanky", "proud", "scandalous", "sour", "cranky", "soul-crushing", "rolling", "inebriating", "pandering", "raunchy", "reckless", "feckless", "enticing", "blasphemous", "jaunty", "jovial", "jocund", "arrogant", "mislabeled", "funky", "crabby", "malevolent", "fraudulent", "sexy", "ironic", "trite", "empty", "odoriferous", "snooty", "spectacular", "sportsmanlike", "fascinating", "ultimate", "penultimate", "punctual", "humble", "young", "nubile", "fresh", "ripe", "raucous", "hairy", "fuzzy", "fluffy", "fun", "funny", "dull", "small", "large", "huge", "tiny", "infinite", "nonexistent", "well", "placed", "successful", "unsuccessful", "pathetic", "unarmed", "dirty", "ever changing", "cromulent", "spurious", "libelous"];
 
   var ADVERBS = ["functionally", "strangely", "wisely", "sagaciously", "softly", "overpoweringly", "coyly", "subtly", "stiflingly", "frantically", "thoroughly", "wishfully", "formidably", "thoughtfully", "pedantically", "momentarily", "mildly", "frustratingly", "angrily", "habitually", "seductively", "devilishly", "potentially", "platonically", "monotonously", "meanderingly", "pointedly", "decidedly", "fortunately", "disapprovingly", "shockingly", "wishfully", "wantonly", "wanly", "victoriously", "honestly", "totally", "truly", "fascinatingly", "musically", "reassuringly", "joyfully", "hopefully", "happily", "ethereally", "ephemerally", "fleetingly", "horribly", "gracefully", "clumsily"];
 
-  var NOUNS = ["patron", "benefactor", "nemesis", "ally", "pedophilia", "trap", "cup", "warmth", "winter", "spring", "fall", "summer", "regret", "rag-doll", "punk", "goth", "visigoth", "marauder", "vision", "lobster", "sunrise", "american", "local", "horror", "husband", "wife", "sweet-wine", "cocktail", "humps", "terrorist", "anarchist", "lad", "wench", "cherry", "jezebel", "thought", "wish", "wonder", "actor", "engineer", "dope", "partner", "politician", "seductress", "demon", "incubus", "succubus", "devil", "scowl", "smile", "rebel", "king", "queen", "cephalopod", "snail", "monster", "bed", "sheets", "master", "mistress", "suitor", "odyssey", "adonis", "sculpture", "wanker", "nipples", "member", "phallus", "tits", "titties", "butt", "ass", "arse", "goblet", "tankard", "vessel", "lute", "affair", "hookup", "telephone", "taunt", "orgasm", "ejaculation", "semen", "pinstripes", "candy", "victory", "loser", "nerd", "geek", "illusion", "dork", "funk", "shaft", "shorts", "music", "battle", "plan", "foreplay", "tease", "toy", "tongue", "lips", "mouth", "accessory", "gadget", "bonus", "joystick", "job", "rod", "pumpkin", "flower", "plot", "limit", "theorem", "postulation", "posture", "position", "angle", "arrangement", "book", "location", "drunk", "rapture", "proverb", "song", "songbird", "porpoise", "raven", "sex", "appeal", "obsession", "stalker", "pork", "argument", "bumpkin", "yodel", "model", "actress", "swagger", "strut", "strategy", "arousal", "muscles", "flex", "man", "sex", "sanctum", "sanctuary", "priest", "pope", "hat", "lingerie", "codpiece", "cock", "crunch", "sample", "letter", "word", "hunk", "specimen", "abs", "noodles", "cavern", "crotch", "thighs", "chest", "business", "nap", "body", "porn", "elderly", "muck", "swashbuckler", "renegade", "rogue", "rapscallion", "wanderer", "milkshake", "nectar", "honey", "sap", "brew", "potion"];
+  var NOUNS = ["patron", "benefactor", "nemesis", "ally", "pedophilia", "trap", "cup", "warmth", "winter", "spring", "fall", "summer", "regret", "rag-doll", "punk", "goth", "visigoth", "marauder", "vision", "lobster", "sunrise", "american", "local", "horror", "husband", "wife", "sweet-wine", "cocktail", "humps", "terrorist", "anarchist", "lad", "wench", "cherry", "jezebel", "thought", "wish", "wonder", "actor", "engineer", "dope", "partner", "politician", "seductress", "demon", "incubus", "succubus", "devil", "scowl", "smile", "rebel", "king", "queen", "cephalopod", "snail", "monster", "bed", "sheets", "master", "mistress", "suitor", "odyssey", "adonis", "sculpture", "wanker", "nipples", "member", "phallus", "tits", "titties", "butt", "ass", "arse", "goblet", "tankard", "vessel", "lute", "affair", "hookup", "telephone", "taunt", "orgasm", "ejaculation", "semen", "pinstripes", "candy", "victory", "loser", "nerd", "geek", "illusion", "dork", "funk", "shaft", "shorts", "music", "battle", "plan", "foreplay", "tease", "toy", "tongue", "lips", "mouth", "accessory", "gadget", "bonus", "joystick", "job", "rod", "pumpkin", "flower", "plot", "limit", "theorem", "postulation", "posture", "position", "angle", "arrangement", "book", "location", "drunk", "rapture", "proverb", "song", "songbird", "porpoise", "raven", "sex", "appeal", "obsession", "stalker", "pork", "argument", "bumpkin", "yodel", "model", "actress", "swagger", "strut", "strategy", "arousal", "muscles", "flex", "man", "sex", "sanctum", "sanctuary", "priest", "pope", "hat", "lingerie", "codpiece", "cock", "crunch", "sample", "letter", "word", "hunk", "specimen", "abs", "noodles", "cavern", "crotch", "thighs", "chest", "business", "nap", "body", "porn", "elderly", "muck", "swashbuckler", "renegade", "rogue", "rapscallion", "wanderer", "milkshake", "nectar", "honey", "sap", "brew", "potion", "octothorpe", "velociraptor", "interrobang"];
 
   var FORMULAE_BY_WEIGHT: [number, ()=>string][] = [
-    [1, () => thing()],
-    [1, () => adjective()],
+    [1, () => 'The ' + thing()],
+    [1, () => 'The ' + adjective()],
     [3, () => thing() + ' and ' + thing()],
     [2, () => adjective() + ' and ' + adjective()],
-    [1, () => 'the ' + adjective() + ' and ' + thing()],
-    [1, () => 'the ' + thing() + ' and the ' + thing()],
+    [1, () => 'The ' + adjective() + ' and ' + thing()],
+    [1, () => 'The ' + thing() + ' and the ' + thing()],
   ];
 
   function calc_weights(formulae: [number, ()=>string][]):
@@ -37,7 +37,6 @@ function RandomName() {
 
   function invoke(weights: [number, ()=>string][]) {
     var r = Math.random();
-    window.console.log(r);
     for (var i = 0; i < weights.length; i++) {
       if (r < weights[i][0]) {
         return weights[i][1]();
@@ -45,18 +44,24 @@ function RandomName() {
     }
   }
 
-  function oneof<T>(l: T[]): T {
-    return l[Math.floor(Math.random() * l.length)];
+  function oneof(l: string[]): string {
+    var r = l[Math.floor(Math.random() * l.length)];
+    return r[0].toUpperCase() + r.substr(1);
   }
 
   function thing() {
-    if (Math.random() < .5) return oneof(NOUNS);
-    return adjective() + " " + oneof(NOUNS);
+    var r: string = oneof(NOUNS);
+    if (Math.random() < .5) r = adjective() + " " + r;
+    if (r.indexOf('#') == -1 && Math.random() < .1) {
+      return '#' + r.replace(/ /g, "");
+    }
+    return r;
   }
 
   function adjective(): string {
-    if (Math.random() < .5) return oneof(ADJECTIVES);
-    return oneof(ADVERBS) + " " + adjective();
+    var adverb = "";
+    if (Math.random() < .5)  adverb = oneof(ADVERBS) + " ";
+    return adverb + oneof(ADJECTIVES);
   }
 
   var weights = calc_weights(FORMULAE_BY_WEIGHT);
@@ -152,9 +157,8 @@ class RandomDrinkService {
   }
 
   private sum(vec: number[]): number {
-    var i = 0;
     var s = 0;
-    for (i = 0; i < vec.length; i++) {
+    for (var i = 0; i < vec.length; i++) {
       s += vec[i];
     }
     return s;
@@ -195,7 +199,7 @@ class RandomDrinkService {
       if (amount == 0) continue;
       var original_amount = amount;
       var is_bitter =
-          ingredient_weights[this.BITTER] == this.sum(ingredient_weights);
+          (ingredient_weights[this.BITTER] == this.sum(ingredient_weights));
       amount = this.chooseProportion(amount);
       if (is_bitter) {
         amount = Math.ceil(amount);
@@ -205,6 +209,7 @@ class RandomDrinkService {
         var new_weights = new Array(weights.length);
         for (var j = 0; j < weights.length; j++) {
           new_weights[j] = weights[j] - amount * ingredient_weights[j];
+          if (new_weights[j] < 0) new_weights[j] = 0;
         }
         /* Recursively find ingredients to fill the remaining weights */
         var remaining_ingredients = this.chooseRandomIngredients(
@@ -228,7 +233,7 @@ class RandomDrinkService {
   }
 
   private format(r: Recipe): string {
-    var s = r.drink_name + "(" + r.total_oz + " oz): ";
+    var s = r.drink_name + " (" + r.total_oz + " oz): ";
     for (var i = 0; i < r.ingredients.length; i++) {
       var ingredient = r.ingredients[i];
       s += "\n";
@@ -254,6 +259,15 @@ class RandomDrinkService {
       if (ingredients === null) {
         return this.$q.reject("Couldn't find a recipe."); 
       }
+      ingredients.sort((a: Ingredient, b: Ingredient): number => {
+        if ((a.parts||0) > (b.parts||0)) return -1;
+        if ((a.parts||0) < (b.parts||0)) return 1;
+        if (a.drops > b.drops) return -1;
+        if (a.drops < b.drops) return 1;
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
+      });
       var r: Recipe = {
         drink_name: RandomName(),
         categories: [],
