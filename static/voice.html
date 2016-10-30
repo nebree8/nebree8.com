@@ -6,7 +6,7 @@
     function PollAndMaybeSpeak() {
       $.ajax({
         dataType: "json",
-        url: "/api/drink_queue",
+        url: "/api/next_drink",
         contentType: "application/json; charset=utf-8",
       }).done(
       function(data) {
