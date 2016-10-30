@@ -135,7 +135,7 @@
 }, {
   "total_oz": 5.0,
   "drink_name": "Americano",
-  "categories": ["Classic Cocktails", "Featured"],
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Campari"
@@ -307,7 +307,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Kamikaze",
-  "categories": ["Classic Cocktails", "Featured"],
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 1,
     "name": "Vodka"
@@ -367,7 +367,7 @@
 }, {
   "total_oz": 2.75,
   "drink_name": "Tom Collins",
-  "categories": ["Classic Cocktails"],
+  "categories": ["Classic Cocktails", "Featured"],
   "ingredients": [{
     "parts": 2,
     "name": "Gin"
@@ -497,7 +497,7 @@
 }, {
   "total_oz": 1.75,
   "drink_name": "R2-D2",
-  "categories": ["Robot Inspired", "Featured"],
+  "categories": ["Robot Inspired"],
   "ingredients": [{
     "parts": 1,
     "name": "Tequila"
@@ -613,7 +613,7 @@
 }, {
   "total_oz": 3.5,
   "drink_name": "GlaDOS",
-  "categories": ["Robot Inspired", "Featured"],
+  "categories": ["Robot Inspired"],
   "ingredients": [{
     "parts": 2,
     "name": "Rye"
@@ -630,7 +630,7 @@
 },  {
   "total_oz": 2.5,
   "drink_name": "Sazerac",
-  "categories": ["Classic Cocktails", "Featured"],
+  "categories": ["Classic Cocktails"],
   "ingredients": [{
     "parts": 5,
     "name": "Rye"
@@ -642,6 +642,23 @@
     "name": "Simple Syrup"
   }, {
     "drops": 2,
+    "name": "Peychauds Bitters"
+  }]
+},  {
+  "total_oz": 3,
+  "drink_name": "Jarvis",
+  "categories": ["Robot Inspired", "Featured"],
+  "ingredients": [{
+    "parts": 2,
+    "name": "Scotch"
+  }, {
+    "parts": 1,
+    "name": "Rum"
+  }, {
+    "parts": 1,
+    "name": "Simple Syrup"
+  }, {
+    "drops": 1,
     "name": "Peychauds Bitters"
   }]
 }
