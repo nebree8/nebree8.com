@@ -32,12 +32,21 @@ class n8AdminCtrl {
     });
   }
 
+  promote(order: Order) {
+    this.$http({
+      'method': 'POST',
+      'url': '/api/promote_drink',
+      'params': {'key': order.id}
+    }).then((resp: angular.IHttpPromiseCallbackArg<Order>) => {
+      this.promoteToTop(order);
+    });
+  }
+
   refresh() {
     this.$http.get('/api/drink_queue')
       .then((resp: angular.IHttpPromiseCallbackArg<Order[]>) => {
         this.queue = resp.data;
         this.assignPositions();
-        window.console.log(this.queue);
       });
   }
 
@@ -52,6 +61,20 @@ class n8AdminCtrl {
       }
     });
     this.queue.splice(index, 1, updatedOrder);
+
+    // Update the queue positions for drinks that are going to be made
+    this.assignPositions();
+  }
+
+  promoteToTop(toTop: Order) {
+    var index: number = null;
+    angular.forEach(this.queue, function(o, idx) {
+      if (o.id == toTop.id) {
+        index = idx;
+      }
+    });
+    this.queue.splice(index, 1);
+    this.queue.splice(0, 0, toTop);
 
     // Update the queue positions for drinks that are going to be made
     this.assignPositions();

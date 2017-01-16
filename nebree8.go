@@ -38,11 +38,11 @@ type Order struct {
 }
 
 type OrderStatus struct {
-  Approved        bool         `json:"approved"`
-	Done            bool         `json:"done"`
-	Archived        bool         `json:"archived"`
-	QueuePosition   int          `json:"queue_position"`
-  ProgressPercent int          `json:"progress_percent"`
+	Approved        bool `json:"approved"`
+	Done            bool `json:"done"`
+	Archived        bool `json:"archived"`
+	QueuePosition   int  `json:"queue_position"`
+	ProgressPercent int  `json:"progress_percent"`
 }
 
 type KeyedOrder struct {
@@ -60,9 +60,9 @@ func (k *KeyedOrder) Put(c appengine.Context) error {
 }
 
 var ArchivedByStaff time.Time = time.Date(
-	2000, time.January, 1, 0, 0, 0, 0, time.UTC);
-var CancelledByUser time.Time =  time.Date(
-	2000, time.February, 1, 0, 0, 0, 0, time.UTC);
+	2000, time.January, 1, 0, 0, 0, 0, time.UTC)
+var CancelledByUser time.Time = time.Date(
+	2000, time.February, 1, 0, 0, 0, 0, time.UTC)
 
 func findOrder(c appengine.Context, encoded_key string) (*KeyedOrder, error) {
 	key, err := datastore.DecodeKey(encoded_key)
@@ -134,6 +134,7 @@ func init() {
 	http.HandleFunc("/api/approve_drink", approveDrink)
 	http.HandleFunc("/api/archive_drink", archiveDrink)
 	http.HandleFunc("/api/cancel_drink", cancelDrink)
+	http.HandleFunc("/api/promote_drink", promoteDrink)
 	http.HandleFunc("/api/set_config", setConfig)
 	http.HandleFunc("/api/get_config", getConfig)
 }
@@ -172,10 +173,10 @@ func orderStatus(w http.ResponseWriter, r *http.Request) {
 	key := keyed_order.key
 	order := keyed_order.Order
 	var status OrderStatus
-	if (order.DoneTime.Equal(ArchivedByStaff)) {
+	if order.DoneTime.Equal(ArchivedByStaff) {
 		status.Archived = true
-	} else if (!order.DoneTime.IsZero()) {
-		status.Done = true  // Technically this includes 'cancelled' as well.
+	} else if !order.DoneTime.IsZero() {
+		status.Done = true // Technically this includes 'cancelled' as well.
 	}
 	status.ProgressPercent = order.ProgressPercent
 	status.Approved = order.Approved
@@ -225,10 +226,10 @@ func finishedDrink(w http.ResponseWriter, r *http.Request) {
 func approveDrink(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	var is_approved bool
-	if (r.FormValue("approved") == "true") {
+	if r.FormValue("approved") == "true" {
 		is_approved = true
-	} else if (r.FormValue("approved") == "false") {
-		is_approved = false;
+	} else if r.FormValue("approved") == "false" {
+		is_approved = false
 	} else {
 		c.Infof("Bad value \"%v\" for approved", r.FormValue("approved"))
 		http.Error(w, "Form value 'approved' must be one of: 'true', 'false'",
@@ -244,20 +245,31 @@ func approveDrink(w http.ResponseWriter, r *http.Request) {
 func cancelDrink(w http.ResponseWriter, r *http.Request) {
 	// Essentially the same as archiving, but uses a different "past" value.
 	mutateAndReturnOrder(w, r, func(o *Order) error {
-		o.DoneTime = CancelledByUser;
+		o.DoneTime = CancelledByUser
 		return nil
-	})  
+	})
+}
+
+func promoteDrink(w http.ResponseWriter, r *http.Request) {
+	var orders []Order
+	c := appengine.NewContext(r)
+	q := unpreparedDrinkQueryNewestFirst().Limit(1)
+	q.GetAll(c, &orders)
+	mutateAndReturnOrder(w, r, func(o *Order) error {
+		o.OrderTime = orders[0].OrderTime.Add(-1 * time.Minute)
+		return nil
+	})
 }
 
 func archiveDrink(w http.ResponseWriter, r *http.Request) {
 	var archiveTime time.Time
-	if (r.FormValue("archive") == "true") {
-		archiveTime = ArchivedByStaff;
-	} else if (r.FormValue("archive") == "false") {
+	if r.FormValue("archive") == "true" {
+		archiveTime = ArchivedByStaff
+	} else if r.FormValue("archive") == "false" {
 		archiveTime = time.Time{}
 	}
 	mutateAndReturnOrder(w, r, func(o *Order) error {
-		o.DoneTime = archiveTime;
+		o.DoneTime = archiveTime
 		return nil
 	})
 }
@@ -280,7 +292,7 @@ func drinkProgress(w http.ResponseWriter, r *http.Request) {
 func setConfig(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	cfg := Config{}
-	if (r.FormValue("reset") != "") {
+	if r.FormValue("reset") != "" {
 		cfg = defaultConfig
 	} else if err := json.Unmarshal([]byte(r.FormValue("config")), &cfg); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

@@ -214,10 +214,10 @@ md-dialog {
 }
 
 /* Styles for admin */
-.admin-queue-position {
-  border: 2px solid #000;
+.admin-queue-position .admin-pos {
+  display: inline-block;
   font-weight: bold;
-  line-height: 42px;
+  padding: 4px;
   text-align: center;
 }
 
@@ -225,9 +225,25 @@ md-dialog {
   margin-top: 20px;
 }
 
+.admin-order-list md-list-item>.md-avatar {
+  border-radius: none;
+  margin-top: 0;
+  text-align: center;
+}
+
+.admin-order-list h3 {
+  max-width: 250px;
+}
+
 .admin-order-list .md-avatar {
   margin-right: 8px;
   margin-left: 8px;
+  position: relative;
+  top: -10px;
+}
+
+.admin-arrow {
+  font-size: 32px;
 }
 
 /* About page */
