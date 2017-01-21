@@ -73,8 +73,13 @@ class n8AdminCtrl {
         index = idx;
       }
     });
+
     this.queue.splice(index, 1);
-    this.queue.splice(0, 0, toTop);
+    var topIdx = 0;
+    if (this.queue[0].progress_percent > 0) {
+      topIdx = 1;
+    }
+    this.queue.splice(topIdx, 0, toTop);
 
     // Update the queue positions for drinks that are going to be made
     this.assignPositions();
