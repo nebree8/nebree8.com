@@ -253,10 +253,17 @@ func cancelDrink(w http.ResponseWriter, r *http.Request) {
 func promoteDrink(w http.ResponseWriter, r *http.Request) {
 	var orders []Order
 	c := appengine.NewContext(r)
-	q := unpreparedDrinkQueryNewestFirst().Limit(1)
-	q.GetAll(c, &orders)
+	unpreparedDrinkQueryNewestFirst().GetAll(c, &orders)
+	var nextUnstartedOrder Order
+	for _, o := range orders {
+		if o.ProgressPercent == 0 {
+			nextUnstartedOrder = o
+			break
+		}
+	}
+
 	mutateAndReturnOrder(w, r, func(o *Order) error {
-		o.OrderTime = orders[0].OrderTime.Add(-1 * time.Minute)
+		o.OrderTime = nextUnstartedOrder.OrderTime.Add(-1 * time.Second)
 		return nil
 	})
 }
