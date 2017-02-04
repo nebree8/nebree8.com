@@ -253,7 +253,7 @@ func cancelDrink(w http.ResponseWriter, r *http.Request) {
 func promoteDrink(w http.ResponseWriter, r *http.Request) {
 	var orders []Order
 	c := appengine.NewContext(r)
-	unpreparedDrinkQueryNewestFirst().GetAll(c, &orders)
+	unpreparedDrinkQueryNewestFirst().Limit(10).GetAll(c, &orders)
 	var nextUnstartedOrder Order
 	for _, o := range orders {
 		if o.ProgressPercent == 0 {

@@ -48,7 +48,7 @@ class DrinksService {
 
     var recipes: ng.IHttpPromise<Recipe[][]> =
       $http.get('/all_drinks', { cache: true });
-    this.db = $q<Recipe[][]>((resolve, reject) => {
+    this.db = $q<Recipe[][]>((resolve: any, reject: any) => {
       $q.all([recipes, this.pantry]).then((args: any[]) => {
         var recipe_response: ng.IHttpPromiseCallbackArg<Recipe[]> = args[0];
         var pantry: Pantry = args[1];
