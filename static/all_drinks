@@ -174,7 +174,7 @@
 }, {
   "total_oz": 2.0,
   "drink_name": "Scotch (neat)",
-  "categories": ["Classic Cocktails"],
+  "categories": [],
   "ingredients": [{
     "parts": 1,
     "name": "Scotch"
@@ -460,7 +460,7 @@
 }, {
   "total_oz": 3,
   "drink_name": "Johnny Five",
-  "categories": ["Robot Inspired"],
+  "categories": ["Robot Inspired", "Featured"],
   "ingredients": [{
     "parts": 2,
     "name": "Gin"
@@ -477,7 +477,7 @@
 }, {
   "total_oz": 5,
   "drink_name": "C-3PO",
-  "categories": ["Robot Inspired", "Featured"],
+  "categories": ["Robot Inspired"],
   "ingredients": [{
     "parts": 2,
     "name": "Gin"
