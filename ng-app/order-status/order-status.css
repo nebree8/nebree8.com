@@ -1,0 +1,72 @@
+.order-status-wrapper {
+  width: 100%;
+}
+
+order-status {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  position: relative; width: 100%;
+
+  & .ingredients-list {
+    text-transform: capitalize;
+  }
+
+  & md-list-item.md-2-line .md-list-item-text h3 {
+    /* Wrap the title of the drink instead of letting it get cut off */
+    white-space: normal;
+  }
+
+  & .rating {
+    & button {
+      background-color: transparent;
+      border: none;
+      font-size: 30px;
+      height: 45px;
+      padding: 0;
+      text-align: center;
+      width: 30px;
+    }
+
+    & .star-cont { text-align: center; }
+    & .filled { color: #FBB608; }
+    & .empty { color: #999; }
+    & .unrated .empty { color: black; }
+  }
+
+  & h3 {
+    color: rgba(0,0,0,0.87);
+    margin: 10px 0 0;
+  }
+}
+
+.order-progress {
+  padding-bottom: 10px;
+  & md-progress-linear { margin-top: 10px; }
+}
+
+.order-state {
+  margin: 0;
+
+  &.order-done { margin-bottom: 30px; }
+}
+
+.order-action {
+  margin: 10px 0;
+}
+
+.queue {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.order-state,
+.order-action,
+.queue {
+  color: rgba(0,0,0,0.54);
+}
+
+.queue-position {
+  font-size: 24px;
+  & sup { font-size: 18px; }
+}

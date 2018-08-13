@@ -1,0 +1,33 @@
+.admin-queue-position .admin-pos {
+  display: inline-block;
+  font-weight: bold;
+  padding: 4px;
+  text-align: center;
+}
+
+.admin-order-list {
+  & md-list-item {
+    margin-top: 20px;
+  }
+
+  & md-list-item>.md-avatar {
+    border-radius: none;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  & h3 {
+    max-width: 250px;
+  }
+
+  & .md-avatar {
+    margin-right: 8px;
+    margin-left: 8px;
+    position: relative;
+    top: -10px;
+  }
+}
+
+.admin-arrow {
+  font-size: 32px;
+}

@@ -1,0 +1,10 @@
+.orders-btn-cont {
+  bottom: 8px;
+  position: fixed;
+  width: 100%;
+}
+
+.orders-btn {
+  display: block;
+  margin: auto;
+}

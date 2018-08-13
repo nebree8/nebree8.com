@@ -48,99 +48,9 @@
     100% { transform: translateX(0%); }
 }
 
-order-status {
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  position: relative;
-  width: 100%;
-
-  & .ingredients-list {
-    text-transform: capitalize;
-  }
-
-  & md-list-item.md-2-line .md-list-item-text h3 {
-    /* Wrap the title of the drink instead of letting it get cut off */
-    white-space: normal;
-  }
-
-  & .rating {
-    & button {
-      background-color: transparent;
-      border: none;
-      font-size: 30px;
-      height: 45px;
-      padding: 0;
-      text-align: center;
-      width: 30px;
-    }
-
-    & .star-cont { text-align: center; }
-    & .filled { color: #FBB608; }
-    & .empty { color: #999; }
-    & .unrated .empty { color: black; }
-  }
-
-  & h3 {
-    color: rgba(0,0,0,0.87);
-    margin: 10px 0 0;
-  }
-}
-
 md-card.about {
   max-width: 400px;
   margin: auto;
-}
-
-.orders-btn-cont {
-  bottom: 8px;
-  position: fixed;
-  width: 100%;
-}
-
-.orders-btn {
-  display: block;
-  margin: auto;
-}
-
-.order-status-sheet {
-  padding-bottom: 20px;
-  transform: none;
-}
-
-.order-status-wrapper {
-  width: 100%;
-}
-
-.order-state,
-.order-action,
-.queue {
-  color: rgba(0,0,0,0.54);
-}
-
-.order-state {
-  margin: 0;
-
-  &.order-done { margin-bottom: 30px; }
-}
-
-.order-action {
-  margin: 10px 0;
-}
-
-.queue {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.queue-position {
-  font-size: 24px;
-  & sup { font-size: 18px; }
-}
-
-.order-progress {
-  padding-bottom: 10px;
-  & md-progress-linear { margin-top: 10px; }
 }
 
 .all-orders-card {
@@ -153,57 +63,8 @@ md-card.about {
   &.exit-right { animation: from-left 0.5s forwards; }
 }
 
-
-
 md-dialog {
   max-height: 90%;
   max-width: 90%;
   &.md-dialog-content { padding: 6px; }
-}
-
-/* Styles for admin */
-.admin-queue-position .admin-pos {
-  display: inline-block;
-  font-weight: bold;
-  padding: 4px;
-  text-align: center;
-}
-
-.admin-order-list {
-  & md-list-item {
-    margin-top: 20px;
-  }
-
-  & md-list-item>.md-avatar {
-    border-radius: none;
-    margin-top: 0;
-    text-align: center;
-  }
-
-  & h3 {
-    max-width: 250px;
-  }
-
-  & .md-avatar {
-    margin-right: 8px;
-    margin-left: 8px;
-    position: relative;
-    top: -10px;
-  }
-}
-
-.admin-arrow {
-  font-size: 32px;
-}
-
-/* About page */
-.about-card {
-  & p {
-    line-height: 1.4;
-  }
-
-  & li {
-    list-style: none;
-    margin-top: 12px;
-  }
 }
