@@ -1,6 +1,20 @@
 runtime: go
 api_version: go1
 
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- ^(.*/)?gulpfile.js$
+- ^(.*/)?package.json$
+- ^(.*/)?README.md$
+- ^(.*/)?.gitignore$
+- node_modules/
+- ng-app/
+- .git/
+
 handlers:
 - url: /api/.*
   script: _go_app
