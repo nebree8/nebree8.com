@@ -2,13 +2,14 @@
   font-size: 150%;
 }
 
-.page-detail .ingredients {
-  text-transform: capitalize;
-  margin-bottom: 24px;
-}
-
-.page-detail md-content {
-  padding: 24px;
+.page-detail {
+  & .ingredients {
+    text-transform: capitalize;
+    margin-bottom: 24px;
+  }
+  & md-content {
+    padding: 24px;
+  }
 }
 
 #searchBox {
@@ -25,91 +26,65 @@
   overflow: scroll;
 }
 
-.page-detail.ng-enter,
-.page-about.ng-enter,
-.all-orders.ng-enter {
-  animation: from-right 0.5s forwards;
-  -webkit-animation: from-right 0.5s forwards;
+.page-detail,
+.page-about,
+.all-orders {
+  &.ng-enter { animation: from-right 0.5s forwards; }
+  &.ng-leave { animation: from-right 0.5s reverse forwards; }
 }
 
-.page-detail.ng-leave,
-.page-about.ng-leave,
-.all-orders.ng-leave {
-  animation: from-right 0.5s reverse forwards;
-  -webkit-animation: from-right 0.5s reverse forwards;
+.page-list {
+  &.ng-enter { animation: from-left 0.5s forwards; }
+  &.ng-leave { animation: from-left 0.5s reverse backwards; }
 }
-
-.page-list.ng-enter {
-  animation: from-left 0.5s forwards;
-  -webkit-animation: from-left 0.5s forwards;
-}
-
-.page-list.ng-leave {
-  animation: from-left 0.5s reverse backwards;
-  -webkit-animation: from-left 0.5s reverse backwards;
-}
-
 
 @keyframes from-left {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(0%); }
 }
 
-@-webkit-keyframes from-left {
-    0% { -webkit-transform: translateX(-100%); }
-    100% { -webkit-transform: translateX(0%); }
-}
-    
 @keyframes from-right {
     0% { transform: translateX(100%); }
     100% { transform: translateX(0%); }
-}
-
-@-webkit-keyframes from-right {
-    0% { -webkit-transform: translateX(100%); }
-    100% { -webkit-transform: translateX(0%); }
 }
 
 order-status {
   bottom: 0;
   left: 0;
   position: fixed;
+  position: relative;
   width: 100%;
-}
 
-order-status .ingredients-list {
-  text-transform: capitalize;
-}
+  & .ingredients-list {
+    text-transform: capitalize;
+  }
 
-order-status md-list-item.md-2-line .md-list-item-text h3 {
-  /* Wrap the title of the drink instead of letting it get cut off */
-  white-space: normal;
-}
+  & md-list-item.md-2-line .md-list-item-text h3 {
+    /* Wrap the title of the drink instead of letting it get cut off */
+    white-space: normal;
+  }
 
-order-status .rating button {
-  background-color: transparent;
-  border: none;
-  font-size: 30px;
-  height: 45px;
-  padding: 0;
-  text-align: center;
-  width: 30px;
-}
+  & .rating {
+    & button {
+      background-color: transparent;
+      border: none;
+      font-size: 30px;
+      height: 45px;
+      padding: 0;
+      text-align: center;
+      width: 30px;
+    }
 
-.star-cont {
-  text-align: center;
-}
+    & .star-cont { text-align: center; }
+    & .filled { color: #FBB608; }
+    & .empty { color: #999; }
+    & .unrated .empty { color: black; }
+  }
 
-order-status .rating .filled {
-  color: #FBB608;
-}
-
-order-status .rating .empty {
-  color: #999;
-}
-
-order-status .rating.unrated .empty {
-  color: black;
+  & h3 {
+    color: rgba(0,0,0,0.87);
+    margin: 10px 0 0;
+  }
 }
 
 md-card.about {
@@ -133,15 +108,6 @@ md-card.about {
   transform: none;
 }
 
-order-status {
-  position: relative;
-}
-
-order-status h3 {
-  color: rgba(0,0,0,0.87);
-  margin: 10px 0 0;
-}
-
 .order-status-wrapper {
   width: 100%;
 }
@@ -154,16 +120,13 @@ order-status h3 {
 
 .order-state {
   margin: 0;
+
+  &.order-done { margin-bottom: 30px; }
 }
 
 .order-action {
   margin: 10px 0;
 }
-
-.order-state.order-done {
-  margin-bottom: 30px;
-}
-
 
 .queue {
   margin-bottom: 20px;
@@ -172,18 +135,12 @@ order-status h3 {
 
 .queue-position {
   font-size: 24px;
-}
-
-.queue-position sup {
-  font-size: 18px;
+  & sup { font-size: 18px; }
 }
 
 .order-progress {
   padding-bottom: 10px;
-}
-
-.order-progress md-progress-linear {
-  margin-top: 10px;
+  & md-progress-linear { margin-top: 10px; }
 }
 
 .all-orders-card {
@@ -191,26 +148,17 @@ order-status h3 {
   padding: 6px;
   min-height: 150px;
   width: 90%;
-}
 
-.all-orders-card.exit-left {
-  animation: from-right 0.5s forwards;
-  -webkit-animation: from-right 0.5s forwards;
-}
-
-.all-orders-card.exit-right {
-  animation: from-left 0.5s forwards;
-  -webkit-animation: from-left 0.5s forwards;
+  &.exit-left { animation: from-right 0.5s forwards; } 
+  &.exit-right { animation: from-left 0.5s forwards; }
 }
 
 
-md-dialog .md-dialog-content {
-  padding: 6px;
-}
 
 md-dialog {
   max-height: 90%;
   max-width: 90%;
+  &.md-dialog-content { padding: 6px; }
 }
 
 /* Styles for admin */
@@ -221,25 +169,27 @@ md-dialog {
   text-align: center;
 }
 
-.admin-order-list md-list-item {
-  margin-top: 20px;
-}
+.admin-order-list {
+  & md-list-item {
+    margin-top: 20px;
+  }
 
-.admin-order-list md-list-item>.md-avatar {
-  border-radius: none;
-  margin-top: 0;
-  text-align: center;
-}
+  & md-list-item>.md-avatar {
+    border-radius: none;
+    margin-top: 0;
+    text-align: center;
+  }
 
-.admin-order-list h3 {
-  max-width: 250px;
-}
+  & h3 {
+    max-width: 250px;
+  }
 
-.admin-order-list .md-avatar {
-  margin-right: 8px;
-  margin-left: 8px;
-  position: relative;
-  top: -10px;
+  & .md-avatar {
+    margin-right: 8px;
+    margin-left: 8px;
+    position: relative;
+    top: -10px;
+  }
 }
 
 .admin-arrow {
@@ -247,11 +197,13 @@ md-dialog {
 }
 
 /* About page */
-.about-card p {
-  line-height: 1.4;
-}
+.about-card {
+  & p {
+    line-height: 1.4;
+  }
 
-.about-card li {
-  list-style: none;
-  margin-top: 12px;
+  & li {
+    list-style: none;
+    margin-top: 12px;
+  }
 }

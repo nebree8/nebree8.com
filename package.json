@@ -5,15 +5,18 @@
   "main": "app.ts",
   "dependencies": {},
   "devDependencies": {
+    "autoprefixer": "^9.1.1",
     "gulp": "^3.9.1",
     "gulp-cli": "^2.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-csso": "^3.0.1",
     "gulp-minify": "^3.1.0",
     "gulp-ng-annotate": "^2.1.0",
+    "gulp-postcss": "^8.0.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-typescript": "^5.0.0-alpha.3",
     "gulp-uglify": "^3.0.1",
+    "postcss-nested": "^3.0.0",
     "typescript": "^3.0.1"
   },
   "scripts": {
