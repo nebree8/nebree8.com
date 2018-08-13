@@ -5,35 +5,30 @@ An app with a Go/Appengine backend and Angular Material frontend.
 ## Dependencies / Tools
 
 - [Go Appengine SDK](https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go)
-- typescript: npm install -g typescript
-
-For deployment only:
-
-- ng-annotate: npm install -g ng-annotate
-- uglify: npm install -g uglify
+- npm install
 
 ## Running locally
 
-`goapp` is part of the Go AppEngine SDK. `tsc` is the typescript compiler.
+`dev_appserver.py` is part of the Go AppEngine SDK. `tsc` is the typescript compiler.
 
 ```bash
 rm -rf deploy/
-goapp serve .
-tsc -w  # Continuously recompile typescript files.
+dev_appserver.py app.yaml
+npm run tsc # Compile typescript once, or...
+npm run tsc-w # Watch for changes to and automatically recompile.
 # View at http://localhost:8080
 ```
 
 ## Deployment checklist
 
 * Update recipes and featured list
-* Increment version in `app.yaml`
-* `make`
-* Do a quick verification of contents of deploy with `goapp serve deploy/`
-* Deploy to appengine using `goapp deploy deploy/`
-* Switch serving version at [console.cloud.google.com](https://console.cloud.google.com/appengine/versions?project=nebree8&serviceId=default)
+* `make` to build the minified sources for deployment in `deploy/`
+* Do a quick verification of contents of deploy with `dev_appserver.py deploy/app.yaml`
+* Deploy to appengine using `gcloud app deploy --project nebree8 deploy/`
 * Load http://nebree8.com and check list of excluded recipes in the Chrome console
 * Configure ingredients on frontend and backend
 * Run backend with `--frontend=http://nebree8.com` (not default) and `--check_ingredients` (the default) to check consistency
+* In case of bugs, revert serving version at [console.cloud.google.com](https://console.cloud.google.com/appengine/versions?project=nebree8&serviceId=default)
 
 ## Backend
 

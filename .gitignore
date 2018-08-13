@@ -4,3 +4,4 @@ static/compiled.js
 static/compiled.js.map
 static/compiled.annotated.js
 tsd.json
+node_modules
