@@ -21,7 +21,7 @@ class EnterNameDialogService {
       escapeToClose: true,
       hasBackdrop: true,
       targetEvent: event,
-      templateUrl: 'components/enter-name-dialog/enter-name-dialog.html',
+      templateUrl: 'enter-name-dialog/enter-name-dialog.html',
     })
   }
 }

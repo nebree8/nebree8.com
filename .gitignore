@@ -1,7 +1,9 @@
 deploy/
 **/.DS_Store
-static/compiled.js
-static/compiled.js.map
-static/compiled.annotated.js
+public/app.js
+public/app.js.map
+public/app.css
+public/app.css.map
+public/*/*.html
 tsd.json
 node_modules

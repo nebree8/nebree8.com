@@ -15,7 +15,7 @@ class OrderDrinkService {
       escapeToClose: false,
       hasBackdrop: true,
       targetEvent: event,
-      templateUrl: 'components/order-drink/order-drink-dialog.html',
+      templateUrl: 'order-drink/order-drink-dialog.html',
     });
   };
 
@@ -28,7 +28,7 @@ class OrderDrinkService {
       escapeToClose: false,
       hasBackdrop: true,
       targetEvent: event,
-      templateUrl: 'components/order-drink/order-random-drink-dialog.html',
+      templateUrl: 'order-drink/order-random-drink-dialog.html',
     });
   };
 

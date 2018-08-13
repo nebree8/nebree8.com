@@ -5,15 +5,23 @@
   "main": "app.ts",
   "dependencies": {},
   "devDependencies": {
-    "ng-annotate": "^1.2.2",
-    "typescript": "^3.0.1",
-    "uglify-js": "^3.4.7",
-    "uglifycss": "0.0.29"
+    "gulp": "^3.9.1",
+    "gulp-cli": "^2.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-minify": "^3.1.0",
+    "gulp-ng-annotate": "^2.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-typescript": "^5.0.0-alpha.3",
+    "gulp-uglify": "^3.0.1",
+    "typescript": "^3.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "tsc-w": "tsc -w"
+    "tsc-w": "tsc -w",
+    "build": "gulp",
+    "watch": "gulp default watch"
   },
   "repository": {
     "type": "git",

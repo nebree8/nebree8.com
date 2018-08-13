@@ -162,7 +162,7 @@ class OrderStatusService {
 angular.module('nebree8.order-status', ['ngCookies'])
   .service('OrderStatusService', OrderStatusService)
   .component('orderStatus', {
-    templateUrl: 'components/order-status/order-status.html',
+    templateUrl: 'order-status/order-status.html',
     controller: OrderStatusCtrl,
     controllerAs: 'ctrl',
     bindings: {
