@@ -1,0 +1,25 @@
+{
+  "name": "nebree8.com",
+  "version": "1.0.0",
+  "description": "Frontend for NEBree8",
+  "main": "app.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "ng-annotate": "^1.2.2",
+    "typescript": "^3.0.1",
+    "uglify-js": "^3.4.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nebree8/nebree8.com.git"
+  },
+  "author": "",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/nebree8/nebree8.com/issues"
+  },
+  "homepage": "https://github.com/nebree8/nebree8.com#readme"
+}
